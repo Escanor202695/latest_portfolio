@@ -1,7 +1,7 @@
 const ROUTENAME = {
 
-    HOME:'/',
-    NOTFOUND:'*'
+    HOME: '/',
+    NOTFOUND: '*'
 
 }
 

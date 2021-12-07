@@ -5,8 +5,5 @@
   "prettier.tabWidth": 2,
   "prettier.semi": false,
   "prettier.singleQuote": true,
-  "prettier.jsxSingleQuote": true,
-  "[javascript]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
-  }
+  "prettier.jsxSingleQuote": true
 }
