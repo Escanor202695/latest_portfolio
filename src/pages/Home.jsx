@@ -1,9 +1,10 @@
 import React from 'react'
+import DashBoard from '../components/DashBoard/DashBoard'
 
 const Home = () => {
   return (
     <div>
-      <h1 className='text-danger'>home</h1>
+      <DashBoard />
     </div>
   )
 }
