@@ -1,8 +1,9 @@
 import React from 'react'
 import { ROUTENAME } from '../constants'
-import Home from '../pages/Home'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import NavigationBar from '../components/NavigationBar/NavigationBar'
+import Home from '../pages/Home/Home'
+import { AdminManagement } from '../pages/AdminManagement'
 function App() {
   return (
     <BrowserRouter>
@@ -12,7 +13,7 @@ function App() {
           <Route path={ROUTENAME.HOME} element={<Home />} />
           <Route
             path={ROUTENAME.ADMINMANAGEMENT}
-            element={<h1>ADMINMANAGEMENT</h1>}
+            element={<AdminManagement />}
           />
           <Route
             path={ROUTENAME.STOREFRONTMANAGEMENT}

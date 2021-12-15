@@ -4,7 +4,7 @@ import './DashBoard.scss'
 
 const DashBoard = ({ children }) => {
   return (
-    <div className='py-2'>
+    <div className=''>
       <SideBar />
       <div>{children}</div>
     </div>
