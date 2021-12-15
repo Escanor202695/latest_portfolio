@@ -1,0 +1,28 @@
+@import '../../index.scss';
+
+.list-group-item {
+  background-color: $white_background;
+  height: 3rem !important;
+  color: $text;
+  border-radius: 8px !important;
+  margin: 0.4rem 0 !important;
+  border: none !important;
+  display: flex !important;
+  justify-content: start !important;
+  align-items: center !important;
+  padding: 1.9rem 2rem !important;
+}
+
+.list-group-item.active {
+  z-index: 2;
+  color: $primary !important;
+  background-color: $primary_light !important;
+  border: none;
+  font-weight: bold;
+}
+
+.list-group-item:hover {
+  background-color: $primary_light !important;
+  color: $primary_dark !important;
+  font-weight: bold;
+}

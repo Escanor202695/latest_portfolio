@@ -1,10 +1,10 @@
 import React from 'react'
+import SideBar from '../CommonLayout/SideBar'
 import './DashBoard.scss'
-import SideBar from './SideBar'
 
 const DashBoard = ({ children }) => {
   return (
-    <div>
+    <div className='py-2'>
       <SideBar />
       <div>{children}</div>
     </div>

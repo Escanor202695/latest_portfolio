@@ -4,7 +4,7 @@ const ROUTENAME = {
     NOTFOUND: '*',
     ADMINMANAGEMENT: '/adminManagement',
     STOREFRONTMANAGEMENT: '/storefrontManagement',
-    ADMINMANAGEMENT: './adManagement',
+    ADDMANAGEMENT: '/adManagement',
 
 
 }
