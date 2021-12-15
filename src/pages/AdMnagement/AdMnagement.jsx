@@ -1,11 +1,11 @@
 import React from 'react'
 import DashBoard from '../../components/DashBoard/DashBoard'
 import plus from '../../assets/icons/plus.svg'
-import './AdminManagement.scss'
+import './AdManagement.scss'
 import { Table } from 'react-bootstrap'
 import threedot from '../../assets/icons/threedot.svg'
 
-const AdminManagement = () => {
+const AdMnagement = () => {
   return (
     <div className='row py-3'>
       <div className='col-3'>
@@ -19,7 +19,7 @@ const AdminManagement = () => {
           </button>
         </div>
 
-        <div className='d-flex justify-content-between align-items-center mt-4'>
+        <div className='d-flex justify-content-between align-items-center'>
           <div className='custom-input me-2'>
             <label for=''>Search Admin</label>
             <br />
@@ -116,4 +116,4 @@ const AdminManagement = () => {
   )
 }
 
-export default AdminManagement
+export default AdMnagement

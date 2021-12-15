@@ -1,0 +1,32 @@
+@import '../../index.scss';
+
+.btn-close {
+  background-color: $grey_five !important;
+}
+.modal-title {
+  color: $primary;
+}
+
+.upload-btn {
+  background: $white_background;
+  border: 1px solid #cccccc;
+  box-sizing: border-box;
+  border-radius: 4px;
+  color: $grey_one;
+  padding: 0.5rem 1rem;
+  min-width: 12rem;
+  transition: all 500ms ease;
+  &:hover {
+    background-color: $grey_five;
+    font-weight: bold;
+  }
+}
+
+.plain-textarea span {
+  background-color: $primary_light;
+  padding: 0.4rem 1rem;
+  border-radius: 4px;
+  position: relative;
+  bottom: 4.5rem;
+  z-index: 1000;
+}

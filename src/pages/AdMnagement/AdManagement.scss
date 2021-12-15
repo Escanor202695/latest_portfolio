@@ -1,0 +1,115 @@
+@import '../../index.scss';
+
+.custom-input {
+  width: 150%;
+  label {
+    margin-bottom: 0.7rem;
+  }
+  input {
+    width: 100%;
+    height: 48px;
+    // background: #ffffff;
+    border: 1px solid #cccccc;
+    box-sizing: border-box !important;
+    border-radius: 4px !important;
+    padding-left: 0.7rem;
+    background: url('../../assets/icons/searchIcon.svg') no-repeat right
+      $white_background; // background-position-x: 0rem;
+    background-position-x: calc(100% - 0.4rem) !important;
+
+    &:focus {
+      outline: 1px solid $primary !important;
+    }
+  }
+}
+
+.custom-dropdown {
+  width: 50%;
+  select {
+    padding: 5px;
+    background: url('../../assets/icons/downArrow.svg') no-repeat right
+      $white_background !important;
+    -webkit-appearance: none;
+    background-position-x: calc(100% - 0.4rem) !important;
+    width: 100%;
+    height: 48px;
+    border: 1px solid #cccccc;
+    color: $grey_two !important;
+    box-sizing: border-box !important;
+    border-radius: 4px !important;
+    padding-left: 0.7rem;
+    cursor: pointer;
+    &:focus {
+      outline: 1px solid $primary !important;
+    }
+  }
+  label {
+    margin-bottom: 0.7rem;
+  }
+}
+
+.plain-input {
+  width: 100%;
+  label {
+    margin-bottom: 0.7rem;
+    font-weight: bold;
+  }
+  input {
+    width: 100%;
+    height: 48px;
+    // background: #ffffff;
+    border: 1px solid #cccccc;
+    box-sizing: border-box !important;
+    border-radius: 4px !important;
+    padding-left: 0.7rem;
+
+    &:focus {
+      outline: 1px solid $primary !important;
+    }
+  }
+}
+
+.plain-textarea {
+  label {
+    margin-bottom: 0.7rem;
+    font-weight: bold;
+  }
+  textarea {
+    width: 100%;
+
+    // background: #ffffff;
+    border: 1px solid #cccccc;
+    box-sizing: border-box !important;
+    border-radius: 4px !important;
+    padding-left: 0.7rem;
+
+    &:focus {
+      outline: 1px solid $primary !important;
+    }
+  }
+}
+
+.plain-dropdown {
+  label {
+    margin-bottom: 0.7rem;
+    font-weight: bold;
+  }
+  select {
+    padding: 5px;
+    background: url('../../assets/icons/downArrow.svg') no-repeat right
+      $white_background !important;
+    -webkit-appearance: none;
+    background-position-x: calc(100% - 0.4rem) !important;
+    width: 100%;
+    height: 48px;
+    border: 1px solid #cccccc;
+    color: $grey_two !important;
+    box-sizing: border-box !important;
+    border-radius: 4px !important;
+    padding-left: 0.7rem;
+    cursor: pointer;
+    &:focus {
+      outline: 1px solid $primary !important;
+    }
+  }
+}

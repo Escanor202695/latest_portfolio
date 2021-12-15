@@ -4,6 +4,9 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import NavigationBar from '../components/NavigationBar/NavigationBar'
 import Home from '../pages/Home/Home'
 import { AdminManagement } from '../pages/AdminManagement'
+import AdMnagement from '../pages/AdMnagement/AdMnagement'
+import StoreFrontManagement from '../pages/StoreFrontManagement/StoreFrontManagement'
+
 function App() {
   return (
     <BrowserRouter>
@@ -17,12 +20,9 @@ function App() {
           />
           <Route
             path={ROUTENAME.STOREFRONTMANAGEMENT}
-            element={<h1>STOREFRONTMANAGEMENT</h1>}
+            element={<StoreFrontManagement />}
           />
-          <Route
-            path={ROUTENAME.ADDMANAGEMENT}
-            element={<h1>ADMINMANAGEMENT</h1>}
-          />
+          <Route path={ROUTENAME.ADDMANAGEMENT} element={<AdMnagement />} />
 
           <Route path={ROUTENAME.NOTFOUND} element={<h1>Not Found!</h1>} />
         </Routes>

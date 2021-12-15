@@ -1,0 +1,1 @@
+export { default as AdMnagement } from './AdMnagement.jsx'
