@@ -2,9 +2,10 @@ const ROUTENAME = {
 
     HOME: '/',
     NOTFOUND: '*',
-    ADMINMANAGEMENT: '/adminManagement',
-    STOREFRONTMANAGEMENT: '/storefrontManagement',
-    ADDMANAGEMENT: '/adManagement',
+    ADMINMANAGEMENT: '/admin-management',
+    STOREFRONTMANAGEMENT: '/storefront-management',
+    ADDMANAGEMENT: '/ad-management',
+    STOREFRONT: '/storefront',
 
 
 }

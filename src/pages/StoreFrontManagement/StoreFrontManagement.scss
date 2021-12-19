@@ -30,3 +30,10 @@
   bottom: 4.5rem;
   z-index: 1000;
 }
+
+.modal-content {
+  border: none !important;
+  border-radius: 8px !important;
+  outline: none !important;
+  box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.08) !important;
+}

@@ -4,8 +4,9 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import NavigationBar from '../components/NavigationBar/NavigationBar'
 import Home from '../pages/Home/Home'
 import { AdminManagement } from '../pages/AdminManagement'
-import AdMnagement from '../pages/AdMnagement/AdMnagement'
+import AdManagement from '../pages/AdManagement/AdManagement'
 import StoreFrontManagement from '../pages/StoreFrontManagement/StoreFrontManagement'
+import { StoreFront } from '../pages/StoreFront'
 
 function App() {
   return (
@@ -22,7 +23,8 @@ function App() {
             path={ROUTENAME.STOREFRONTMANAGEMENT}
             element={<StoreFrontManagement />}
           />
-          <Route path={ROUTENAME.ADDMANAGEMENT} element={<AdMnagement />} />
+          <Route path={ROUTENAME.ADDMANAGEMENT} element={<AdManagement />} />
+          <Route path={ROUTENAME.STOREFRONT} element={<StoreFront />} />
 
           <Route path={ROUTENAME.NOTFOUND} element={<h1>Not Found!</h1>} />
         </Routes>
