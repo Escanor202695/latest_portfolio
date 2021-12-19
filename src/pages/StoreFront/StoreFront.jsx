@@ -22,7 +22,6 @@ const StoreFront = () => {
         <DashBoard />
       </div>
       <div className='col-9'>
-        {/* <h2>StoreFront </h2> */}
         <div className='d-flex justify-content-between align-items-center'>
           <h3 className='fw-bold'>Storefront Name</h3>
           <button

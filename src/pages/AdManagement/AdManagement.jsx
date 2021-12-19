@@ -4,6 +4,7 @@ import plus from '../../assets/icons/plus.svg'
 import './AdManagement.scss'
 import { Table } from 'react-bootstrap'
 import threedot from '../../assets/icons/threedot.svg'
+import { AdCards } from '../../components/AdCards'
 
 const AdMnagement = () => {
   return (
@@ -12,16 +13,16 @@ const AdMnagement = () => {
         <DashBoard />
       </div>
       <div className='col-9'>
+        {' '}
         <div className='d-flex justify-content-between align-items-center'>
-          <h3 className='fw-bold'>Admin Management</h3>
+          <h3 className='fw-bold'>Advertisement Management</h3>
           <button className='primary-btn d-flex justify-content-center align-items-center '>
-            <img className='me-3' src={plus} alt='' /> New Admin
+            <img className='me-3' src={plus} alt='' /> Upload New Ad
           </button>
         </div>
-
-        <div className='d-flex justify-content-between align-items-center'>
+        <div className='d-flex justify-content-between align-items-center mt-4'>
           <div className='custom-input me-2'>
-            <label for=''>Search Admin</label>
+            <label for=''>Search Adverts</label>
             <br />
             <input type='text' placeholder='Search something' />
           </div>
@@ -37,80 +38,12 @@ const AdMnagement = () => {
             </select>
           </div>
         </div>
-        <Table
-          striped
-          bordered
-          hover
-          responsive
-          borderless={true}
-          className='my-5 text-start'
-        >
-          <thead>
-            <tr>
-              <th>Name</th>
-              <th>Email</th>
-              <th>Phone</th>
-              <th>Role</th>
-              <th>Header</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>Mark</td>
-              <td>Mark</td>
-              <td>Mark</td>
-              <td>Mark</td>
-              <td className='d-flex justify-content-between align-items-center'>
-                Mark <img src={threedot} alt='' className='' />{' '}
-              </td>
-            </tr>
-            <tr>
-              <td>Mark</td>
-              <td>Mark</td>
-              <td>Mark</td>
-              <td>Mark</td>
-              <td className='d-flex justify-content-between align-items-center'>
-                Mark <img src={threedot} alt='' />{' '}
-              </td>{' '}
-            </tr>
-            <tr>
-              <td>Mark</td>
-              <td>Mark</td>
-              <td>Mark</td>
-              <td>Mark</td>
-              <td className='d-flex justify-content-between align-items-center'>
-                Mark <img src={threedot} alt='' />{' '}
-              </td>{' '}
-            </tr>
-            <tr>
-              <td>Mark</td>
-              <td>Mark</td>
-              <td>Mark</td>
-              <td>Mark</td>
-              <td className='d-flex justify-content-between align-items-center'>
-                Mark <img src={threedot} alt='' />{' '}
-              </td>{' '}
-            </tr>
-            <tr>
-              <td>Mark</td>
-              <td>Mark</td>
-              <td>Mark</td>
-              <td>Mark</td>
-              <td className='d-flex justify-content-between align-items-center'>
-                Mark <img src={threedot} alt='' />{' '}
-              </td>{' '}
-            </tr>
-            <tr>
-              <td>Mark</td>
-              <td>Mark</td>
-              <td>Mark</td>
-              <td>Mark</td>
-              <td className='d-flex justify-content-between align-items-center'>
-                Mark <img src={threedot} alt='' />{' '}
-              </td>{' '}
-            </tr>
-          </tbody>
-        </Table>
+        <section>
+          <AdCards />
+          <AdCards />
+          <AdCards />
+          <AdCards />
+        </section>
       </div>
     </div>
   )
