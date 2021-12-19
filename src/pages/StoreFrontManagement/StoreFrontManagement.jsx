@@ -228,8 +228,8 @@ const StoreFrontManagement = () => {
               <label for=''>Tags</label>
               <br />
               <textarea rows='3' cols=''></textarea>
-              <span className='m-1'>tag 1</span>
-              <span className='m-1'>tag 1</span>
+              {/* <span className='m-1'>tag 1</span>
+              <span className='m-1'>tag 1</span> */}
             </div>
             <div className='plain-dropdown '>
               <label for=''>Show</label>
