@@ -15,7 +15,7 @@ body {
 $primary: #558f55;
 $primary-dark: #155215;
 $primary-light: #dfecdf;
-$text: black;
+$text: rgb(31, 31, 31);
 $grey_one: #333333;
 $grey_two: rgb(92, 92, 92);
 $grey_four: rgb(144, 144, 144);
@@ -49,4 +49,13 @@ $white_background: white;
     color: white;
     transition: all 300ms linear;
   }
+}
+
+.btn:focus {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+.modal-title {
+  font-weight: bold !important;
 }

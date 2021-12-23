@@ -1,0 +1,1 @@
+export { default as AdminDetailsModal } from './AdminDetails.jsx'
