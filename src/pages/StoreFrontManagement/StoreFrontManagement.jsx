@@ -1,17 +1,28 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import DashBoard from '../../components/DashBoard/DashBoard'
 import plus from '../../assets/icons/plus.svg'
 import './StoreFrontManagement.scss'
-import { Modal, Table } from 'react-bootstrap'
+import { Dropdown, Modal, Table } from 'react-bootstrap'
 import threedot from '../../assets/icons/threedot.svg'
 import demoImg from '../../assets/images/demoLogoImg.png'
 import uploadBtn from '../../assets/icons/upload.svg'
+import StoresFakeData from './StoresFakeData'
+import { useNavigate } from 'react-router-dom'
+import { StoreFront } from '../../pages/StoreFront'
+import { StoreContext } from '../../context/StoreContext'
 
 const StoreFrontManagement = () => {
   const [show, setShow] = useState(false)
 
   const handleClose = () => setShow(false)
   const handleShow = () => setShow(true)
+  let navigate = useNavigate()
+  const [store, setStore] = useContext(StoreContext)
+
+  const goToStore = (dt) => {
+    setStore(dt)
+    navigate('/storefront')
+  }
 
   return (
     <div className='row py-3'>
@@ -31,55 +42,48 @@ const StoreFrontManagement = () => {
 
         <div className='d-flex justify-content-between align-items-center mt-4'>
           <div className='custom-input me-2'>
-            <label for=''>Search Admin</label>
+            <label for=''>Search Store</label>
             <br />
-            <input type='text' placeholder='Search something' />
+            <input type='text' placeholder='search by name, email etc.' />
           </div>
           <div className='custom-dropdown ms-2'>
             <label for=''>Sort By</label>
             <select>
               <option value='1' style={{ border: 'none' }}>
-                {' '}
-                value 1
+                Name (a to z)
               </option>
-              <option value='2'> value 2</option>
-              <option value='3'> value 3</option>
+              <option value='2'> Name (z to a)</option>
             </select>
           </div>
         </div>
 
         <div className='d-flex justify-content-between align-items-center mt-3'>
           <div className='custom-dropdown ms-2'>
-            <label for=''>Show</label>
+            <label for=''>Type</label>
             <select>
               <option value='1' style={{ border: 'none' }}>
                 {' '}
-                value 1
+                primary
               </option>
-              <option value='2'> value 2</option>
-              <option value='3'> value 3</option>
+              <option value='2'> secondary</option>
             </select>
           </div>
           <div className='custom-dropdown ms-2'>
-            <label for=''>Show</label>
+            <label for=''>Time</label>
             <select>
-              <option value='1' style={{ border: 'none' }}>
-                {' '}
-                value 1
-              </option>
-              <option value='2'> value 2</option>
-              <option value='3'> value 3</option>
+              <option value='3'> Time (new to old)</option>
+              <option value='3'> Time (old to new)</option>
             </select>
           </div>
           <div className='custom-dropdown ms-2'>
-            <label for=''>Show</label>
+            <label for=''>Tags</label>
             <select>
+              <option value='3'> all</option>
               <option value='1' style={{ border: 'none' }}>
                 {' '}
-                value 1
+                most popular
               </option>
-              <option value='2'> value 2</option>
-              <option value='3'> value 3</option>
+              <option value='2'>most unpopular </option>
             </select>
           </div>
           <div className='custom-dropdown ms-2'>
@@ -87,10 +91,10 @@ const StoreFrontManagement = () => {
             <select>
               <option value='1' style={{ border: 'none' }}>
                 {' '}
-                value 1
+                Dhaka
               </option>
-              <option value='2'> value 2</option>
-              <option value='3'> value 3</option>
+              <option value='2'> Chattagram</option>
+              <option value='3'> Sylet</option>
             </select>
           </div>
         </div>
@@ -105,68 +109,41 @@ const StoreFrontManagement = () => {
         >
           <thead>
             <tr>
-              <th>Name</th>
-              <th>Email</th>
+              <th>Store</th>
+              <th>Owner</th>
               <th>Phone</th>
-              <th>Role</th>
-              <th>Header</th>
+              <th>Email</th>
+              <th>Location</th>
+              <th>Type</th>
+              <th>Action</th>
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td>Mark</td>
-              <td>Mark</td>
-              <td>Mark</td>
-              <td>Mark</td>
-              <td className='d-flex justify-content-between align-items-center'>
-                Mark <img src={threedot} alt='' className='' />{' '}
-              </td>
-            </tr>
-            <tr>
-              <td>Mark</td>
-              <td>Mark</td>
-              <td>Mark</td>
-              <td>Mark</td>
-              <td className='d-flex justify-content-between align-items-center'>
-                Mark <img src={threedot} alt='' />{' '}
-              </td>{' '}
-            </tr>
-            <tr>
-              <td>Mark</td>
-              <td>Mark</td>
-              <td>Mark</td>
-              <td>Mark</td>
-              <td className='d-flex justify-content-between align-items-center'>
-                Mark <img src={threedot} alt='' />{' '}
-              </td>{' '}
-            </tr>
-            <tr>
-              <td>Mark</td>
-              <td>Mark</td>
-              <td>Mark</td>
-              <td>Mark</td>
-              <td className='d-flex justify-content-between align-items-center'>
-                Mark <img src={threedot} alt='' />{' '}
-              </td>{' '}
-            </tr>
-            <tr>
-              <td>Mark</td>
-              <td>Mark</td>
-              <td>Mark</td>
-              <td>Mark</td>
-              <td className='d-flex justify-content-between align-items-center'>
-                Mark <img src={threedot} alt='' />{' '}
-              </td>{' '}
-            </tr>
-            <tr>
-              <td>Mark</td>
-              <td>Mark</td>
-              <td>Mark</td>
-              <td>Mark</td>
-              <td className='d-flex justify-content-between align-items-center'>
-                Mark <img src={threedot} alt='' />{' '}
-              </td>{' '}
-            </tr>
+            {StoresFakeData.map((dt, idx) => (
+              <tr>
+                <td onClick={() => goToStore(dt)}> {dt.name} </td>
+                <td onClick={() => goToStore(dt)}>{dt.ownerName}</td>
+                <td onClick={() => goToStore(dt)}>{dt.ownerPhone}</td>
+                <td onClick={() => goToStore(dt)}>{dt.ownerEmail}</td>
+                <td onClick={() => goToStore(dt)}>{dt.address}</td>
+                <td onClick={() => goToStore(dt)}>{dt.type}</td>
+                <td className='text-center'>
+                  {/* <img src={threedot} alt='' className='' /> */}
+                  <Dropdown drop='start' style={{ cursor: 'pointer' }}>
+                    <Dropdown.Toggle variant='transparent' id='dropdown-basic'>
+                      <img src={threedot} alt='' className='' />
+                    </Dropdown.Toggle>
+
+                    <Dropdown.Menu className='mt-4'>
+                      <Dropdown.Item onClick={() => goToStore(dt)}>
+                        visit store
+                      </Dropdown.Item>
+                      <Dropdown.Item href=''>show details</Dropdown.Item>
+                    </Dropdown.Menu>
+                  </Dropdown>
+                </td>
+              </tr>
+            ))}
           </tbody>
         </Table>
       </div>

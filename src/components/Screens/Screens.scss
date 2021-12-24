@@ -6,3 +6,9 @@
   padding: 1.5rem;
   background-color: $white_background;
 }
+
+.screen-right {
+  h6:not(:first-child) {
+    color: $grey_one;
+  }
+}

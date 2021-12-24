@@ -1,12 +1,20 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import DashBoard from '../../components/DashBoard/DashBoard'
 import './StoreFront.scss'
 import plus from '../../assets/icons/plus.svg'
 import Screens from '../../components/Screens/Screens'
-import { Modal } from 'react-bootstrap'
+import { Breadcrumb, Modal } from 'react-bootstrap'
 import demoImg from '../../assets/images/demoLogoImg.png'
 import uploadBtn from '../../assets/icons/upload.svg'
 import { EditScheduleModal } from '../../components/Modals/EditScheduleModal'
+import { StoreContext } from '../../context/StoreContext'
+import { Navigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
+import { EditStoreModal } from '../../components/Modals/EditStoreModal'
+import InputRange from 'react-input-range'
+import 'react-input-range/lib/css/index.css'
+import AdCard from '../../components/AdCard/AdCard'
+import { AddNewAdModal } from '../../components/Modals/AddNewAdModal'
 
 const StoreFront = () => {
   const [show, setShow] = React.useState(false)
@@ -15,6 +23,17 @@ const StoreFront = () => {
   const [editModal, setEditModal] = useState(false)
   const handleClose = () => setShow(false)
   const handleShow = () => setShow(true)
+  let navigate = useNavigate()
+
+  const [editInfoModal, setEditInfoModal] = useState(false)
+  const [rangeValue, setRangeValue] = useState({
+    value: { min: 500, max: 1000 },
+  })
+  const store = useContext(StoreContext)
+  console.log(store)
+  console.log(store[0]?.tags[0])
+
+  const [adnewAdd, setAdnewAdd] = useState(false)
 
   return (
     <div className='row py-3'>
@@ -22,14 +41,14 @@ const StoreFront = () => {
         <DashBoard />
       </div>
       <div className='col-9'>
+        <Breadcrumb>
+          <Breadcrumb.Item onClick={() => navigate('/storefront-management')}>
+            Storefront Management
+          </Breadcrumb.Item>
+          <Breadcrumb.Item active>storefront</Breadcrumb.Item>
+        </Breadcrumb>
         <div className='d-flex justify-content-between align-items-center'>
-          <h3 className='fw-bold'>Storefront Name</h3>
-          <button
-            className='primary-btn d-flex justify-content-center align-items-center '
-            onClick={handleShow}
-          >
-            <img className='me-3' src={plus} alt='' /> Create New Store
-          </button>
+          <h3 className='fw-bold'> {store[0].name} </h3>
         </div>
         <h5 className='mt-4 fw-bold'>Store Details</h5>
 
@@ -45,16 +64,38 @@ const StoreFront = () => {
               <h6>Tags</h6>
             </div>
             <div className='ms-5'>
-              <h6>{'Store name'}</h6>
-              <h6>{'Type name'}</h6>
-              <h6>{'Mr X'}</h6>
-              <h6>{'01783092354'}</h6>
-              <h6>{'skza45@gmail.com'}</h6>
-              <h6>{'Toronto, Ontario, Canada'}</h6>
-              <h6>{'tag1, tag2, tag3'}</h6>
+              <h6>{store[0]?.name}</h6>
+              <h6>{store[0]?.type}</h6>
+              <h6>{store[0]?.ownerName}</h6>
+              <h6>{store[0]?.ownerPhone}</h6>
+              <h6>{store[0]?.ownerEmail}</h6>
+              <h6>{store[0]?.address}</h6>
+              <h6>
+                {store[0]?.tags.length > 0
+                  ? store[0]?.tags.map((dt, idx) => (
+                      <span
+                        key={idx}
+                        style={{
+                          color: 'black',
+                          backgroundColor: '#e0e0e0',
+                          padding: ' .3rem 1rem',
+                          marginRight: '.7rem',
+                          borderRadius: '4px',
+                        }}
+                      >
+                        {dt}
+                      </span>
+                    ))
+                  : 'N/A'}
+              </h6>
             </div>
           </div>
-          <button className='primary-btn-light'>Edit Info</button>
+          <button
+            className='primary-btn-light'
+            onClick={() => setEditInfoModal(true)}
+          >
+            Edit Info
+          </button>
         </section>
         <section className='my-5'>
           <div className='d-flex justify-content-between align-items-center'>
@@ -82,7 +123,10 @@ const StoreFront = () => {
                 & for a “duration”.
               </p>
             </div>
-            <button className='primary-btn d-flex justify-content-center align-items-center'>
+            <button
+              className='primary-btn d-flex justify-content-center align-items-center'
+              onClick={() => setAdnewAdd(true)}
+            >
               {' '}
               <img className='me-3' src={plus} alt='' /> Add New Ad
             </button>
@@ -99,105 +143,18 @@ const StoreFront = () => {
                 EDIT SCHEDULE
               </button>
             </div>
-            <Screens />
+            <AdCard />
           </div>
         </section>
       </div>
+      <AddNewAdModal show={adnewAdd} handleClose={() => setAdnewAdd()} />
 
       <EditScheduleModal show={editModal} hide={() => setEditModal()} />
-
-      <Modal
-        show={newStoreModal}
-        onHide={() => setNewStoreModal(false)}
-        size='lg'
-      >
-        <Modal.Header closeButton style={{ border: 'none' }}>
-          <Modal.Title style={{ fontSize: '22px' }}>
-            Create New Store
-          </Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <h6>Store Brand Icon / Logo</h6>
-          <div className='d-flex justify-content-start align-items-end'>
-            <img
-              src={demoImg}
-              alt='demoImg'
-              height='100'
-              width='100'
-              className='me-4'
-            />
-            <button className='upload-btn d-flex justify-content-between align-items-center'>
-              <span>Upload</span>
-              <img
-                className='mx-2'
-                src={uploadBtn}
-                alt=''
-                width='24'
-                height='24'
-              />{' '}
-            </button>
-          </div>
-          <div className='my-3'>
-            <div className='plain-input my-3'>
-              <label for=''>Store Name</label>
-              <br />
-              <input type='text' placeholder='Search something' />
-            </div>
-            <div className='plain-input my-3'>
-              <label for=''>Manager / Owner Name</label>
-              <br />
-              <input type='text' placeholder='Search something' />
-            </div>
-            <div className='plain-input my-3'>
-              <label for=''>Manager / Owner Phone</label>
-              <br />
-              <input type='text' placeholder='Search something' />
-            </div>
-            <div className='plain-input my-3'>
-              <label for=''>Manager / Owner Email</label>
-              <br />
-              <input type='text' placeholder='Search something' />
-            </div>
-            <div className='plain-input my-3'>
-              <label for=''>Address / Location</label>
-              <br />
-              <input type='text' placeholder='Search something' />
-            </div>
-            <div className='plain-textarea my-3'>
-              <label for=''>Tags</label>
-              <br />
-              <textarea rows='3' cols=''></textarea>
-              {/* <span className='m-1'>tag 1</span>
-              <span className='m-1'>tag 1</span> */}
-            </div>
-            <div className='plain-dropdown '>
-              <label for=''>Show</label>
-              <select>
-                <option value='1' style={{ border: 'none' }}>
-                  {' '}
-                  value 1
-                </option>
-                <option value='2'> value 2</option>
-                <option value='3'> value 3</option>
-              </select>
-            </div>
-          </div>
-        </Modal.Body>
-        <Modal.Footer>
-          <button
-            className='primary-btn-light'
-            onClick={() => setNewStoreModal(false)}
-          >
-            Close
-          </button>
-          <button
-            className='primary-btn'
-            onClick={() => setNewStoreModal(false)}
-          >
-            Save Changes
-          </button>
-        </Modal.Footer>
-      </Modal>
+      <EditStoreModal
+        show={editInfoModal}
+        handleClose={() => setEditInfoModal()}
+        data={store[0]}
+      />
 
       <Modal show={show} onHide={handleClose} size='lg'>
         <Modal.Header closeButton style={{ border: 'none' }}>
@@ -231,53 +188,52 @@ const StoreFront = () => {
                 Click-n-Collect
               </button>
             </div>
-            <div className='plain-dropdown '>
+            <div className='plain-dropdown my-3'>
+              <label for=''>Product Count</label>
+              <InputRange
+                maxValue={2000}
+                minValue={0}
+                value={rangeValue.value}
+                onChange={(value) => setRangeValue({ value })}
+                style={{ padding: '0px 10px' }}
+              />
+            </div>
+            <div className='plain-dropdown mt-4'>
               <label for=''>Layout Theme</label>
               <select>
                 <option value='1' style={{ border: 'none' }}>
                   {' '}
-                  value 1
+                  Blue
                 </option>
-                <option value='2'> value 2</option>
-                <option value='3'> value 3</option>
+                <option value='2'> Green</option>
+                <option value='3'> Tomato</option>
               </select>
             </div>
-            <div className='plain-dropdown '>
+            <div className='plain-dropdown mt-3'>
               <label for=''>Categories of Products</label>
               <select>
                 <option value='1' style={{ border: 'none' }}>
                   {' '}
-                  value 1
+                  Stock
                 </option>
-                <option value='2'> value 2</option>
-                <option value='3'> value 3</option>
+                <option value='2'> Bond</option>
               </select>
             </div>
-            <div className='plain-dropdown '>
-              <label for=''>Product Count</label>
-              <select>
-                <option value='1' style={{ border: 'none' }}>
-                  {' '}
-                  value 1
-                </option>
-                <option value='2'> value 2</option>
-                <option value='3'> value 3</option>
-              </select>
-            </div>
+
             <div className='plain-input my-3'>
               <label for=''>Android ID (TV-Stick)</label>
               <br />
-              <input type='text' placeholder='Search something' />
+              <input type='text' placeholder='input something' />
             </div>
             <div className='plain-input my-3'>
               <label for=''>Screen ID</label>
               <br />
-              <input type='text' placeholder='Search something' />
+              <input type='number' placeholder='12323213' />
             </div>
             <div className='plain-input my-3'>
               <label for=''>Screen Password</label>
               <br />
-              <input type='text' placeholder='Search something' />
+              <input type='text' placeholder='ads@33TqRt' />
             </div>
           </div>
         </Modal.Body>

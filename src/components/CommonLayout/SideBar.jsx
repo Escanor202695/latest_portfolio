@@ -22,10 +22,10 @@ const SideBar = () => {
           >
             <Vector /> <span className='ps-3'>Storefront Management</span>
           </NavLink>
-          <NavLink as='li' className='list-group-item' to='/storefront'>
+          {/* <NavLink as='li' className='list-group-item' to='/storefront'>
             {' '}
             <Vector /> <span className='ps-3'>Storefront </span>
-          </NavLink>
+          </NavLink> */}
           <NavLink as='li' className='list-group-item' to='/ad-management'>
             <Vector /> <span className='ps-3'>Ad Management</span>
           </NavLink>

@@ -1,9 +1,9 @@
 @import '../../index.scss';
 
 .list-group-item {
-  background-color: $white_background;
+  background-color: $white_background !important;
   height: 3rem !important;
-  color: $text;
+  color: $text !important;
   border-radius: 8px !important;
   margin: 0.4rem 0 !important;
   border: none !important;

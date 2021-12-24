@@ -39,3 +39,17 @@
     }
   }
 }
+
+.input-range__label--max,
+.input-range__label--min {
+  display: none !important;
+}
+.input-range__track--active {
+  color: $primary !important;
+  background-color: $primary !important;
+}
+.input-range__slider {
+  background-color: $primary !important;
+  color: $primary !important;
+  border: none !important;
+}

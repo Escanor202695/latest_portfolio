@@ -59,3 +59,19 @@ $white_background: white;
 .modal-title {
   font-weight: bold !important;
 }
+
+a {
+  text-decoration: none !important;
+  color: $primary !important;
+
+  &:hover {
+    color: $text !important;
+  }
+  &:active {
+    background-color: $primary-light !important;
+  }
+}
+
+td {
+  cursor: pointer;
+}

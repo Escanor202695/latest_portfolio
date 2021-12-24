@@ -2,22 +2,17 @@ import React, { useState } from 'react'
 import screenImg from '../../assets/images/screen-img.png'
 import threedot from '../../assets/icons/threedot.svg'
 import Frame from '../../assets/images/Frame.png'
-import './Screens.scss'
-import BoardView from '../../assets/images/BoardView.png'
+import AddScreen from '../../assets/images/AddScreen.png'
 import { Dropdown, Modal } from 'react-bootstrap'
-import { EditScreenModal } from '../Modals/EditScreenModal'
+import { EditAdModal } from '../Modals/EditAdModal'
 
-const Screens = () => {
+const AdCard = () => {
   const [show, setShow] = useState(false)
 
   const handleClose = () => setShow(false)
   const handleShow = () => setShow(true)
 
-  const [editScreen, setEditScreen] = useState(false)
-
-  const goToScreen = (dt) => {
-    setEditScreen(true)
-  }
+  const [adEdit, setAdEdit] = useState(false)
 
   return (
     <div className='my-3 d-flex justify-content-between align-items-start screen-section'>
@@ -35,13 +30,9 @@ const Screens = () => {
           onClick={() => handleShow(true)}
         />
         <div className='ms-3 screen-right'>
-          <h6 className='fw-bold'>Screen 01:SCR 2323</h6>
-          <h6>Category Screens</h6>
-          <h6>
-            Categories: CategoryName, CategoryName, CategoryName, CategoryName,{' '}
-          </h6>
-          <h6>Theme: ThemeName</h6>
-          <h6>Android ID</h6>
+          <h6 className='fw-bold'>Advertisement Name</h6>
+          <h6>Product Manufacturer, Manufacturer Type</h6>
+          <h6>Filetype: Image, Ad Type: Lorem</h6>
         </div>
       </div>
       <div>
@@ -51,25 +42,19 @@ const Screens = () => {
           </Dropdown.Toggle>
 
           <Dropdown.Menu className='mt-4'>
-            <Dropdown.Item onClick={() => goToScreen()}>
-              Edit Screen
+            <Dropdown.Item onClick={() => setAdEdit(true)}>
+              Edit Ad
             </Dropdown.Item>
             <Dropdown.Item href=''>show details</Dropdown.Item>
           </Dropdown.Menu>
         </Dropdown>
-        {/* <img
-          src={threedot}
-          alt=''
-          onClick={() => setEditScreen(true)}
-          style={{ cursor: 'pointer' }}
-        /> */}
       </div>
       <Modal show={show} onHide={handleClose} size='xl' centered>
-        <img src={BoardView} alt='' />
+        <img src={AddScreen} alt='' />
       </Modal>
-      <EditScreenModal show={editScreen} handleClose={() => setEditScreen()} />
+      <EditAdModal show={adEdit} handleClose={() => setAdEdit()} />
     </div>
   )
 }
 
-export default Screens
+export default AdCard

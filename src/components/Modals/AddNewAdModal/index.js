@@ -1,0 +1,1 @@
+export { default as AddNewAdModal } from './AddNewAdModal.jsx'
