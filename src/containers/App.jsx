@@ -10,6 +10,7 @@ import { StoreFront } from '../pages/StoreFront'
 import { GlobalSettings } from '../pages/GlobalSettings'
 import { NotFound } from '../pages/NotFound'
 import { StoreContext } from '../context/StoreContext'
+import Login from '../pages/Authentication/Login'
 
 function App() {
   const [store, setStore] = useState({
@@ -24,7 +25,9 @@ function App() {
           style={{ maxWidth: '1440px', margin: '0 auto', padding: '0 1rem' }}
         >
           <Routes>
-            <Route path={ROUTENAME.HOME} element={<Home />} />
+            <Route path={ROUTENAME.HOME} element={<Login />} />
+            <Route path={ROUTENAME.HOMEPAGE} element={<Home />} />
+
             <Route
               path={ROUTENAME.ADMINMANAGEMENT}
               element={<AdminManagement />}
@@ -39,7 +42,7 @@ function App() {
               path={ROUTENAME.GLOBALSETTINGS}
               element={<GlobalSettings />}
             />
-
+            <Route path={ROUTENAME.LOGIN} element={<Login />} />
             <Route path={ROUTENAME.NOTFOUND} element={<NotFound />} />
           </Routes>
         </div>

@@ -8,7 +8,6 @@ import demoImg from '../../assets/images/demoLogoImg.png'
 import uploadBtn from '../../assets/icons/upload.svg'
 import StoresFakeData from './StoresFakeData'
 import { useNavigate } from 'react-router-dom'
-import { StoreFront } from '../../pages/StoreFront'
 import { StoreContext } from '../../context/StoreContext'
 
 const StoreFrontManagement = () => {

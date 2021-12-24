@@ -4,11 +4,8 @@ import './StoreFront.scss'
 import plus from '../../assets/icons/plus.svg'
 import Screens from '../../components/Screens/Screens'
 import { Breadcrumb, Modal } from 'react-bootstrap'
-import demoImg from '../../assets/images/demoLogoImg.png'
-import uploadBtn from '../../assets/icons/upload.svg'
 import { EditScheduleModal } from '../../components/Modals/EditScheduleModal'
 import { StoreContext } from '../../context/StoreContext'
-import { Navigate } from 'react-router-dom'
 import { useNavigate } from 'react-router-dom'
 import { EditStoreModal } from '../../components/Modals/EditStoreModal'
 import InputRange from 'react-input-range'
@@ -19,7 +16,6 @@ import { AddNewAdModal } from '../../components/Modals/AddNewAdModal'
 const StoreFront = () => {
   const [show, setShow] = React.useState(false)
   const [selectedBtn, setSelectedBtn] = React.useState(true)
-  const [newStoreModal, setNewStoreModal] = useState(false)
   const [editModal, setEditModal] = useState(false)
   const handleClose = () => setShow(false)
   const handleShow = () => setShow(true)

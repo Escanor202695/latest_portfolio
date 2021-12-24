@@ -11,7 +11,9 @@ const NavigationBar = () => {
         <Link to='/' style={{ textDecoration: 'none' }}>
           <h2 style={{ fontWeight: 'bold' }}>MenuBoard</h2>
         </Link>
-        <img src={accIcon} alt='' />
+        <Link to='/login'>
+          <img src={accIcon} alt='' />
+        </Link>
       </nav>
     </section>
   )

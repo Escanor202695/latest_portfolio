@@ -1,12 +1,13 @@
-import React from 'react'
+import React, { useState } from 'react'
 import DashBoard from '../../components/DashBoard/DashBoard'
 import plus from '../../assets/icons/plus.svg'
 import './AdManagement.scss'
-import { Table } from 'react-bootstrap'
-import threedot from '../../assets/icons/threedot.svg'
 import { AdCards } from '../../components/AdCards'
+import { AddNewAdModal } from '../../components/Modals/AddNewAdModal'
 
 const AdMnagement = () => {
+  const [show, setShow] = useState(false)
+
   return (
     <div className='row py-3'>
       <div className='col-3'>
@@ -16,7 +17,10 @@ const AdMnagement = () => {
         {' '}
         <div className='d-flex justify-content-between align-items-center'>
           <h3 className='fw-bold'>Advertisement Management</h3>
-          <button className='primary-btn d-flex justify-content-center align-items-center '>
+          <button
+            className='primary-btn d-flex justify-content-center align-items-center '
+            onClick={() => setShow(true)}
+          >
             <img className='me-3' src={plus} alt='' /> Upload New Ad
           </button>
         </div>
@@ -31,20 +35,21 @@ const AdMnagement = () => {
             <select>
               <option value='1' style={{ border: 'none' }}>
                 {' '}
-                value 1
+                All Ad
               </option>
-              <option value='2'> value 2</option>
-              <option value='3'> value 3</option>
+              <option value='2'> Newest</option>
+              <option value='3'> Oldest</option>
             </select>
           </div>
         </div>
-        <section>
+        <section className='px-2'>
           <AdCards />
           <AdCards />
           <AdCards />
           <AdCards />
         </section>
       </div>
+      <AddNewAdModal show={show} handleClose={() => setShow()} />
     </div>
   )
 }
