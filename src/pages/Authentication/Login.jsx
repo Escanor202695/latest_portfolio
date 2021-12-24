@@ -4,7 +4,7 @@ import './Login.scss'
 const Login = () => {
   return (
     <div className='login-card  '>
-      <h2 className='text-center'>Login</h2>
+      <h2 className='text-center fw-bold'>Login</h2>
       <div className='plain-input mt-3 '>
         <label for=''>Email</label>
         <br />
@@ -16,7 +16,7 @@ const Login = () => {
         <input type='password' placeholder='enter your password' />
       </div>
       <Link to='/home'>
-        <button className=' primary-btn w-100 my-4'>LOGIN</button>
+        <button className=' primary-btn w-100 my-4 '>LOGIN</button>
       </Link>
       <Link to='/' className=' text-center mt-2'>
         <p>Forgot password?</p>
