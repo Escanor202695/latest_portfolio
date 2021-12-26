@@ -1,0 +1,28 @@
+@import '../../index.scss';
+
+.global-settings {
+  border-top: 1px solid #dddddd;
+  border-bottom: 1px solid #dddddd;
+  padding: 1rem 0;
+  p {
+    color: $grey_three;
+  }
+}
+
+.react-switch-bg {
+  // background: #558f55 !important;
+  // border: 0.6px solid #ababab !important;
+  // box-sizing: border-box !important;
+  // border-radius: 36px !important;
+  // width: 84px !important;
+}
+
+.react-switch-handle {
+  // height: 24px !important;
+  // width: 36px !important;
+  // background: rgb(255, 255, 255);
+  // border-radius: 36px !important;
+  // top: 2px !important;
+  // left: 2px !important;
+  // right: -20px !important;
+}
