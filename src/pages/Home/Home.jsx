@@ -8,7 +8,7 @@ const Home = () => {
         <DashBoard />
       </div>
       <div className='col-9'>
-        <h2>DashBoard</h2>
+        <h3>DashBoard</h3>
         <div className='d-flex'>
           <div
             style={{
