@@ -13,7 +13,7 @@ const GlobalSettings = () => {
         <DashBoard />
       </div>
       <div className='col-9'>
-        <h3>Global Settings</h3>
+        <h3 className='fw-bold'>Global Settings</h3>
 
         <div className='global-settings mt-5 mb-3 d-flex justify-content-between align-items-start'>
           <div>
