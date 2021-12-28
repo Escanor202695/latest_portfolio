@@ -11,6 +11,7 @@ import { GlobalSettings } from '../pages/GlobalSettings'
 import { NotFound } from '../pages/NotFound'
 import { StoreContext } from '../context/StoreContext'
 import Login from '../pages/Authentication/Login'
+import Profile from '../pages/Profile/Profile'
 
 function App() {
   const [store, setStore] = useState({
@@ -43,6 +44,8 @@ function App() {
               element={<GlobalSettings />}
             />
             <Route path={ROUTENAME.LOGIN} element={<Login />} />
+            <Route path={ROUTENAME.PROFILE} element={<Profile />} />
+
             <Route path={ROUTENAME.NOTFOUND} element={<NotFound />} />
           </Routes>
         </div>

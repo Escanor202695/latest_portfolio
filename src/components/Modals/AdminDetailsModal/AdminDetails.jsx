@@ -24,10 +24,10 @@ const AdminDetails = ({ show, handleClose, data }) => {
           <h4 className='fw-bold'>Role: </h4>
           <h4>{data.role}</h4>
         </div>
-        <div className='d-flex justify-content-between align-items-center'>
+        {/* <div className='d-flex justify-content-between align-items-center'>
           <h4 className='fw-bold'>Password: </h4>
           <h4>{data.password}</h4>
-        </div>
+        </div> */}
         <div className='d-flex justify-content-between align-items-center'>
           <h4 className='fw-bold'>Joining Date: </h4>
           <h4>23-12-2012</h4>

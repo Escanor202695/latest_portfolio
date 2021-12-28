@@ -9,6 +9,7 @@ const ROUTENAME = {
     STOREFRONT: '/storefront',
     GLOBALSETTINGS: '/global-settings',
     LOGIN: '/login',
+    PROFILE: '/profile',
 
 }
 

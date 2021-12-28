@@ -8,6 +8,7 @@ import fakeAdmin from './AdminsFakedata'
 import HideShowToggle from '../../components/HideShowToggle/HideShowToggle'
 import { NewAdminModal } from '../../components/Modals/NewAdminModal'
 import { AdminDetailsModal } from '../../components/Modals/AdminDetailsModal'
+import { useNavigate } from 'react-router-dom'
 
 const AdminManagement = () => {
   const [searchKey, setSearchKey] = useState('')
@@ -15,6 +16,7 @@ const AdminManagement = () => {
   const [show, setShow] = useState(false)
   const handleClose = () => setShow(false)
   const handleShow = () => setShow(true)
+  let navigate = useNavigate()
 
   const [showDetails, setShowDetails] = useState(false)
   const closeDetails = () => setShowDetails(false)
@@ -41,6 +43,10 @@ const AdminManagement = () => {
         dt.email.toUpperCase().includes(searchKey.toUpperCase())
     )
     setAdminToShow(returnValue)
+  }
+
+  const goToProfile = () => {
+    navigate('/profile')
   }
 
   return (
@@ -96,7 +102,7 @@ const AdminManagement = () => {
                 <th>Email</th>
                 <th>Phone</th>
                 <th>Role</th>
-                <th>password</th>
+                {/* <th>password</th> */}
                 <th>Action</th>
               </tr>
             </thead>
@@ -128,9 +134,9 @@ const AdminManagement = () => {
                   >
                     {admin.role}
                   </td>
-                  <td className=''>
+                  {/* <td className=''>
                     <HideShowToggle password={admin.password} />
-                  </td>
+                  </td> */}
                   <td className=' text-center'>
                     <Dropdown drop='start' style={{ cursor: 'pointer' }}>
                       <Dropdown.Toggle
@@ -141,7 +147,7 @@ const AdminManagement = () => {
                       </Dropdown.Toggle>
 
                       <Dropdown.Menu className='mt-4'>
-                        <Dropdown.Item href='#/action-1'>
+                        <Dropdown.Item onClick={() => goToProfile()}>
                           visit profile
                         </Dropdown.Item>
                         <Dropdown.Item href='#/action-2'>
