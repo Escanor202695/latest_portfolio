@@ -8,7 +8,7 @@ import fakeAdmin from './AdminsFakedata'
 import HideShowToggle from '../../components/HideShowToggle/HideShowToggle'
 import { NewAdminModal } from '../../components/Modals/NewAdminModal'
 import { AdminDetailsModal } from '../../components/Modals/AdminDetailsModal'
-import { useNavigate } from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
 
 const AdminManagement = () => {
   const [searchKey, setSearchKey] = useState('')
@@ -16,7 +16,7 @@ const AdminManagement = () => {
   const [show, setShow] = useState(false)
   const handleClose = () => setShow(false)
   const handleShow = () => setShow(true)
-  let navigate = useNavigate()
+  let history = useHistory()
 
   const [showDetails, setShowDetails] = useState(false)
   const closeDetails = () => setShowDetails(false)
@@ -46,7 +46,7 @@ const AdminManagement = () => {
   }
 
   const goToProfile = () => {
-    navigate('/profile')
+    history.push('/profile')
   }
 
   return (

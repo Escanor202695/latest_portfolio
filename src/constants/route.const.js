@@ -1,8 +1,6 @@
 const ROUTENAME = {
 
     HOME: '/',
-    HOMEPAGE: '/home',
-    NOTFOUND: '*',
     ADMINMANAGEMENT: '/admin-management',
     STOREFRONTMANAGEMENT: '/storefront-management',
     ADDMANAGEMENT: '/ad-management',
@@ -10,6 +8,7 @@ const ROUTENAME = {
     GLOBALSETTINGS: '/global-settings',
     LOGIN: '/login',
     PROFILE: '/profile',
+    NOTFOUND: '*',
 
 }
 

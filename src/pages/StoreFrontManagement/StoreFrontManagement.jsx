@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react'
+import React, { useState } from 'react'
 import DashBoard from '../../components/DashBoard/DashBoard'
 import plus from '../../assets/icons/plus.svg'
 import './StoreFrontManagement.scss'
@@ -7,20 +7,20 @@ import threedot from '../../assets/icons/threedot.svg'
 import demoImg from '../../assets/images/demoLogoImg.png'
 import uploadBtn from '../../assets/icons/upload.svg'
 import StoresFakeData from './StoresFakeData'
-import { useNavigate } from 'react-router-dom'
-import { StoreContext } from '../../context/StoreContext'
+import { useHistory } from 'react-router-dom'
+// import { StoreProvider } from '../../Providers/StoreProvider'
 
 const StoreFrontManagement = () => {
   const [show, setShow] = useState(false)
 
   const handleClose = () => setShow(false)
   const handleShow = () => setShow(true)
-  let navigate = useNavigate()
-  const [store, setStore] = useContext(StoreContext)
-
+  const history = useHistory()
+  // const [store, setStore] = useContext(StoreProvider)
+  const [store, setStore] = useState()
   const goToStore = (dt) => {
     setStore(dt)
-    navigate('/storefront')
+    history.push('/storefront')
   }
 
   return (

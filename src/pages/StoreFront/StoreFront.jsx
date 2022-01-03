@@ -5,8 +5,8 @@ import plus from '../../assets/icons/plus.svg'
 import Screens from '../../components/Screens/Screens'
 import { Breadcrumb, Modal } from 'react-bootstrap'
 import { EditScheduleModal } from '../../components/Modals/EditScheduleModal'
-import { StoreContext } from '../../context/StoreContext'
-import { useNavigate } from 'react-router-dom'
+// import { StoreProvider } from '../../Providers'
+import { useHistory } from 'react-router-dom'
 import { EditStoreModal } from '../../components/Modals/EditStoreModal'
 import InputRange from 'react-input-range'
 import 'react-input-range/lib/css/index.css'
@@ -19,13 +19,14 @@ const StoreFront = () => {
   const [editModal, setEditModal] = useState(false)
   const handleClose = () => setShow(false)
   const handleShow = () => setShow(true)
-  let navigate = useNavigate()
+  let history = useHistory()
 
   const [editInfoModal, setEditInfoModal] = useState(false)
   const [rangeValue, setRangeValue] = useState({
     value: { min: 500, max: 1000 },
   })
-  const store = useContext(StoreContext)
+  const store = ''
+  // const store = useContext(StoreProvider)
   console.log(store)
   console.log(store[0]?.tags[0])
 
@@ -38,7 +39,9 @@ const StoreFront = () => {
       </div>
       <div className='col-9'>
         <Breadcrumb>
-          <Breadcrumb.Item onClick={() => navigate('/storefront-management')}>
+          <Breadcrumb.Item
+            onClick={() => history.push('/storefront-management')}
+          >
             Storefront Management
           </Breadcrumb.Item>
           <Breadcrumb.Item active>storefront</Breadcrumb.Item>

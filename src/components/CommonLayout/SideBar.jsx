@@ -12,13 +12,19 @@ const SideBar = () => {
             <Vector />
             <span className='ps-3'> DashBoard</span>
           </NavLink>
-          <NavLink as='li' className='list-group-item' to='/admin-management'>
+          <NavLink
+            as='li'
+            className='list-group-item'
+            to='/admin-management'
+            exact
+          >
             <Vector /> <span className='ps-3'>Admin Management</span>
           </NavLink>
           <NavLink
             as='li'
             className='list-group-item'
             to='/storefront-management'
+            exact
           >
             <Vector /> <span className='ps-3'>Storefront Management</span>
           </NavLink>
@@ -26,10 +32,20 @@ const SideBar = () => {
             {' '}
             <Vector /> <span className='ps-3'>Storefront </span>
           </NavLink> */}
-          <NavLink as='li' className='list-group-item' to='/ad-management'>
+          <NavLink
+            as='li'
+            className='list-group-item'
+            to='/ad-management'
+            exact
+          >
             <Vector /> <span className='ps-3'>Ad Management</span>
           </NavLink>
-          <NavLink as='li' className='list-group-item' to='/global-settings'>
+          <NavLink
+            as='li'
+            className='list-group-item'
+            to='/global-settings'
+            exact
+          >
             <Vector /> <span className='ps-3'>Global Settings</span>
           </NavLink>
         </ul>

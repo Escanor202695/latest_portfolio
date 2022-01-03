@@ -1,7 +1,6 @@
 import React from 'react'
 import { Modal } from 'react-bootstrap'
 const AdminDetails = ({ show, handleClose, data }) => {
-  console.log(data)
   return (
     <Modal show={show} onHide={handleClose}>
       <Modal.Header style={{ border: 'none' }}>
