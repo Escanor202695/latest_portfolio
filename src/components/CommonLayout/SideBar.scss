@@ -1,9 +1,7 @@
-@import '../../index.scss';
-
 .list-group-item {
-  background-color: $white_background !important;
+  background-color: var(--white_background) !important;
   height: 3rem !important;
-  color: $text !important;
+  color: var(--text) !important;
   border-radius: 8px !important;
   margin: 0.4rem 0 !important;
   border: none !important;
@@ -16,16 +14,16 @@
 
 .list-group-item.active {
   z-index: 2;
-  color: $primary !important;
-  background-color: $primary_light !important;
+  color: var(--primary_color) !important;
+  background-color: var(--primary_light_color) !important;
   border: none;
   font-weight: bold;
-  fill: $primary !important;
+  fill: var(--primary_color) !important;
 }
 
 .list-group-item:hover {
-  background-color: $primary_light !important;
-  color: $primary_dark !important;
+  background-color: var(--primary_light_color) !important;
+  color: var(--primary_dark_color) !important;
   font-weight: bold;
-  fill: $primary_dark !important;
+  fill: var(--primary_dark_color) !important;
 }

@@ -1,11 +1,9 @@
-@import '../../index.scss';
-
 .global-settings {
   border-top: 1px solid #dddddd;
   border-bottom: 1px solid #dddddd;
   padding: 1rem 0;
   p {
-    color: $grey_three;
+    color: var(--grey_three);
   }
   h5 {
     font-weight: bold;

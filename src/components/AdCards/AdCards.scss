@@ -1,6 +1,5 @@
-@import '../../index.scss';
 .ad-card {
-  background-color: $white_background;
+  background-color: var(--white_background);
   padding: 1rem;
   border: 1px solid #dddddd;
   box-sizing: border-box;

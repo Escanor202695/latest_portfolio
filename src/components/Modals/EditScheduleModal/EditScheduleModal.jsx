@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import { Form, Modal } from 'react-bootstrap'
-import './EditScheduleModal.scss'
 
 const EditScheduleModal = ({ show, hide }) => {
   const [duration, setDuration] = useState(0)

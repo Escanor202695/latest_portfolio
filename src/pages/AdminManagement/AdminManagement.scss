@@ -1,5 +1,3 @@
-@import '../../index.scss';
-
 .custom-input {
   width: 150%;
   label {
@@ -15,7 +13,7 @@
     padding-left: 0.7rem;
 
     &:focus {
-      outline: 1px solid $primary !important;
+      outline: 1px solid var(--primary_color) !important;
     }
   }
 }
@@ -25,18 +23,18 @@
   select {
     padding: 5px;
     background: url('../../assets/icons/downArrow.svg') no-repeat right
-      $white_background !important;
+      var(--white_background) !important;
     -webkit-appearance: none;
     background-position-x: calc(100% - 0.4rem) !important;
     width: 100%;
     height: 48px;
     border: 1px solid #cccccc;
-    color: $grey_two !important;
+    color: var(--grey_two) !important;
     box-sizing: border-box !important;
     border-radius: 4px !important;
     padding-left: 0.7rem;
     &:focus {
-      outline: 1px solid $primary !important;
+      outline: 1px solid var(--primary_color) !important;
     }
   }
   label {

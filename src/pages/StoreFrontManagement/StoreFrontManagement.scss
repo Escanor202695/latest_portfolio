@@ -1,29 +1,27 @@
-@import '../../index.scss';
-
 .btn-close {
-  background-color: $grey_five !important;
+  background-color: var(--grey_five) !important;
 }
 .modal-title {
-  color: $primary;
+  color: var(--primary_color);
 }
 
 .upload-btn {
-  background: $white_background;
+  background: var(--white_background);
   border: 1px solid #cccccc;
   box-sizing: border-box;
   border-radius: 4px;
-  color: $grey_one;
+  color: var(--grey_one);
   padding: 0.5rem 1rem;
   min-width: 12rem;
   transition: all 500ms ease;
   &:hover {
-    background-color: $grey_five;
+    background-color: var(--grey_five);
     font-weight: bold;
   }
 }
 
 .plain-textarea span {
-  background-color: $primary_light;
+  background-color: var(--primary_light_color);
   padding: 0.4rem 1rem;
   border-radius: 4px;
   position: relative;

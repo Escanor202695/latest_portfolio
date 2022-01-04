@@ -1,5 +1,4 @@
 @import url('https://fonts.googleapis.com/css2?family=PT+Sans&family=Raleway&display=swap');
-@import './Designs//scss-variables.scss';
 
 body {
   margin: 0 auto;
@@ -12,19 +11,42 @@ body {
   background-color: #fafafa !important;
 }
 
-$primary: #558f55;
-$primary-dark: #155215;
-$primary-light: #dfecdf;
-$text: rgb(31, 31, 31);
-$grey_one: #333333;
-$grey_two: rgb(92, 92, 92);
-$grey-three: rgb(117, 117, 117);
-$grey_four: rgb(144, 144, 144);
-$grey_five: #aaaaaa;
-$white_background: white;
+#root {
+  $primary_color: #558f55;
+  $primary_dark_color: #155215;
+  $primary_light_color: #dfecdf;
+  $secondary_color: #f4f4f4;
+  $secondary_light_color: #f4f4f4;
+  $text_color: #000000;
+  $text_light_color: #696969;
+  $gray_one_color: #333333;
+  $gray_two_color: #666666;
+  $gray_three_color: #999999;
+  $gray_four_color: #aaaaaa;
+  $gray_five_color: #cccccc;
+  $gray_six_color: #eeeeee;
+  $sativa_color: #77ca59;
+  $indica_color: #ca8259;
+  $blend_color: #ba59ca;
+  $hybrid_color: #59afca;
+  $thc_color: transparent;
+  $cbd_color: transparent;
+  $white_background: white;
+}
+
+// $primary: #558f55;
+// $primary-dark: #155215;
+// $primary-light: #dfecdf;
+// $text: rgb(31, 31, 31);
+// $grey_one: #333333;
+// $grey_two: rgb(92, 92, 92);
+// $grey-three: rgb(117, 117, 117);
+// $grey_four: rgb(144, 144, 144);
+// $grey_five: #aaaaaa;
+// $white_background: white;
 
 .primary-btn {
-  background-color: $primary;
+  background-color: var(--primary_color);
   color: white;
   font-weight: bold;
   border: none;
@@ -32,21 +54,21 @@ $white_background: white;
   text-align: center;
   border-radius: 4px;
   &:hover {
-    background-color: $primary-dark;
+    background-color: var(--primary_dark_color);
     transition: background-color 300ms linear;
   }
 }
 
 .primary-btn-light {
-  background-color: $primary-light;
-  color: $primary;
+  background-color: var(--primary_light_color);
+  color: var(--primary_color);
   font-weight: bold;
   border: none;
   padding: 0.4rem 1.5rem;
   text-align: center;
   border-radius: 4px;
   &:hover {
-    background-color: $primary;
+    background-color: var(--primary_color);
     color: white;
     transition: all 300ms linear;
   }
@@ -78,13 +100,13 @@ $white_background: white;
 
 a {
   text-decoration: none !important;
-  color: $primary !important;
+  color: var(--primary_color) !important;
 
   &:hover {
     color: rgb(0, 0, 131) !important;
   }
   &:active {
-    background-color: $primary-light !important;
+    background-color: var(--primary_light_color) !important;
   }
 }
 
@@ -92,7 +114,26 @@ td {
   cursor: pointer;
 }
 .page-item.active .page-link {
-  background-color: $primary !important;
+  background-color: var(--primary_color) !important;
   outline: none !important;
   border: none !important;
+}
+
+div,
+p,
+section,
+article,
+table,
+th,
+tr,
+thead,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+button,
+span {
+  color: var(--text);
 }

@@ -1,5 +1,3 @@
-@import '../../index.scss';
-
 .nav-section {
   background-color: white;
 }
@@ -9,6 +7,6 @@
   margin: auto;
   padding: 1rem;
   h2 {
-    color: $primary;
+    color: var(--primary_color);
   }
 }
