@@ -52,7 +52,7 @@ function App() {
       <NavigationBar />
       <div style={{ maxWidth: '1440px', margin: '0 auto', padding: '0 1rem' }}>
         <Switch>
-          {user._id ? (
+          {user?._id ? (
             <Redirect from='/login' to='/' />
           ) : (
             <Route exact path={ROUTENAME.LOGIN} component={Login} />

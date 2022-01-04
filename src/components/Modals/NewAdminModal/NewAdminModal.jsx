@@ -18,10 +18,13 @@ const NewAdminModal = ({ show, handleClose, loadAllAdmin }) => {
   const handleSubmit = async () => {
     if (data.name === '') {
       Toast('err', 'Please enter your name')
+      setSpinner(false)
       return
     }
     if (data.email === '') {
       Toast('err', 'Please enter a valid email')
+      setSpinner(false)
+
       return
     }
     if (data.phone === '') {

@@ -2,63 +2,35 @@ import axios from 'axios'
 import React, { useEffect } from 'react'
 import { useState } from 'react'
 import { Modal, Spinner } from 'react-bootstrap'
-import { AdminEdit, ChangeRole } from '../../../constants/api.constants'
+import { AdminEdit } from '../../../constants/api.constants'
 import Toast from '../../../utils/Toast/Toast'
 
-const EditProfileModal = ({ show, handleClose, data, loadAdmin }) => {
+const EditProfileModal = ({ show, handleClose, data, getAdminInfo }) => {
   const [spinner, setSpinner] = useState(false)
   const [adminData, setAdminData] = useState({})
-  const [role, setRole] = useState(data[0]?.effective_role)
 
   useEffect(() => {
     setAdminData({
-      name: data[0]?.name,
-      phone: data[0]?.phone,
+      name: data?.name,
+      phone: data?.phone,
     })
-  }, [])
-
-  const updateRole = async () => {
-    try {
-      const response = await axios.put(
-        ChangeRole,
-        {
-          id: data[0]?._id,
-          role: role,
-        },
-        {
-          headers: {
-            menuboard: localStorage.getItem('menu_token'),
-          },
-        }
-      )
-      if (response.status === 200) {
-        Toast('success', 'Role Updated!')
-        return true
-      } else
-        throw new Error(
-          response?.data?.msg || ' Something went wrong! Try again later.'
-        )
-    } catch (error) {
-      Toast(
-        'err',
-        error.response?.data?.msg || 'Something went wrong! Try again later.'
-      )
-      return error
-    }
-  }
+  }, [data])
 
   const handleSubmit = async () => {
     setSpinner(true)
 
     if (adminData.name === '') {
       Toast('err', 'Please enter your name')
+      setSpinner(false)
+
       return
     }
     if (adminData.phone === '') {
       Toast('err', 'Please enter your phone')
+      setSpinner(false)
+
       return
     }
-    updateRole()
     try {
       const response = await axios.put(AdminEdit, adminData, {
         headers: {
@@ -67,10 +39,10 @@ const EditProfileModal = ({ show, handleClose, data, loadAdmin }) => {
       })
       console.log(response)
       if (response.status === 200) {
-        Toast('success', 'Admin updated!')
+        Toast('success', 'User Updated updated!')
         handleClose()
         setSpinner(false)
-        loadAdmin()
+        getAdminInfo()
       } else
         throw new Error(
           response?.data?.msg || ' Something went wrong! Try again later.'
@@ -78,14 +50,13 @@ const EditProfileModal = ({ show, handleClose, data, loadAdmin }) => {
     } catch (error) {
       handleClose()
       setSpinner(false)
-      loadAdmin()
+      getAdminInfo()
       Toast(
         'err',
         error.response?.data?.msg || 'Something went wrong! Try again later.'
       )
     }
   }
-  console.log(adminData)
 
   return (
     <Modal show={show} onHide={handleClose} size='md'>
@@ -97,6 +68,7 @@ const EditProfileModal = ({ show, handleClose, data, loadAdmin }) => {
           <div className='plain-input my-3'>
             <label for=''>User Name</label>
             <br />
+
             <input
               type='text'
               placeholder='Search something'
@@ -113,7 +85,7 @@ const EditProfileModal = ({ show, handleClose, data, loadAdmin }) => {
             <input
               type='text'
               placeholder='Search something'
-              value={adminData.phone}
+              value={adminData?.phone}
               onChange={(e) =>
                 setAdminData({ ...adminData, phone: e.target.value })
               }
@@ -126,12 +98,12 @@ const EditProfileModal = ({ show, handleClose, data, loadAdmin }) => {
             <input
               type='text'
               placeholder='Search something'
-              value={data[0]?.email}
+              value={data?.email}
               disabled
             />
           </div>
 
-          <div className='plain-dropdown '>
+          {/* <div className='plain-dropdown '>
             <label for=''>Role </label>
             <select onChange={(e) => setRole(e.target.value)}>
               <option
@@ -152,7 +124,7 @@ const EditProfileModal = ({ show, handleClose, data, loadAdmin }) => {
                 super admin{' '}
               </option>
             </select>
-          </div>
+          </div> */}
         </div>
       </Modal.Body>
       <Modal.Footer>

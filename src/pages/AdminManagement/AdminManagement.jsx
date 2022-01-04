@@ -121,10 +121,13 @@ const AdminManagement = () => {
 
     if (individualData.name === '') {
       Toast('err', 'Please enter your name')
+      setEditSpinner(false)
+
       return
     }
     if (individualData.phone === '') {
       Toast('err', 'Please enter your phone')
+      setEditSpinner(false)
       return
     }
     updateRole()
