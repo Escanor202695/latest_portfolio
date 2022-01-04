@@ -2,17 +2,23 @@ import React, { useEffect, useState } from 'react'
 import DashBoard from '../../components/DashBoard/DashBoard'
 import plus from '../../assets/icons/plus.svg'
 import './AdminManagement.scss'
-import { Dropdown, Spinner, Table } from 'react-bootstrap'
+import { Dropdown, Modal, Spinner, Table } from 'react-bootstrap'
 import threedot from '../../assets/icons/threedot.svg'
 import fakeAdmin from './AdminsFakedata'
 import HideShowToggle from '../../components/HideShowToggle/HideShowToggle'
 import { NewAdminModal } from '../../components/Modals/NewAdminModal'
 import { AdminDetailsModal } from '../../components/Modals/AdminDetailsModal'
 import { useHistory } from 'react-router-dom'
-import { GetAdminApi } from '../../constants/api.constants'
+import {
+  AdminEdit,
+  ChangeRole,
+  GetAdminApi,
+  UserDeleteEnd,
+} from '../../constants/api.constants'
 import axios from 'axios'
 import Toast from '../../utils/Toast/Toast'
 import Pagination from 'react-bootstrap/Pagination'
+import EditOthersProfileModal from '../../components/Modals/EditOthersProfileModal/EditOthersProfileModal'
 
 const AdminManagement = () => {
   const [show, setShow] = useState(false)
@@ -67,8 +73,120 @@ const AdminManagement = () => {
     }
   }
 
-  const visitProfile = (admin) => {
-    history.push(`/profile/${admin._id}`)
+  const [individualData, setIndividualData] = useState({})
+  const [othersProfileModal, setOthersProfileModal] = useState(false)
+  const [userRole, setUserRole] = useState('')
+  const [userEmail, setUserEmail] = useState('')
+  const [editSpinner, setEditSpinner] = useState(false)
+  const [deleteSpinner, setDeleteSpinner] = useState(false)
+
+  const handleEditOthersModal = (admin) => {
+    setIndividualData({
+      name: admin.name,
+      phone: admin.phone,
+    })
+    setUserEmail(admin.email)
+    setUserRole({
+      id: admin._id,
+      role: admin.effective_role,
+    })
+    setOthersProfileModal(true)
+  }
+
+  const updateRole = async () => {
+    try {
+      const response = await axios.put(ChangeRole, userRole, {
+        headers: {
+          menuboard: localStorage.getItem('menu_token'),
+        },
+      })
+      if (response.status === 200) {
+        Toast('success', 'Role Updated!')
+        return true
+      } else
+        throw new Error(
+          response?.data?.msg || ' Something went wrong! Try again later.'
+        )
+    } catch (error) {
+      Toast(
+        'err',
+        error.response?.data?.msg || 'Something went wrong! Try again later.'
+      )
+      return error
+    }
+  }
+
+  const handleSubmit = async () => {
+    setEditSpinner(true)
+
+    if (individualData.name === '') {
+      Toast('err', 'Please enter your name')
+      return
+    }
+    if (individualData.phone === '') {
+      Toast('err', 'Please enter your phone')
+      return
+    }
+    updateRole()
+    try {
+      const response = await axios.put(AdminEdit, individualData, {
+        headers: {
+          menuboard: localStorage.getItem('menu_token'),
+        },
+      })
+      console.log(response)
+      if (response.status === 200) {
+        Toast('success', 'Admin updated!')
+        setEditSpinner(false)
+        loadAllAdmin()
+        setOthersProfileModal(false)
+      } else
+        throw new Error(
+          response?.data?.msg || ' Something went wrong! Try again later.'
+        )
+    } catch (error) {
+      setEditSpinner(false)
+      setOthersProfileModal(false)
+      loadAllAdmin()
+      Toast(
+        'err',
+        error.response?.data?.msg || 'Something went wrong! Try again later.'
+      )
+    }
+  }
+
+  const handleDelete = async (id) => {
+    setDeleteSpinner(true)
+
+    console.log(id, localStorage.getItem('menu_token'))
+
+    try {
+      const response = await axios.delete(UserDeleteEnd, id, {
+        headers: {
+          menuboard: localStorage.getItem('menu_token'),
+        },
+      })
+      console.log(response)
+      if (response.status === 200) {
+        Toast('success', 'User Deleted!')
+        handleClose()
+        setDeleteSpinner(false)
+        loadAllAdmin()
+        setOthersProfileModal(false)
+      } else
+        throw new Error(
+          response?.data?.msg || ' Something went wrong! Try again later.'
+        )
+    } catch (error) {
+      handleClose()
+      setDeleteSpinner(false)
+      setOthersProfileModal(false)
+      loadAllAdmin()
+      Toast(
+        'err',
+        error.response?.data?.msg || 'Something went wrong! Try again later.'
+      )
+    }
   }
 
   let items = []
@@ -194,8 +312,12 @@ const AdminManagement = () => {
                       </Dropdown.Toggle>
 
                       <Dropdown.Menu className='mt-4'>
-                        <Dropdown.Item onClick={() => visitProfile(admin)}>
-                          visit profile
+                        <Dropdown.Item
+                          onClick={() => {
+                            handleEditOthersModal(admin)
+                          }}
+                        >
+                          edit profile
                         </Dropdown.Item>
                         <Dropdown.Item href='#/action-2'>
                           reset password
@@ -235,6 +357,125 @@ const AdminManagement = () => {
         handleClose={closeDetails}
         data={detailsData}
       />
+      {/* <EditOthersProfileModal
+        show={othersProfileModal}
+        handleClose={() => setOthersProfileModal()}
+        data={individualData}
+        loadAdmin={() => loadAllAdmin()}
+      /> */}
+
+      <Modal
+        show={othersProfileModal}
+        onHide={() => setOthersProfileModal(false)}
+        size='md'
+      >
+        <Modal.Header closeButton style={{ border: 'none' }}>
+          <Modal.Title style={{ fontSize: '22px' }}>Edit Profile</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <div className='mb-3'>
+            <div className='plain-input my-3'>
+              <label for=''>User Name</label>
+              <br />
+              <input
+                type='text'
+                placeholder='Search something'
+                value={individualData.name}
+                onChange={(e) =>
+                  setIndividualData({ ...individualData, name: e.target.value })
+                }
+              />
+            </div>
+
+            <div className='plain-input my-3'>
+              <label for=''>Phone</label>
+              <br />
+              <input
+                type='text'
+                placeholder='Search something'
+                value={individualData.phone}
+                onChange={(e) =>
+                  setIndividualData({
+                    ...individualData,
+                    phone: e.target.value,
+                  })
+                }
+              />
+            </div>
+
+            <div className='plain-input my-3'>
+              <label for=''>Email</label>
+              <br />
+              <input
+                type='text'
+                placeholder='Search something'
+                value={userEmail}
+                disabled
+              />
+            </div>
+
+            <div className='plain-dropdown '>
+              <label for=''>Role </label>
+              <select
+                onChange={(e) =>
+                  setUserRole({ ...userRole, role: e.target.value })
+                }
+              >
+                <option
+                  value='manager'
+                  selected={userRole.role === 'manager' ? true : false}
+                >
+                  manager
+                </option>
+                <option
+                  value='admin'
+                  selected={userRole.role === 'admin' ? true : false}
+                >
+                  {' '}
+                  admin
+                </option>
+                <option
+                  value='super_admin'
+                  selected={userRole.role === 'super_admin' ? true : false}
+                >
+                  {' '}
+                  super admin{' '}
+                </option>
+              </select>
+            </div>
+          </div>
+        </Modal.Body>
+        <Modal.Footer>
+          <button
+            className='danger-btn-light d-flex justify-content-center align-items-center'
+            onClick={() => handleDelete(userRole.id)}
+          >
+            Delete
+            <Spinner
+              className={deleteSpinner ? 'd-block ms-2' : 'd-none ms-2'}
+              animation='border'
+              size='sm'
+            />
+          </button>
+          <button
+            className='primary-btn-light'
+            onClick={() => setOthersProfileModal(false)}
+          >
+            Close
+          </button>
+          <button
+            className='primary-btn d-flex justify-content-center align-items-center'
+            onClick={() => handleSubmit()}
+          >
+            Update Changes{' '}
+            <Spinner
+              className={editSpinner ? 'd-block ms-2' : 'd-none ms-2'}
+              animation='border'
+              size='sm'
+            />
+          </button>
+        </Modal.Footer>
+      </Modal>
     </div>
   )
 }

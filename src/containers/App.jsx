@@ -4,7 +4,6 @@ import {
   BrowserRouter as Router,
   Switch,
   Route,
-  Link,
   Redirect,
 } from 'react-router-dom'
 import NavigationBar from '../components/NavigationBar/NavigationBar'
@@ -18,14 +17,7 @@ import { NotFound } from '../pages/NotFound'
 import Login from '../pages/Authentication/Login'
 import Profile from '../pages/Profile/Profile'
 import PrivateRoute from '../pages/Authentication/PrivateRoute'
-import Providers from '../Providers'
 import { useAuth } from '../Providers/AuthProvider'
-import { useEffect } from 'react'
-import axios from 'axios'
-import { GetAdminProfileUrl } from '../constants/api.constants'
-import Toast from '../utils/Toast/Toast'
-import { useState } from 'react'
-import ProfileOther from '../pages/ProfileOther/ProfileOther'
 export const UserContext = createContext()
 
 function App() {
@@ -88,9 +80,6 @@ function App() {
           </PrivateRoute>
           <PrivateRoute exact path={ROUTENAME.PROFILE}>
             <Profile />
-          </PrivateRoute>
-          <PrivateRoute exact path={ROUTENAME.VISITPROFILE}>
-            <ProfileOther />
           </PrivateRoute>
 
           <Route path={ROUTENAME.NOTFOUND} component={NotFound} exact />

@@ -1,0 +1,1 @@
+export { default as EditOthersProfileModal } from './EditOthersProfileModal.jsx'
