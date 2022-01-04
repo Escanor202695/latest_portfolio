@@ -8,8 +8,10 @@ import demoImg from '../../assets/images/demoLogoImg.png'
 import uploadBtn from '../../assets/icons/upload.svg'
 import StoresFakeData from './StoresFakeData'
 import { useHistory } from 'react-router-dom'
-// import { StoreProvider } from '../../Providers/StoreProvider'
-
+import { useEffect } from 'react'
+import { GetAllStoreAPI } from '../../constants/api.constants'
+import axios from 'axios'
+import Toast from '../../utils/Toast/Toast'
 const StoreFrontManagement = () => {
   const [show, setShow] = useState(false)
 
@@ -22,6 +24,41 @@ const StoreFrontManagement = () => {
     setStore(dt)
     history.push('/storefront')
   }
+
+  const [allStore, setAllStore] = useState([])
+  const [page, setPage] = useState(1)
+  const [search, setSearch] = useState('')
+
+  useEffect(() => {
+    loadStoreData()
+  }, [page, search])
+  const loadStoreData = async () => {
+    let url = GetAllStoreAPI + `?page=${page}`
+    if (search.length > 0) {
+      url += `&filter=${search}`
+    }
+    try {
+      const response = await axios.get(url, {
+        headers: {
+          menuboard: localStorage.getItem('menu_token'),
+        },
+      })
+      console.log(response)
+      if (response.status === 200) {
+        setAllStore(response.data.data)
+      } else
+        throw new Error(
+          response?.data?.msg || ' Something went wrong! Try again later.'
+        )
+    } catch (error) {
+      console.log(error)
+      Toast(
+        'err',
+        error.response?.data?.msg || 'Something went wrong! Try again later.'
+      )
+    }
+  }
+  console.log(allStore)
 
   return (
     <div className='row py-3'>
@@ -43,7 +80,11 @@ const StoreFrontManagement = () => {
           <div className='custom-input me-2'>
             <label for=''>Search Store</label>
             <br />
-            <input type='text' placeholder='search by name, email etc.' />
+            <input
+              type='text'
+              placeholder='search by name, email etc.'
+              onChange={(e) => setSearch(e.target.value)}
+            />
           </div>
           <div className='custom-dropdown ms-2'>
             <label for=''>Sort By</label>
@@ -118,12 +159,12 @@ const StoreFrontManagement = () => {
             </tr>
           </thead>
           <tbody>
-            {StoresFakeData.map((dt, idx) => (
+            {allStore.map((dt, idx) => (
               <tr>
                 <td onClick={() => goToStore(dt)}> {dt.name} </td>
-                <td onClick={() => goToStore(dt)}>{dt.ownerName}</td>
-                <td onClick={() => goToStore(dt)}>{dt.ownerPhone}</td>
-                <td onClick={() => goToStore(dt)}>{dt.ownerEmail}</td>
+                <td onClick={() => goToStore(dt)}>{dt.manager}</td>
+                <td onClick={() => goToStore(dt)}>{dt.phone}</td>
+                <td onClick={() => goToStore(dt)}>{dt.email}</td>
                 <td onClick={() => goToStore(dt)}>{dt.address}</td>
                 <td onClick={() => goToStore(dt)}>{dt.type}</td>
                 <td className='text-center'>

@@ -76,3 +76,8 @@ a {
 td {
   cursor: pointer;
 }
+.page-item.active .page-link {
+  background-color: $primary !important;
+  outline: none !important;
+  border: none !important;
+}

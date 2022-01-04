@@ -1,7 +1,92 @@
-import React from 'react'
-import { Modal } from 'react-bootstrap'
+import axios from 'axios'
+import React, { useEffect } from 'react'
+import { useState } from 'react'
+import { Modal, Spinner } from 'react-bootstrap'
+import { AdminEdit, ChangeRole } from '../../../constants/api.constants'
+import Toast from '../../../utils/Toast/Toast'
 
-const EditProfileModal = ({ show, handleClose }) => {
+const EditProfileModal = ({ show, handleClose, data, loadAdmin }) => {
+  const [spinner, setSpinner] = useState(false)
+  const [adminData, setAdminData] = useState({})
+  const [role, setRole] = useState(data[0]?.effective_role)
+
+  useEffect(() => {
+    setAdminData({
+      name: data[0]?.name,
+      phone: data[0]?.phone,
+    })
+  }, [])
+
+  const updateRole = async () => {
+    try {
+      const response = await axios.put(
+        ChangeRole,
+        {
+          id: data[0]?._id,
+          role: role,
+        },
+        {
+          headers: {
+            menuboard: localStorage.getItem('menu_token'),
+          },
+        }
+      )
+      if (response.status === 200) {
+        Toast('success', 'Role Updated!')
+        return true
+      } else
+        throw new Error(
+          response?.data?.msg || ' Something went wrong! Try again later.'
+        )
+    } catch (error) {
+      Toast(
+        'err',
+        error.response?.data?.msg || 'Something went wrong! Try again later.'
+      )
+      return error
+    }
+  }
+
+  const handleSubmit = async () => {
+    setSpinner(true)
+
+    if (adminData.name === '') {
+      Toast('err', 'Please enter your name')
+      return
+    }
+    if (adminData.phone === '') {
+      Toast('err', 'Please enter your phone')
+      return
+    }
+    updateRole()
+    try {
+      const response = await axios.put(AdminEdit, adminData, {
+        headers: {
+          menuboard: localStorage.getItem('menu_token'),
+        },
+      })
+      console.log(response)
+      if (response.status === 200) {
+        Toast('success', 'Admin updated!')
+        handleClose()
+        setSpinner(false)
+        loadAdmin()
+      } else
+        throw new Error(
+          response?.data?.msg || ' Something went wrong! Try again later.'
+        )
+    } catch (error) {
+      handleClose()
+      setSpinner(false)
+      loadAdmin()
+      Toast(
+        'err',
+        error.response?.data?.msg || 'Something went wrong! Try again later.'
+      )
+    }
+  }
+  console.log(adminData)
+
   return (
     <Modal show={show} onHide={handleClose} size='md'>
       <Modal.Header closeButton style={{ border: 'none' }}>
@@ -15,7 +100,10 @@ const EditProfileModal = ({ show, handleClose }) => {
             <input
               type='text'
               placeholder='Search something'
-              value='Mohammad Lee'
+              value={adminData.name}
+              onChange={(e) =>
+                setAdminData({ ...adminData, name: e.target.value })
+              }
             />
           </div>
 
@@ -25,7 +113,10 @@ const EditProfileModal = ({ show, handleClose }) => {
             <input
               type='text'
               placeholder='Search something'
-              value='01783092354'
+              value={adminData.phone}
+              onChange={(e) =>
+                setAdminData({ ...adminData, phone: e.target.value })
+              }
             />
           </div>
 
@@ -35,21 +126,30 @@ const EditProfileModal = ({ show, handleClose }) => {
             <input
               type='text'
               placeholder='Search something'
-              value='mohammadlee@email.com'
+              value={data[0]?.email}
               disabled
             />
           </div>
 
           <div className='plain-dropdown '>
             <label for=''>Role </label>
-            <select>
-              <option value='1' style={{ border: 'none' }}>
-                {' '}
-                Admin
+            <select onChange={(e) => setRole(e.target.value)}>
+              <option
+                value='manager'
+                selected={role === 'manager' ? true : false}
+              >
+                manager
               </option>
-              <option value='2' selected>
+              <option value='admin' selected={role === 'admin' ? true : false}>
                 {' '}
-                Super admin{' '}
+                admin
+              </option>
+              <option
+                value='super_admin'
+                selected={role === 'super_admin' ? true : false}
+              >
+                {' '}
+                super admin{' '}
               </option>
             </select>
           </div>
@@ -59,8 +159,16 @@ const EditProfileModal = ({ show, handleClose }) => {
         <button className='primary-btn-light' onClick={handleClose}>
           Close
         </button>
-        <button className='primary-btn' onClick={handleClose}>
-          Update Changes
+        <button
+          className='primary-btn d-flex justify-content-center align-items-center'
+          onClick={() => handleSubmit()}
+        >
+          Update Changes{' '}
+          <Spinner
+            className={spinner ? 'd-block ms-2' : 'd-none ms-2'}
+            animation='border'
+            size='sm'
+          />
         </button>
       </Modal.Footer>
     </Modal>

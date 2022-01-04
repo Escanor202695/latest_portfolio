@@ -25,6 +25,7 @@ import axios from 'axios'
 import { GetAdminProfileUrl } from '../constants/api.constants'
 import Toast from '../utils/Toast/Toast'
 import { useState } from 'react'
+import ProfileOther from '../pages/ProfileOther/ProfileOther'
 export const UserContext = createContext()
 
 function App() {
@@ -87,6 +88,9 @@ function App() {
           </PrivateRoute>
           <PrivateRoute exact path={ROUTENAME.PROFILE}>
             <Profile />
+          </PrivateRoute>
+          <PrivateRoute exact path={ROUTENAME.VISITPROFILE}>
+            <ProfileOther />
           </PrivateRoute>
 
           <Route path={ROUTENAME.NOTFOUND} component={NotFound} exact />

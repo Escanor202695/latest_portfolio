@@ -23,6 +23,15 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
+    if (authValue.email === '') {
+      Toast('err', 'Please enter your email')
+      return
+    }
+    if (authValue.password === '') {
+      Toast('err', 'Please enter your password')
+      return
+    }
+
     setSpin(true)
     try {
       const response = await axios.post(LogInUrl, {

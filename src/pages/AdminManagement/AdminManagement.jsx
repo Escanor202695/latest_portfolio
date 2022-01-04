@@ -2,53 +2,86 @@ import React, { useEffect, useState } from 'react'
 import DashBoard from '../../components/DashBoard/DashBoard'
 import plus from '../../assets/icons/plus.svg'
 import './AdminManagement.scss'
-import { Dropdown, Table } from 'react-bootstrap'
+import { Dropdown, Spinner, Table } from 'react-bootstrap'
 import threedot from '../../assets/icons/threedot.svg'
 import fakeAdmin from './AdminsFakedata'
 import HideShowToggle from '../../components/HideShowToggle/HideShowToggle'
 import { NewAdminModal } from '../../components/Modals/NewAdminModal'
 import { AdminDetailsModal } from '../../components/Modals/AdminDetailsModal'
 import { useHistory } from 'react-router-dom'
+import { GetAdminApi } from '../../constants/api.constants'
+import axios from 'axios'
+import Toast from '../../utils/Toast/Toast'
+import Pagination from 'react-bootstrap/Pagination'
 
 const AdminManagement = () => {
-  const [searchKey, setSearchKey] = useState('')
-  const [adminToShow, setAdminToShow] = useState([])
   const [show, setShow] = useState(false)
   const handleClose = () => setShow(false)
   const handleShow = () => setShow(true)
   let history = useHistory()
-
-  const [showDetails, setShowDetails] = useState(false)
-  const closeDetails = () => setShowDetails(false)
-  const details = () => setShowDetails(true)
-
+  const [allAdmins, setAllAdmins] = useState([])
+  const [searchKey, setSearchKey] = useState('')
+  const [page, setPage] = useState(1)
+  const [spinner, setSpinner] = useState(false)
+  const [totalDoc, setTotalDoc] = useState(0)
+  const [role, setRole] = useState('')
+  const [detailsDataModal, setDetailsDataModal] = useState(false)
+  const closeDetails = () => setDetailsDataModal(false)
   const [detailsData, setDetailsData] = useState({})
-  const handleDetailsData = (data) => {
-    setDetailsData(data)
-    details()
-  }
 
   useEffect(() => {
-    if (searchKey === '') {
-      setAdminToShow(fakeAdmin)
-    } else {
-      filterAdmin()
+    loadAllAdmin()
+  }, [page, searchKey, role])
+
+  const loadAllAdmin = async () => {
+    setSpinner(true)
+    let url = GetAdminApi + `?page=${page}`
+    if (searchKey.length > 0) {
+      url += `&filter=${searchKey}`
     }
-  }, [searchKey])
+    if (role.length > 0) {
+      url += `&role=${role}`
+    }
+    try {
+      const response = await axios.get(url, {
+        headers: {
+          menuboard: localStorage.getItem('menu_token'),
+        },
+      })
+      console.log(response)
+      if (response.status === 200) {
+        setAllAdmins(response.data.data)
+        setTotalDoc(response.data.total_document)
+        setSpinner(false)
+      } else
+        throw new Error(
+          response?.data?.msg || 'Cant load admins data, try again later'
+        )
+    } catch (error) {
+      setSpinner(false)
+      console.log(error)
+      Toast(
+        'err',
+        error.response?.data?.msg || 'Cant load admins data, try again later'
+      )
+    }
+  }
 
-  const filterAdmin = () => {
-    let returnValue = fakeAdmin?.filter(
-      (dt) =>
-        dt.name.toUpperCase().includes(searchKey.toUpperCase()) ||
-        dt.email.toUpperCase().includes(searchKey.toUpperCase())
+  const visitProfile = (admin) => {
+    history.push(`/profile/${admin._id}`)
+  }
+
+  let items = []
+  let totalPage = 0
+  if (totalDoc < 10) totalPage = 1
+  else totalPage = totalDoc / 10
+  for (let number = 1; number <= totalPage; number++) {
+    items.push(
+      <Pagination.Item key={number} active={number == page}>
+        {number}
+      </Pagination.Item>
     )
-    setAdminToShow(returnValue)
   }
-
-  const goToProfile = () => {
-    history.push('/profile')
-  }
-
   return (
     <div className='row py-3'>
       <div className='col-3'>
@@ -64,7 +97,6 @@ const AdminManagement = () => {
             <img className='me-3' src={plus} alt='' /> New Admin
           </button>
         </div>
-
         <div className='d-flex justify-content-between align-items-center mt-4'>
           <div className='custom-input me-2'>
             <label for=''>Search Admin</label>
@@ -77,17 +109,20 @@ const AdminManagement = () => {
           </div>
           <div className='custom-dropdown ms-2'>
             <label for=''>Show</label>
-            <select>
-              <option value='1' style={{ border: 'none' }}>
-                {' '}
-                All admins
-              </option>
-              <option value='2'> Super admins</option>
-              <option value='3'> Only admins</option>
+            <select onChange={(e) => setRole(e.target.value)}>
+              <option value=''>not selected</option>
+              <option value='manager'>manager</option>
+              <option value='admin'>admin </option>
+              <option value='super_admin'>super admin </option>
             </select>
           </div>
         </div>
-        {adminToShow.length > 0 ? (
+        {spinner && (
+          <div className='d-flex justify-content-center align-items-center my-5'>
+            <Spinner animation='border' style={{ color: '#558f55' }} />
+          </div>
+        )}
+        {!spinner && allAdmins.length > 0 ? (
           <Table
             striped
             bordered
@@ -107,29 +142,41 @@ const AdminManagement = () => {
               </tr>
             </thead>
             <tbody>
-              {adminToShow.map((admin, idx) => (
+              {allAdmins.map((admin, idx) => (
                 <tr key={idx}>
                   <td
-                    onClick={() => handleDetailsData(admin)}
+                    onClick={() => {
+                      setDetailsData(admin)
+                      setDetailsDataModal(true)
+                    }}
                     style={{ cursor: 'pointer' }}
                   >
                     {' '}
                     {admin.name}
                   </td>
                   <td
-                    onClick={() => handleDetailsData(admin)}
+                    onClick={() => {
+                      setDetailsData(admin)
+                      setDetailsDataModal(true)
+                    }}
                     style={{ cursor: 'pointer' }}
                   >
                     {admin.email}
                   </td>
                   <td
-                    onClick={() => handleDetailsData(admin)}
+                    onClick={() => {
+                      setDetailsData(admin)
+                      setDetailsDataModal(true)
+                    }}
                     style={{ cursor: 'pointer' }}
                   >
                     {admin.phone}
                   </td>
                   <td
-                    onClick={() => handleDetailsData(admin)}
+                    onClick={() => {
+                      setDetailsData(admin)
+                      setDetailsDataModal(true)
+                    }}
                     style={{ cursor: 'pointer' }}
                   >
                     {admin.role}
@@ -147,7 +194,7 @@ const AdminManagement = () => {
                       </Dropdown.Toggle>
 
                       <Dropdown.Menu className='mt-4'>
-                        <Dropdown.Item onClick={() => goToProfile()}>
+                        <Dropdown.Item onClick={() => visitProfile(admin)}>
                           visit profile
                         </Dropdown.Item>
                         <Dropdown.Item href='#/action-2'>
@@ -161,12 +208,30 @@ const AdminManagement = () => {
             </tbody>
           </Table>
         ) : (
-          <h3 className='text-secondary my-5 text-center'>No Admin Found!</h3>
+          !spinner && (
+            <h3 className='text-secondary my-5 text-center'>No Admin Found!</h3>
+          )
+        )}
+        {!spinner && (
+          <div className='d-flex justify-content-center align-items-center my-5'>
+            <Pagination
+              onClick={(e) => {
+                setPage(e.target.innerText)
+              }}
+            >
+              {items}
+            </Pagination>
+          </div>
         )}
       </div>
-      <NewAdminModal show={show} handleClose={handleClose} />
+
+      <NewAdminModal
+        show={show}
+        handleClose={handleClose}
+        loadAllAdmin={() => loadAllAdmin()}
+      />
       <AdminDetailsModal
-        show={showDetails}
+        show={detailsDataModal}
         handleClose={closeDetails}
         data={detailsData}
       />
