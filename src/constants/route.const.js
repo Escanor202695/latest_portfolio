@@ -4,7 +4,7 @@ const ROUTENAME = {
     ADMINMANAGEMENT: '/admin-management',
     STOREFRONTMANAGEMENT: '/storefront-management',
     ADDMANAGEMENT: '/ad-management',
-    STOREFRONT: '/storefront',
+    STOREFRONT: '/storefront/:id',
     GLOBALSETTINGS: '/global-settings',
     LOGIN: '/login',
     PROFILE: '/profile',

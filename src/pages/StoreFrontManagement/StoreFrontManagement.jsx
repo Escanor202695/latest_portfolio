@@ -6,7 +6,6 @@ import { Dropdown, Modal, Table } from 'react-bootstrap'
 import threedot from '../../assets/icons/threedot.svg'
 import demoImg from '../../assets/images/demoLogoImg.png'
 import uploadBtn from '../../assets/icons/upload.svg'
-import StoresFakeData from './StoresFakeData'
 import { useHistory } from 'react-router-dom'
 import { useEffect } from 'react'
 import { GetAllStoreAPI } from '../../constants/api.constants'
@@ -19,10 +18,8 @@ const StoreFrontManagement = () => {
   const handleShow = () => setShow(true)
   const history = useHistory()
   // const [store, setStore] = useContext(StoreProvider)
-  const [store, setStore] = useState()
-  const goToStore = (dt) => {
-    setStore(dt)
-    history.push('/storefront')
+  const goToStore = (id) => {
+    history.push(`/storefront/${id}`)
   }
 
   const [allStore, setAllStore] = useState([])
@@ -32,6 +29,7 @@ const StoreFrontManagement = () => {
   useEffect(() => {
     loadStoreData()
   }, [page, search])
+
   const loadStoreData = async () => {
     let url = GetAllStoreAPI + `?page=${page}`
     if (search.length > 0) {
@@ -58,7 +56,6 @@ const StoreFrontManagement = () => {
       )
     }
   }
-  console.log(allStore)
 
   return (
     <div className='row py-3'>
@@ -159,14 +156,14 @@ const StoreFrontManagement = () => {
             </tr>
           </thead>
           <tbody>
-            {allStore.map((dt, idx) => (
-              <tr>
-                <td onClick={() => goToStore(dt)}> {dt.name} </td>
-                <td onClick={() => goToStore(dt)}>{dt.manager}</td>
-                <td onClick={() => goToStore(dt)}>{dt.phone}</td>
-                <td onClick={() => goToStore(dt)}>{dt.email}</td>
-                <td onClick={() => goToStore(dt)}>{dt.address}</td>
-                <td onClick={() => goToStore(dt)}>{dt.type}</td>
+            {allStore?.map((dt, idx) => (
+              <tr key={idx}>
+                <td onClick={() => goToStore(dt?._id)}> {dt.name} </td>
+                <td onClick={() => goToStore(dt?._id)}>{dt.manager}</td>
+                <td onClick={() => goToStore(dt?._id)}>{dt.phone}</td>
+                <td onClick={() => goToStore(dt?._id)}>{dt.email}</td>
+                <td onClick={() => goToStore(dt?._id)}>{dt.address}</td>
+                <td onClick={() => goToStore(dt?._id)}>{dt.type}</td>
                 <td className='text-center'>
                   {/* <img src={threedot} alt='' className='' /> */}
                   <Dropdown drop='start' style={{ cursor: 'pointer' }}>
@@ -175,7 +172,7 @@ const StoreFrontManagement = () => {
                     </Dropdown.Toggle>
 
                     <Dropdown.Menu className='mt-4'>
-                      <Dropdown.Item onClick={() => goToStore(dt)}>
+                      <Dropdown.Item onClick={() => goToStore(dt?._id)}>
                         visit store
                       </Dropdown.Item>
                       <Dropdown.Item href=''>show details</Dropdown.Item>

@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import DashBoard from '../../components/DashBoard/DashBoard'
 import './StoreFront.scss'
 import plus from '../../assets/icons/plus.svg'
@@ -6,12 +6,15 @@ import Screens from '../../components/Screens/Screens'
 import { Breadcrumb, Modal } from 'react-bootstrap'
 import { EditScheduleModal } from '../../components/Modals/EditScheduleModal'
 // import { StoreProvider } from '../../Providers'
-import { useHistory } from 'react-router-dom'
+import { useHistory, useParams } from 'react-router-dom'
 import { EditStoreModal } from '../../components/Modals/EditStoreModal'
 import InputRange from 'react-input-range'
 import 'react-input-range/lib/css/index.css'
 import AdCard from '../../components/AdCard/AdCard'
 import { AddNewAdModal } from '../../components/Modals/AddNewAdModal'
+import axios from 'axios'
+import { StoreAPI } from '../../constants/api.constants'
+import Toast from '../../utils/Toast/Toast'
 
 const StoreFront = () => {
   const [show, setShow] = React.useState(false)
@@ -25,12 +28,43 @@ const StoreFront = () => {
   const [rangeValue, setRangeValue] = useState({
     value: { min: 500, max: 1000 },
   })
-  const store = ''
-  // const store = useContext(StoreProvider)
-  console.log(store)
-  console.log(store[0]?.tags[0])
+  // const store = ''
+  // // const store = useContext(StoreProvider)
+  // console.log(store)
+  // console.log(store[0]?.tags[0])
 
   const [adnewAdd, setAdnewAdd] = useState(false)
+
+  const { id } = useParams()
+  const [storeData, setStoreData] = useState({})
+
+  useEffect(() => {
+    loadStoreData()
+  }, [])
+
+  const loadStoreData = async () => {
+    try {
+      const response = await axios.get(StoreAPI + `?id=${id}`, {
+        headers: {
+          menuboard: localStorage.getItem('menu_token'),
+        },
+      })
+      console.log(response)
+      if (response.status === 200) {
+        setStoreData(response.data.data[0])
+      } else
+        throw new Error(
+          response?.data?.msg || ' Something went wrong! Try again later.'
+        )
+    } catch (error) {
+      Toast(
+        'err',
+        error.response?.data?.msg || 'Something went wrong! Try again later.'
+      )
+    }
+  }
+
+  console.log(storeData)
 
   return (
     <div className='row py-3'>
@@ -47,7 +81,7 @@ const StoreFront = () => {
           <Breadcrumb.Item active>storefront</Breadcrumb.Item>
         </Breadcrumb>
         <div className='d-flex justify-content-between align-items-center'>
-          <h3 className='fw-bold'> {store[0].name} </h3>
+          {/* <h3 className='fw-bold'> {store[0].name} </h3> */}
         </div>
         <h5 className='mt-4 fw-bold'>Store Details</h5>
 
@@ -63,15 +97,15 @@ const StoreFront = () => {
               <h6>Tags</h6>
             </div>
             <div className='ms-5'>
-              <h6>{store[0]?.name}</h6>
-              <h6>{store[0]?.type}</h6>
-              <h6>{store[0]?.ownerName}</h6>
-              <h6>{store[0]?.ownerPhone}</h6>
-              <h6>{store[0]?.ownerEmail}</h6>
-              <h6>{store[0]?.address}</h6>
+              <h6>{storeData?.name}</h6>
+              <h6>{storeData?.type}</h6>
+              <h6>{storeData?.manager}</h6>
+              <h6>{storeData?.phone}</h6>
+              <h6>{storeData?.email}</h6>
+              <h6>{storeData?.address}</h6>
               <h6>
-                {store[0]?.tags.length > 0
-                  ? store[0]?.tags.map((dt, idx) => (
+                {storeData?.tag?.length > 0
+                  ? storeData?.tag.map((dt, idx) => (
                       <span
                         key={idx}
                         style={{
@@ -152,7 +186,7 @@ const StoreFront = () => {
       <EditStoreModal
         show={editInfoModal}
         handleClose={() => setEditInfoModal()}
-        data={store[0]}
+        data={storeData}
       />
 
       <Modal show={show} onHide={handleClose} size='lg'>

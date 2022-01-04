@@ -22,15 +22,15 @@ const Screens = () => {
   return (
     <div className='my-3 d-flex justify-content-between align-items-start screen-section'>
       <div className=' d-flex justify-content-between align-items-start '>
-        <div>
-          <img src={screenImg} alt='' className='me-3' />
+        <div className='preview-bg '>
+          {/* <img src={screenImg} alt='' className='me-3' /> */}
           <img
             src={Frame}
             alt=''
             style={{
-              position: 'relative',
-              right: '10rem',
-              top: '.2rem',
+              // position: 'relative',
+              // right: '10rem',
+              // top: '.2rem',
               cursor: 'pointer',
             }}
             onClick={() => handleShow(true)}

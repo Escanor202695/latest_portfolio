@@ -12,3 +12,15 @@
     color: $grey_one;
   }
 }
+
+.preview-bg {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-image: url('../../assets/images/screen-img.png');
+  width: 12rem;
+
+  background-repeat: no-repeat;
+  background-size: cover;
+  border-radius: 4px;
+}
