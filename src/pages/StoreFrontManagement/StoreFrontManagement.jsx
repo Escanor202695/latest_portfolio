@@ -272,6 +272,7 @@ const StoreFrontManagement = () => {
         handleClose={handleClose}
         demoImg={demoImg}
         uploadBtn={uploadBtn}
+        loadStoreData={loadStoreData}
       />
     </div>
   )

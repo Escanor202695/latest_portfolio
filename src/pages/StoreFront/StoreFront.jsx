@@ -38,10 +38,6 @@ const StoreFront = () => {
   const { id } = useParams()
   const [storeData, setStoreData] = useState({})
 
-  useEffect(() => {
-    loadStoreData()
-  }, [])
-
   const loadStoreData = async () => {
     try {
       const response = await axios.get(StoreAPI + `?id=${id}`, {
@@ -63,6 +59,10 @@ const StoreFront = () => {
       )
     }
   }
+
+  useEffect(() => {
+    loadStoreData()
+  }, [])
 
   console.log(storeData)
 
@@ -187,6 +187,7 @@ const StoreFront = () => {
         show={editInfoModal}
         handleClose={() => setEditInfoModal()}
         data={storeData}
+        loadStoreData={loadStoreData}
       />
 
       <Modal show={show} onHide={handleClose} size='lg'>
