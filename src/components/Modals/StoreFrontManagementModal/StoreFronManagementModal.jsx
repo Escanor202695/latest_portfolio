@@ -1,4 +1,5 @@
 import axios from 'axios'
+import Toast from '../../../utils/Toast/Toast'
 import React, { useEffect, useState } from 'react'
 import { Modal } from 'react-bootstrap'
 import { StoreCreate } from '../../../constants/api.constants'
@@ -8,7 +9,9 @@ export default function StoreFronManagementModal({
   handleClose,
   demoImg,
   uploadBtn,
+  loadStoreData,
 }) {
+  const [editSpinner, setEditSpinner] = useState(false)
   const [storeData, setStoreData] = useState({
     name: '',
     manager: '',
@@ -68,6 +71,34 @@ export default function StoreFronManagementModal({
       console.log(tag)
       return tagArray.push(tag.text)
     })
+    if (storeData.name === '') {
+      Toast('err', 'Please enter your name')
+      setEditSpinner(false)
+
+      return
+    }
+    if (storeData.manager === '') {
+      Toast('err', 'Please enter manager')
+      setEditSpinner(false)
+
+      return
+    }
+    if (storeData.phone === '') {
+      Toast('err', 'Please enter your phone')
+      setEditSpinner(false)
+      return
+    }
+    if (storeData.email === '') {
+      Toast('err', 'Please enter email')
+      setEditSpinner(false)
+      return
+    }
+    if (storeData.address === '') {
+      Toast('err', 'Please enter address')
+      setEditSpinner(false)
+      return
+    }
+
     const dataObj = {
       name: storeData.name,
       manager: storeData.manager,
@@ -88,6 +119,7 @@ export default function StoreFronManagementModal({
         .then((response) => {
           console.log(response)
           handleClose()
+          loadStoreData()
         })
     } catch (error) {
       handleClose()

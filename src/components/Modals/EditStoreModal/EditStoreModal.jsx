@@ -6,7 +6,7 @@ import axios from 'axios'
 import { StoreEdit } from '../../../constants/api.constants'
 import { InputTag } from '../../Tag'
 
-const EditStoreModal = ({ show, handleClose, data }) => {
+const EditStoreModal = ({ show, handleClose, data, loadStoreData }) => {
   // console.log(data._id)
   const [storeData, setStoreData] = useState({
     id: '',
@@ -16,6 +16,8 @@ const EditStoreModal = ({ show, handleClose, data }) => {
     email: '',
     address: '',
   })
+  console.log(storeData)
+
   useEffect(() => {
     setStoreData({
       id: data?._id,
@@ -40,20 +42,17 @@ const EditStoreModal = ({ show, handleClose, data }) => {
     }
   }
   let emptyObj = []
-  useEffect(() => {
-    // console.log(data.tag)
-
-    const dbData = data.tag
-    for (var i = 0; i < data.tag.length; i++) {
-      let tmpEmptyObj = {
-        id: dbData[i],
-        text: dbData[i],
-      }
-      emptyObj.push(tmpEmptyObj)
-    }
-    console.log(emptyObj)
-  }, [data.tag])
-
+  const dbData = data.tag
+  console.log(dbData)
+  // if (dbData.length !== 0) {
+  //   for (var i = 0; i < dbData.length; i++) {
+  //     let tmpEmptyObj = {
+  //       id: dbData[i],
+  //       text: dbData[i],
+  //     }
+  //     emptyObj.push(tmpEmptyObj)
+  //   }
+  // }
   const [tags, setTags] = useState(emptyObj)
   // console.log(data.tag)
   // useEffect(() => {
@@ -95,6 +94,7 @@ const EditStoreModal = ({ show, handleClose, data }) => {
       console.log(tag)
       return tagArray.push(tag.text)
     })
+
     const dataObj = {
       id: storeData.id,
       name: storeData.name,
@@ -116,6 +116,7 @@ const EditStoreModal = ({ show, handleClose, data }) => {
         .then((response) => {
           console.log(response)
           handleClose()
+          loadStoreData()
         })
     } catch (error) {
       handleClose()
