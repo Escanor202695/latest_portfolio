@@ -193,9 +193,6 @@ export default function StoreFronManagementModal({
                   handleDrag={handleDrag}
                   handleTagClick={handleTagClick}
                 />
-                {/* <textarea rows='3' cols=''></textarea> */}
-                {/* <span className='m-1'>tag 1</span>
-              <span className='m-1'>tag 1</span> */}
               </div>
               <div className='plain-dropdown '>
                 <label for=''>Type</label>
