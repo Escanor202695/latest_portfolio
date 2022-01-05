@@ -3,7 +3,7 @@ import DashBoard from '../../components/DashBoard/DashBoard'
 import './StoreFront.scss'
 import plus from '../../assets/icons/plus.svg'
 import Screens from '../../components/Screens/Screens'
-import { Breadcrumb, Modal } from 'react-bootstrap'
+import { Breadcrumb, Modal, Spinner } from 'react-bootstrap'
 import { EditScheduleModal } from '../../components/Modals/EditScheduleModal'
 // import { StoreProvider } from '../../Providers'
 import { useHistory, useParams } from 'react-router-dom'
@@ -23,6 +23,7 @@ const StoreFront = () => {
   const handleClose = () => setShow(false)
   const handleShow = () => setShow(true)
   let history = useHistory()
+  const [spinner, setSpinner] = useState(false)
 
   const [editInfoModal, setEditInfoModal] = useState(false)
   const [rangeValue, setRangeValue] = useState({
@@ -39,20 +40,22 @@ const StoreFront = () => {
   const [storeData, setStoreData] = useState({})
 
   const loadStoreData = async () => {
+    setSpinner(true)
     try {
       const response = await axios.get(StoreAPI + `?id=${id}`, {
         headers: {
           menuboard: localStorage.getItem('menu_token'),
         },
       })
-      console.log(response)
       if (response.status === 200) {
         setStoreData(response.data.data[0])
+        setSpinner(false)
       } else
         throw new Error(
           response?.data?.msg || ' Something went wrong! Try again later.'
         )
     } catch (error) {
+      setSpinner(false)
       Toast(
         'err',
         error.response?.data?.msg || 'Something went wrong! Try again later.'
@@ -83,7 +86,10 @@ const StoreFront = () => {
         <div className='d-flex justify-content-between align-items-center'>
           {/* <h3 className='fw-bold'> {store[0].name} </h3> */}
         </div>
-        <h5 className='mt-4 fw-bold'>Store Details</h5>
+        <h5 className='mt-4 fw-bold d-flex justify-content-start align-items-center'>
+          Store Details
+          {spinner && <Spinner animation='border' size='sm' className='ms-2' />}
+        </h5>
 
         <section className='store-details d-flex justify-content-between align-items-start'>
           <div className='d-flex justify-content-between align-items-center'>

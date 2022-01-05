@@ -1,7 +1,7 @@
 import axios from 'axios'
 import Toast from '../../../utils/Toast/Toast'
 import React, { useEffect, useState } from 'react'
-import { Modal } from 'react-bootstrap'
+import { Modal, Spinner } from 'react-bootstrap'
 import { StoreCreate } from '../../../constants/api.constants'
 import { InputTag } from '../../Tag'
 export default function StoreFronManagementModal({
@@ -15,7 +15,7 @@ export default function StoreFronManagementModal({
   const [storeData, setStoreData] = useState({
     name: '',
     manager: '',
-    phone: '',
+    phone: '+88',
     email: '',
     address: '',
   })
@@ -35,8 +35,8 @@ export default function StoreFronManagementModal({
 
   function handleSubmit(e) {
     e.preventDefault()
-    console.log(types)
-    console.log(typeof types)
+    // console.log(types)
+    // console.log(typeof types)
     // console.log("clicked");
     // console.log(storeData);
   }
@@ -66,13 +66,15 @@ export default function StoreFronManagementModal({
   }
 
   async function postStoreData() {
+    setEditSpinner(true)
+
     const tagArray = []
     tags.map((tag) => {
-      console.log(tag)
+      // console.log(tag)
       return tagArray.push(tag.text)
     })
     if (storeData.name === '') {
-      Toast('err', 'Please enter your name')
+      Toast('err', 'Please enter store name')
       setEditSpinner(false)
 
       return
@@ -109,7 +111,7 @@ export default function StoreFronManagementModal({
       type: types,
     }
     try {
-      console.log(dataObj)
+      // console.log(dataObj)
       await axios
         .post(StoreCreate, dataObj, {
           headers: {
@@ -117,13 +119,40 @@ export default function StoreFronManagementModal({
           },
         })
         .then((response) => {
-          console.log(response)
-          handleClose()
-          loadStoreData()
+          // console.log(response)
+          if (response.status === 200) {
+            setEditSpinner(false)
+            Toast('success', 'Store Created!')
+            handleClose()
+            loadStoreData()
+            setStoreData({
+              name: '',
+              manager: '',
+              phone: '+88',
+              email: '',
+              address: '',
+            })
+            setTags([])
+            setTypes('Category')
+          } else throw new Error(response?.data?.msg)
         })
     } catch (error) {
+      setEditSpinner(false)
+      setTags([])
+      setStoreData({
+        name: '',
+        manager: '',
+        phone: '+88',
+        email: '',
+        address: '',
+      })
+      Toast(
+        'err',
+        error.response?.data?.msg || 'Something went wrong! Try again later.'
+      )
       handleClose()
-      console.log(error)
+      setTypes('Category')
+      // console.log(error)
     }
   }
 
@@ -163,7 +192,7 @@ export default function StoreFronManagementModal({
               <br />
               <input
                 type='text'
-                placeholder='Search something'
+                placeholder='Please input store name'
                 value={storeData.name}
                 onChange={handleInput}
                 name='name'
@@ -174,7 +203,7 @@ export default function StoreFronManagementModal({
               <br />
               <input
                 type='text'
-                placeholder='Search something'
+                placeholder='Name of manager'
                 value={storeData.manager}
                 onChange={handleInput}
                 name='manager'
@@ -185,7 +214,7 @@ export default function StoreFronManagementModal({
               <br />
               <input
                 type='text'
-                placeholder='Search something'
+                placeholder='Please input your phone'
                 value={storeData.phone}
                 onChange={handleInput}
                 name='phone'
@@ -196,7 +225,7 @@ export default function StoreFronManagementModal({
               <br />
               <input
                 type='text'
-                placeholder='Search something'
+                placeholder='Please input your email'
                 value={storeData.email}
                 onChange={handleInput}
                 name='email'
@@ -207,7 +236,7 @@ export default function StoreFronManagementModal({
               <br />
               <input
                 type='text'
-                placeholder='Search something'
+                placeholder='Please input your address'
                 value={storeData.address}
                 onChange={handleInput}
                 name='address'
@@ -232,19 +261,24 @@ export default function StoreFronManagementModal({
               </select>
             </div>
           </div>
+
+          {/* </form> */}
+        </Modal.Body>
+        <Modal.Footer>
           <button className='primary-btn-light' onClick={handleClose}>
             Close
           </button>
           <button
-            className='primary-btn'
+            className='primary-btn d-flex justify-content-center align-items-center '
             onClick={() => postStoreData()}
             type='submit'
           >
-            Save Changes
+            Save Changes{' '}
+            {editSpinner && (
+              <Spinner className='ms-2' animation='border' size='sm' />
+            )}
           </button>
-          {/* </form> */}
-        </Modal.Body>
-        <Modal.Footer></Modal.Footer>
+        </Modal.Footer>
       </Modal>
     </>
   )

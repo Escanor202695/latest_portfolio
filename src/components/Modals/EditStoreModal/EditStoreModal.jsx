@@ -1,22 +1,25 @@
 import React, { useState, useEffect } from 'react'
-import { Modal } from 'react-bootstrap'
+import { Modal, Spinner } from 'react-bootstrap'
 import demoImg from '../../../assets/images/demoLogoImg.png'
 import uploadBtn from '../../../assets/icons/upload.svg'
 import axios from 'axios'
-import { StoreEdit } from '../../../constants/api.constants'
+import { DeleteStoreEnd, StoreEdit } from '../../../constants/api.constants'
 import { InputTag } from '../../Tag'
+import Toast from '../../../utils/Toast/Toast'
+import { useHistory } from 'react-router-dom'
 
 const EditStoreModal = ({ show, handleClose, data, loadStoreData }) => {
+  const [editSpinner, setEditSpinner] = useState(false)
   // console.log(data._id)
   const [storeData, setStoreData] = useState({
     id: '',
     name: '',
     manager: '',
-    phone: '',
+    phone: '+88',
     email: '',
     address: '',
   })
-  console.log(storeData)
+  // console.log(storeData)
 
   useEffect(() => {
     setStoreData({
@@ -43,7 +46,7 @@ const EditStoreModal = ({ show, handleClose, data, loadStoreData }) => {
   }
   let emptyObj = []
   const dbData = data.tag
-  console.log(dbData)
+  // console.log(dbData)
   // if (dbData.length !== 0) {
   //   for (var i = 0; i < dbData.length; i++) {
   //     let tmpEmptyObj = {
@@ -89,9 +92,42 @@ const EditStoreModal = ({ show, handleClose, data, loadStoreData }) => {
   }
 
   async function postStoreData() {
+    setEditSpinner(true)
+
+    if (storeData.name === '') {
+      Toast('err', 'Name cant be empty')
+      setEditSpinner(false)
+      return
+    }
+    if (storeData.manager === '') {
+      Toast('err', 'Manager name cant be empty')
+      setEditSpinner(false)
+      return
+    }
+    if (storeData.phone === '') {
+      Toast('err', 'Phone cant be empty')
+      setEditSpinner(false)
+      return
+    }
+    if (storeData.email === '') {
+      Toast('err', 'Email cant be empty')
+      setEditSpinner(false)
+      return
+    }
+    if (storeData.address === '') {
+      Toast('err', 'Address cant be empty')
+      setEditSpinner(false)
+      return
+    }
+    if (storeData.types === '') {
+      Toast('err', 'Types cant be empty')
+      setEditSpinner(false)
+      return
+    }
+
     const tagArray = []
     tags.map((tag) => {
-      console.log(tag)
+      // console.log(tag)
       return tagArray.push(tag.text)
     })
 
@@ -106,7 +142,7 @@ const EditStoreModal = ({ show, handleClose, data, loadStoreData }) => {
       type: types,
     }
     try {
-      console.log(dataObj)
+      // console.log(dataObj)
       await axios
         .put(StoreEdit, dataObj, {
           headers: {
@@ -114,13 +150,71 @@ const EditStoreModal = ({ show, handleClose, data, loadStoreData }) => {
           },
         })
         .then((response) => {
-          console.log(response)
-          handleClose()
-          loadStoreData()
+          if (response.status === 200) {
+            Toast('success', 'Successfully Updated!')
+            setEditSpinner(false)
+            // console.log(response)
+            handleClose()
+            loadStoreData()
+            setStoreData({
+              id: '',
+              name: '',
+              manager: '',
+              phone: '+88',
+              email: '',
+              address: '',
+            })
+            setTags([])
+            setTypes('Category')
+          } else throw new Error(response?.data?.msg)
         })
     } catch (error) {
+      setStoreData({
+        id: '',
+        name: '',
+        manager: '',
+        phone: '+88',
+        email: '',
+        address: '',
+      })
+      setTags([])
+      setTypes('Category')
       handleClose()
-      console.log(error)
+      Toast(
+        'err',
+        error.response?.data?.msg || 'Something went wrong! Try again later.'
+      )
+      setEditSpinner(false)
+    }
+  }
+
+  const history = useHistory()
+  const [deleteSpinner, setDeleteSpinner] = useState(false)
+
+  const handleStoreDelete = async () => {
+    setDeleteSpinner(true)
+    try {
+      const response = await axios.delete(
+        DeleteStoreEnd + `?_id=${storeData.id}`,
+        {
+          headers: {
+            menuboard: localStorage.getItem('menu_token'),
+          },
+        }
+      )
+      if (response.status === 200) {
+        Toast('success', 'Successfully Deleted!')
+        handleClose()
+        history.push('/storefront-management')
+        setDeleteSpinner(false)
+      } else throw new Error(response?.data?.msg)
+    } catch (error) {
+      setDeleteSpinner(false)
+      Toast(
+        'err',
+        error.response?.data?.msg || 'Something went wrong! Try again later.'
+      )
+      handleClose()
     }
   }
 
@@ -129,7 +223,7 @@ const EditStoreModal = ({ show, handleClose, data, loadStoreData }) => {
       <Modal show={show} onHide={handleClose} size='lg'>
         <Modal.Header closeButton style={{ border: 'none' }}>
           <Modal.Title style={{ fontSize: '22px' }}>
-            Create New Store
+            Edit {storeData?.name}
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
@@ -160,7 +254,7 @@ const EditStoreModal = ({ show, handleClose, data, loadStoreData }) => {
               <br />
               <input
                 type='text'
-                placeholder='Search something'
+                placeholder='Please input store name'
                 value={storeData.name}
                 onChange={handleInput}
                 name='name'
@@ -171,7 +265,7 @@ const EditStoreModal = ({ show, handleClose, data, loadStoreData }) => {
               <br />
               <input
                 type='text'
-                placeholder='Search something'
+                placeholder='Name of manager '
                 value={storeData.manager}
                 onChange={handleInput}
                 name='manager'
@@ -182,7 +276,7 @@ const EditStoreModal = ({ show, handleClose, data, loadStoreData }) => {
               <br />
               <input
                 type='text'
-                placeholder='Search something'
+                placeholder='Please input phone'
                 value={storeData.phone}
                 onChange={handleInput}
                 name='phone'
@@ -193,7 +287,7 @@ const EditStoreModal = ({ show, handleClose, data, loadStoreData }) => {
               <br />
               <input
                 type='text'
-                placeholder='Search something'
+                placeholder='Please input email'
                 value={storeData.email}
                 onChange={handleInput}
                 name='email'
@@ -204,7 +298,7 @@ const EditStoreModal = ({ show, handleClose, data, loadStoreData }) => {
               <br />
               <input
                 type='text'
-                placeholder='Search something'
+                placeholder='Please input address'
                 value={storeData.address}
                 onChange={handleInput}
                 name='address'
@@ -229,19 +323,34 @@ const EditStoreModal = ({ show, handleClose, data, loadStoreData }) => {
               </select>
             </div>
           </div>
+
+          {/* </form> */}
+        </Modal.Body>
+        <Modal.Footer>
+          {' '}
+          <button
+            className='danger-btn-light d-flex justify-content-center align-items-center'
+            onClick={() => handleStoreDelete()}
+          >
+            Delete{' '}
+            {deleteSpinner && (
+              <Spinner className='ms-2' animation='border' size='sm' />
+            )}
+          </button>
           <button className='primary-btn-light' onClick={handleClose}>
             Close
           </button>
           <button
-            className='primary-btn'
+            className='primary-btn d-flex justify-content-center align-items-center '
             onClick={() => postStoreData()}
             type='submit'
           >
-            Save Changes
+            Save Changes{' '}
+            {editSpinner && (
+              <Spinner className='ms-2' animation='border' size='sm' />
+            )}
           </button>
-          {/* </form> */}
-        </Modal.Body>
-        <Modal.Footer></Modal.Footer>
+        </Modal.Footer>
       </Modal>
     </>
   )

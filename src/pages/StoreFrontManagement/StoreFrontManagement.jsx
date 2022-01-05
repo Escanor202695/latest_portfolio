@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import DashBoard from '../../components/DashBoard/DashBoard'
 import plus from '../../assets/icons/plus.svg'
 import './StoreFrontManagement.scss'
-import { Dropdown, Modal, Table } from 'react-bootstrap'
+import { Dropdown, Modal, Spinner, Table } from 'react-bootstrap'
 import threedot from '../../assets/icons/threedot.svg'
 import demoImg from '../../assets/images/demoLogoImg.png'
 import uploadBtn from '../../assets/icons/upload.svg'
@@ -15,6 +15,7 @@ import StoreFronManagementModal from '../../components/Modals/StoreFrontManageme
 
 const StoreFrontManagement = () => {
   const [show, setShow] = useState(false)
+  const [spin, setSpin] = useState(false)
 
   const handleClose = () => setShow(false)
   const handleShow = () => setShow(true)
@@ -33,6 +34,7 @@ const StoreFrontManagement = () => {
   }, [page, search])
 
   const loadStoreData = async () => {
+    setSpin(true)
     let url = GetAllStoreAPI + `?page=${page}`
     if (search.length > 0) {
       url += `&filter=${search}`
@@ -43,15 +45,17 @@ const StoreFrontManagement = () => {
           menuboard: localStorage.getItem('menu_token'),
         },
       })
-      console.log(response)
+      // console.log(response)
       if (response.status === 200) {
         setAllStore(response.data.data)
+        setSpin(false)
       } else
         throw new Error(
           response?.data?.msg || ' Something went wrong! Try again later.'
         )
     } catch (error) {
-      console.log(error)
+      // console.log(error)
+      setSpin(false)
       Toast(
         'err',
         error.response?.data?.msg || 'Something went wrong! Try again later.'
@@ -138,53 +142,68 @@ const StoreFrontManagement = () => {
           </div>
         </div>
 
-        <Table
-          striped
-          bordered
-          hover
-          responsive
-          borderless={true}
-          className='my-5 text-start'
-        >
-          <thead>
-            <tr>
-              <th>Store</th>
-              <th>Owner</th>
-              <th>Phone</th>
-              <th>Email</th>
-              <th>Location</th>
-              <th>Type</th>
-              <th>Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            {allStore?.map((dt, idx) => (
-              <tr key={idx}>
-                <td onClick={() => goToStore(dt?._id)}> {dt.name} </td>
-                <td onClick={() => goToStore(dt?._id)}>{dt.manager}</td>
-                <td onClick={() => goToStore(dt?._id)}>{dt.phone}</td>
-                <td onClick={() => goToStore(dt?._id)}>{dt.email}</td>
-                <td onClick={() => goToStore(dt?._id)}>{dt.address}</td>
-                <td onClick={() => goToStore(dt?._id)}>{dt.type}</td>
-                <td className='text-center'>
-                  {/* <img src={threedot} alt='' className='' /> */}
-                  <Dropdown drop='start' style={{ cursor: 'pointer' }}>
-                    <Dropdown.Toggle variant='transparent' id='dropdown-basic'>
-                      <img src={threedot} alt='' className='' />
-                    </Dropdown.Toggle>
+        {spin && (
+          <div className='d-flex justify-content-center align-items-center my-5'>
+            <Spinner animation='border' style={{ color: '#558f55' }} />
+          </div>
+        )}
 
-                    <Dropdown.Menu className='mt-4'>
-                      <Dropdown.Item onClick={() => goToStore(dt?._id)}>
-                        visit store
-                      </Dropdown.Item>
-                      <Dropdown.Item href=''>show details</Dropdown.Item>
-                    </Dropdown.Menu>
-                  </Dropdown>
-                </td>
+        {!spin ? (
+          <Table
+            striped
+            bordered
+            hover
+            responsive
+            borderless={true}
+            className='my-5 text-start'
+          >
+            <thead>
+              <tr>
+                <th>Store</th>
+                <th>Owner</th>
+                <th>Phone</th>
+                <th>Email</th>
+                <th>Location</th>
+                <th>Type</th>
+                <th>Action</th>
               </tr>
-            ))}
-          </tbody>
-        </Table>
+            </thead>
+            <tbody>
+              {allStore?.map((dt, idx) => (
+                <tr key={idx}>
+                  <td onClick={() => goToStore(dt?._id)}> {dt.name} </td>
+                  <td onClick={() => goToStore(dt?._id)}>{dt.manager}</td>
+                  <td onClick={() => goToStore(dt?._id)}>{dt.phone}</td>
+                  <td onClick={() => goToStore(dt?._id)}>{dt.email}</td>
+                  <td onClick={() => goToStore(dt?._id)}>{dt.address}</td>
+                  <td onClick={() => goToStore(dt?._id)}>{dt.type}</td>
+                  <td className='text-center'>
+                    {/* <img src={threedot} alt='' className='' /> */}
+                    <Dropdown drop='start' style={{ cursor: 'pointer' }}>
+                      <Dropdown.Toggle
+                        variant='transparent'
+                        id='dropdown-basic'
+                      >
+                        <img src={threedot} alt='' className='' />
+                      </Dropdown.Toggle>
+
+                      <Dropdown.Menu className='mt-4'>
+                        <Dropdown.Item onClick={() => goToStore(dt?._id)}>
+                          visit store
+                        </Dropdown.Item>
+                        <Dropdown.Item href=''>show details</Dropdown.Item>
+                      </Dropdown.Menu>
+                    </Dropdown>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </Table>
+        ) : (
+          !spin && (
+            <h2 className='text-center my-5 text-secondary'>No Data Found!</h2>
+          )
+        )}
       </div>
 
       {/* <Modal show={show} onHide={handleClose} size='lg'>
