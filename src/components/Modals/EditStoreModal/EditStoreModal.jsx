@@ -2,7 +2,7 @@ import React from 'react'
 import { Modal } from 'react-bootstrap'
 import demoImg from '../../../assets/images/demoLogoImg.png'
 import uploadBtn from '../../../assets/icons/upload.svg'
-
+//comment
 const EditStoreModal = ({ show, handleClose, data }) => {
   return (
     <Modal show={show} onHide={handleClose} size='lg'>
