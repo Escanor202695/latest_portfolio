@@ -8,7 +8,7 @@ function PrivateRoute({ children, ...rest }) {
     <Route
       {...rest}
       render={({ location }) =>
-        user._id ? (
+        user?._id ? (
           children
         ) : (
           <Redirect

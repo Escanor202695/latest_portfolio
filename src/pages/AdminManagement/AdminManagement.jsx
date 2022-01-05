@@ -19,6 +19,8 @@ import axios from 'axios'
 import Toast from '../../utils/Toast/Toast'
 import Pagination from 'react-bootstrap/Pagination'
 import EditOthersProfileModal from '../../components/Modals/EditOthersProfileModal/EditOthersProfileModal'
+import ResetPassword from '../../components/Modals/ResetPassword/ResetPassword'
+import { ResetOtherPassModal } from '../../components/Modals/ResetOtherPassModal'
 
 const AdminManagement = () => {
   const [show, setShow] = useState(false)
@@ -164,7 +166,7 @@ const AdminManagement = () => {
     console.log(id, localStorage.getItem('menu_token'))
 
     try {
-      const response = await axios.delete(UserDeleteEnd, id, {
+      const response = await axios.delete(UserDeleteEnd + `?_id=${id}`, {
         headers: {
           menuboard: localStorage.getItem('menu_token'),
         },
@@ -192,6 +194,10 @@ const AdminManagement = () => {
     }
   }
 
+  const [showResetPassOther, setShowResetPassOther] = useState(false)
+  const [changePassData, setChangePassData] = useState('')
+  // pagination start
+
   let items = []
   let totalPage = 0
   if (totalDoc < 10) totalPage = 1
@@ -203,6 +209,8 @@ const AdminManagement = () => {
       </Pagination.Item>
     )
   }
+  // pagination end
+
   return (
     <div className='row py-3'>
       <div className='col-3'>
@@ -322,7 +330,12 @@ const AdminManagement = () => {
                         >
                           edit profile
                         </Dropdown.Item>
-                        <Dropdown.Item href='#/action-2'>
+                        <Dropdown.Item
+                          onClick={() => {
+                            setShowResetPassOther(true)
+                            setChangePassData(admin)
+                          }}
+                        >
                           reset password
                         </Dropdown.Item>
                       </Dropdown.Menu>
@@ -366,7 +379,11 @@ const AdminManagement = () => {
         data={individualData}
         loadAdmin={() => loadAllAdmin()}
       /> */}
-
+      <ResetOtherPassModal
+        show={showResetPassOther}
+        handleClose={() => setShowResetPassOther()}
+        data={changePassData}
+      />
       <Modal
         show={othersProfileModal}
         onHide={() => setOthersProfileModal(false)}

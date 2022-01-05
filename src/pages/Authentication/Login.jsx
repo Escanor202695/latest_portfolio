@@ -66,6 +66,7 @@ const Login = () => {
         },
       })
       if (response.status === 200) {
+        // console.log(response)
         auth.setUser(response.data.data)
         history.replace(from)
         setSpin(false)

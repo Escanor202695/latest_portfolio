@@ -3,18 +3,18 @@ import React from 'react'
 import { useEffect } from 'react'
 import { useState } from 'react'
 import { Modal, Spinner } from 'react-bootstrap'
-import { ChangePasswordEnd } from '../../../constants/api.constants'
+import { ChangeOthersPassEnd } from '../../../constants/api.constants'
 import Toast from '../../../utils/Toast/Toast'
 
-const ResetPassword = ({ show, handleClose }) => {
+const ResetOtherPassModal = ({ show, handleClose, data }) => {
   const [spinner, setSpinner] = useState(false)
-  const [pass, setPass] = useState('')
+  const [myPass, setMyPass] = useState('')
   const [newPass, setNewPass] = useState('')
 
   const handleSubmit = async () => {
     setSpinner(true)
 
-    if (pass === '' || newPass === '') {
+    if (myPass === '' || newPass === '') {
       Toast('err', 'Password cant be empty')
       setSpinner(false)
       return
@@ -28,9 +28,10 @@ const ResetPassword = ({ show, handleClose }) => {
 
     try {
       const response = await axios.put(
-        ChangePasswordEnd,
+        ChangeOthersPassEnd,
         {
-          password: pass,
+          id: data?._id,
+          password: myPass,
           new_password: newPass,
         },
         {
@@ -44,14 +45,14 @@ const ResetPassword = ({ show, handleClose }) => {
         Toast('success', 'Password updated!')
         handleClose()
         setSpinner(false)
-        setPass('')
+        setMyPass('')
         setNewPass('')
       } else
         throw new Error(
           response?.data?.msg || ' Something went wrong! Try again later.'
         )
     } catch (error) {
-      setPass('')
+      setMyPass('')
       setNewPass('')
       handleClose()
       setSpinner(false)
@@ -65,21 +66,12 @@ const ResetPassword = ({ show, handleClose }) => {
   return (
     <Modal show={show} onHide={handleClose} size='md'>
       <Modal.Header closeButton style={{ border: 'none' }}>
-        <Modal.Title style={{ fontSize: '22px' }}>Reset Password</Modal.Title>
+        <Modal.Title style={{ fontSize: '22px' }}>
+          Reset Password Of {data?.name}
+        </Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <div className='mb-3'>
-          <div className='plain-input my-3'>
-            <label for=''>Current Password</label>
-            <br />
-            <input
-              type='password'
-              value={pass}
-              placeholder='input current password'
-              onChange={(e) => setPass(e.target.value)}
-            />
-          </div>
-
           <div className='plain-input my-3'>
             <label for=''>New Password</label>
             <br />
@@ -92,6 +84,17 @@ const ResetPassword = ({ show, handleClose }) => {
             {newPass.length > 0 && newPass.length < 5 && (
               <p className='text-danger'>minimum password length is 5</p>
             )}
+          </div>
+
+          <div className='plain-input my-3'>
+            <label for=''>Your Password</label>
+            <br />
+            <input
+              type='password'
+              value={myPass}
+              placeholder='input current password'
+              onChange={(e) => setMyPass(e.target.value)}
+            />
           </div>
         </div>
       </Modal.Body>
@@ -115,4 +118,4 @@ const ResetPassword = ({ show, handleClose }) => {
   )
 }
 
-export default ResetPassword
+export default ResetOtherPassModal
