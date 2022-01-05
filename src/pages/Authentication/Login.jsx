@@ -7,6 +7,7 @@ import Toast from '../../utils/Toast/Toast'
 import { Spinner } from 'react-bootstrap'
 import { useHistory } from 'react-router-dom'
 import { useAuth } from '../../Providers/AuthProvider'
+import ForgotPassGetOTPModal from '../../components/Modals/ForgotPass/ForgotPassGetOTPModal'
 
 const Login = () => {
   let location = useLocation()
@@ -77,6 +78,8 @@ const Login = () => {
     }
   }
 
+  const [forgotPassModal, setForgotPassModal] = useState(false)
+
   return (
     <div className='login-card  '>
       <h2 className='text-center fw-bold'>Login</h2>
@@ -119,9 +122,18 @@ const Login = () => {
         </button>
       </form>
 
-      <Link to='/' className=' text-center mt-2'>
-        <p>Forgot password?</p>
-      </Link>
+      <p
+        className=' text-center mt-2'
+        style={{ color: 'var(--primary_color)', cursor: 'pointer' }}
+        onClick={() => setForgotPassModal(true)}
+      >
+        Forgot password?
+      </p>
+
+      <ForgotPassGetOTPModal
+        show={forgotPassModal}
+        handleClose={() => setForgotPassModal()}
+      />
     </div>
   )
 }

@@ -8,6 +8,7 @@ const ROUTENAME = {
     GLOBALSETTINGS: '/global-settings',
     LOGIN: '/login',
     PROFILE: '/profile',
+    FROGOTPASSRESET: '/forgot-pass-reset',
     NOTFOUND: '*',
 
 }

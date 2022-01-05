@@ -11,6 +11,8 @@ import { useEffect } from 'react'
 import { GetAllStoreAPI } from '../../constants/api.constants'
 import axios from 'axios'
 import Toast from '../../utils/Toast/Toast'
+import StoreFronManagementModal from '../../components/Modals/StoreFrontManagementModal/StoreFronManagementModal'
+
 const StoreFrontManagement = () => {
   const [show, setShow] = useState(false)
 
@@ -185,7 +187,7 @@ const StoreFrontManagement = () => {
         </Table>
       </div>
 
-      <Modal show={show} onHide={handleClose} size='lg'>
+      {/* <Modal show={show} onHide={handleClose} size='lg'>
         <Modal.Header closeButton style={{ border: 'none' }}>
           <Modal.Title style={{ fontSize: '22px' }}>
             Create New Store
@@ -242,8 +244,6 @@ const StoreFrontManagement = () => {
               <label for=''>Tags</label>
               <br />
               <textarea rows='3' cols=''></textarea>
-              {/* <span className='m-1'>tag 1</span>
-              <span className='m-1'>tag 1</span> */}
             </div>
             <div className='plain-dropdown '>
               <label for=''>Show</label>
@@ -266,7 +266,13 @@ const StoreFrontManagement = () => {
             Save Changes
           </button>
         </Modal.Footer>
-      </Modal>
+      </Modal> */}
+      <StoreFronManagementModal
+        show={show}
+        handleClose={handleClose}
+        demoImg={demoImg}
+        uploadBtn={uploadBtn}
+      />
     </div>
   )
 }

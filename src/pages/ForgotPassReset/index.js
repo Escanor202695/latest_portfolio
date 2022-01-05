@@ -1,0 +1,1 @@
+export { default as ForgotPassReset } from './ForgotPassReset.jsx'

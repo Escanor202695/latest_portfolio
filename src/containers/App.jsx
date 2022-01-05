@@ -21,6 +21,7 @@ import { useAuth } from '../Providers/AuthProvider'
 import { useEffect } from 'react'
 import axios from 'axios'
 import { GetThemeEnd } from '../constants/api.constants'
+import { ForgotPassReset } from '../pages/ForgotPassReset'
 export const UserContext = createContext()
 
 function App() {
@@ -78,6 +79,11 @@ function App() {
           ) : (
             <Route exact path={ROUTENAME.LOGIN} component={Login} />
           )}
+          <Route
+            exact
+            path={ROUTENAME.FROGOTPASSRESET}
+            component={ForgotPassReset}
+          />
 
           {/* <Route path={ROUTENAME.LOGIN} component={Login} exact /> */}
           <PrivateRoute path={ROUTENAME.HOME} exact>
