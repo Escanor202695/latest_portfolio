@@ -15,5 +15,6 @@ export const ChangeOthersPassEnd = BaseUrl + '/admin/reset_others_password'
 export const ForgotPassGetOTPEnd = BaseUrl + '/admin/forgot-pass-get-otp'
 export const ForgotPassSetPassEnd = BaseUrl + '/admin/set-pass-forget-pass'
 export const StoreCreate = BaseUrl + '/store/create'
+export const StoreEdit = BaseUrl + '/store/edit'
 
 
