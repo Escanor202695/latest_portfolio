@@ -17,7 +17,7 @@ export default function StoreFronManagementModal({
     address: '',
   })
 
-  const [types, setTypes] = useState('')
+  const [types, setTypes] = useState('Category')
 
   function handleInput(e) {
     if (e.target.name === 'types') {
@@ -62,8 +62,7 @@ export default function StoreFronManagementModal({
     // console.log('The tag at index ' + index + ' was clicked');
   }
 
-  useEffect(() => {
-    console.log('call')
+  async function postStoreData() {
     const tagArray = []
     tags.map((tag) => {
       console.log(tag)
@@ -78,24 +77,23 @@ export default function StoreFronManagementModal({
       tag: tagArray,
       type: types,
     }
-    console.log(dataObj)
-    async function postStoreData() {
-      try {
-        console.log(dataObj)
-        await axios
-          .post(StoreCreate, dataObj, {
-            headers: {
-              menuboard: localStorage.getItem('menu_token'),
-            },
-          })
-          .then((response) => console.log(response))
-      } catch (error) {
-        console.log(error)
-      }
+    try {
+      console.log(dataObj)
+      await axios
+        .post(StoreCreate, dataObj, {
+          headers: {
+            menuboard: localStorage.getItem('menu_token'),
+          },
+        })
+        .then((response) => {
+          console.log(response)
+          handleClose()
+        })
+    } catch (error) {
+      handleClose()
+      console.log(error)
     }
-    postStoreData()
-    console.log('call')
-  }, [storeData, tags, types])
+  }
 
   return (
     <>
@@ -106,109 +104,113 @@ export default function StoreFronManagementModal({
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <form onSubmit={handleSubmit}>
-            <h6>Store Brand Icon / Logo</h6>
-            <div className='d-flex justify-content-start align-items-end'>
+          {/* <form onSubmit={handleSubmit}> */}
+          <h6>Store Brand Icon / Logo</h6>
+          <div className='d-flex justify-content-start align-items-end'>
+            <img
+              src={demoImg}
+              alt='demoImg'
+              height='100'
+              width='100'
+              className='me-4'
+            />
+            <button className='upload-btn d-flex justify-content-between align-items-center'>
+              <span>Upload</span>
               <img
-                src={demoImg}
-                alt='demoImg'
-                height='100'
-                width='100'
-                className='me-4'
+                className='mx-2'
+                src={uploadBtn}
+                alt=''
+                width='24'
+                height='24'
+              />{' '}
+            </button>
+          </div>
+          <div className='my-3'>
+            <div className='plain-input my-3'>
+              <label for=''>Store Name</label>
+              <br />
+              <input
+                type='text'
+                placeholder='Search something'
+                value={storeData.name}
+                onChange={handleInput}
+                name='name'
               />
-              <button className='upload-btn d-flex justify-content-between align-items-center'>
-                <span>Upload</span>
-                <img
-                  className='mx-2'
-                  src={uploadBtn}
-                  alt=''
-                  width='24'
-                  height='24'
-                />{' '}
-              </button>
             </div>
-            <div className='my-3'>
-              <div className='plain-input my-3'>
-                <label for=''>Store Name</label>
-                <br />
-                <input
-                  type='text'
-                  placeholder='Search something'
-                  value={storeData.name}
-                  onChange={handleInput}
-                  name='name'
-                />
-              </div>
-              <div className='plain-input my-3'>
-                <label for=''>Manager / Owner Name</label>
-                <br />
-                <input
-                  type='text'
-                  placeholder='Search something'
-                  value={storeData.manager}
-                  onChange={handleInput}
-                  name='manager'
-                />
-              </div>
-              <div className='plain-input my-3'>
-                <label for=''>Manager / Owner Phone</label>
-                <br />
-                <input
-                  type='text'
-                  placeholder='Search something'
-                  value={storeData.phone}
-                  onChange={handleInput}
-                  name='phone'
-                />
-              </div>
-              <div className='plain-input my-3'>
-                <label for=''>Manager / Owner Email</label>
-                <br />
-                <input
-                  type='text'
-                  placeholder='Search something'
-                  value={storeData.email}
-                  onChange={handleInput}
-                  name='email'
-                />
-              </div>
-              <div className='plain-input my-3'>
-                <label for=''>Address / Location</label>
-                <br />
-                <input
-                  type='text'
-                  placeholder='Search something'
-                  value={storeData.address}
-                  onChange={handleInput}
-                  name='address'
-                />
-              </div>
-              <div className='plain-textarea my-3'>
-                <label for=''>Tags</label>
-                <br />
-                <InputTag
-                  tags={tags}
-                  handleDelete={handleDelete}
-                  handleAddition={handleAddition}
-                  handleDrag={handleDrag}
-                  handleTagClick={handleTagClick}
-                />
-              </div>
-              <div className='plain-dropdown '>
-                <label for=''>Type</label>
-                <select onChange={handleInput} name='types'>
-                  <option value='Category'> Catagory</option>
-                  <option value='Click-n-Collect'> Click-n-Collect</option>
-                </select>
-              </div>
+            <div className='plain-input my-3'>
+              <label for=''>Manager / Owner Name</label>
+              <br />
+              <input
+                type='text'
+                placeholder='Search something'
+                value={storeData.manager}
+                onChange={handleInput}
+                name='manager'
+              />
             </div>
-            <button className='primary-btn-light' onClick={handleClose}>
-              Close
-            </button>
-            <button className='primary-btn' onClick={handleClose} type='submit'>
-              Save Changes
-            </button>
-          </form>
+            <div className='plain-input my-3'>
+              <label for=''>Manager / Owner Phone</label>
+              <br />
+              <input
+                type='text'
+                placeholder='Search something'
+                value={storeData.phone}
+                onChange={handleInput}
+                name='phone'
+              />
+            </div>
+            <div className='plain-input my-3'>
+              <label for=''>Manager / Owner Email</label>
+              <br />
+              <input
+                type='text'
+                placeholder='Search something'
+                value={storeData.email}
+                onChange={handleInput}
+                name='email'
+              />
+            </div>
+            <div className='plain-input my-3'>
+              <label for=''>Address / Location</label>
+              <br />
+              <input
+                type='text'
+                placeholder='Search something'
+                value={storeData.address}
+                onChange={handleInput}
+                name='address'
+              />
+            </div>
+            <div className='plain-textarea my-3'>
+              <label for=''>Tags</label>
+              <br />
+              <InputTag
+                tags={tags}
+                handleDelete={handleDelete}
+                handleAddition={handleAddition}
+                handleDrag={handleDrag}
+                handleTagClick={handleTagClick}
+              />
+            </div>
+            <div className='plain-dropdown '>
+              <label for=''>Type</label>
+              <select onChange={handleInput} name='types'>
+                <option value='Category'> Catagory</option>
+                <option value='Click-n-Collect'> Click-n-Collect</option>
+              </select>
+            </div>
+          </div>
+          <button className='primary-btn-light' onClick={handleClose}>
+            Close
+          </button>
+          <button
+            className='primary-btn'
+            onClick={() => postStoreData()}
+            type='submit'
+          >
+            Save Changes
+          </button>
+          {/* </form> */}
         </Modal.Body>
         <Modal.Footer></Modal.Footer>
       </Modal>
