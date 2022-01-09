@@ -37,7 +37,7 @@ const EditProfileModal = ({ show, handleClose, data, getAdminInfo }) => {
           menuboard: localStorage.getItem('menu_token'),
         },
       })
-      console.log(response)
+      // console.log(response)
       if (response.status === 200) {
         Toast('success', 'User Updated updated!')
         handleClose()

@@ -15,7 +15,7 @@ const Login = () => {
   let history = useHistory()
   const auth = useAuth()
 
-  console.log(auth)
+  // console.log(auth)
   const [spin, setSpin] = useState(false)
   const [authValue, setAuthValue] = useState({
     email: 'super@admin.com',
@@ -40,7 +40,7 @@ const Login = () => {
         password: authValue.password,
       })
       const token = response.data.menuboard.token
-      console.log(response)
+      // console.log(response)
       if (response.status === 200) {
         Toast('success', 'Successfully Logged In!')
         localStorage.setItem('menu_token', token)
@@ -51,7 +51,7 @@ const Login = () => {
         )
     } catch (error) {
       setSpin(false)
-      console.log(error)
+      // console.log(error)
       Toast(
         'err',
         error.response?.data?.msg || 'Something went wrong! Try again later.'

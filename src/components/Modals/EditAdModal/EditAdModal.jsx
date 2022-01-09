@@ -4,7 +4,7 @@ import axios from 'axios'
 import { AdEditEnd } from '../../../constants/api.constants'
 import Toast from '../../../utils/Toast/Toast'
 
-const EditAdModal = ({ show, handleClose, ad, loadAllFolders }) => {
+const EditAdModal = ({ show, handleClose, ad, loadAllFolders, folderID }) => {
   const [spinner, setSpinner] = useState(false)
   const [data, setData] = useState({
     id: '',
@@ -13,12 +13,14 @@ const EditAdModal = ({ show, handleClose, ad, loadAllFolders }) => {
     description: '',
   })
 
+  // console.log(ad)
+
   useEffect(() => {
     setData({
       id: ad?._id,
       folder_id: ad?.folder_id,
       name: ad?.name,
-      description: ad?.description,
+      description: ad?.description || '',
     })
   }, [ad])
 
@@ -41,12 +43,12 @@ const EditAdModal = ({ show, handleClose, ad, loadAllFolders }) => {
           },
         }
       )
-      console.log(response)
+      // console.log(response.data)
       if (response.status === 200) {
         Toast('success', 'AD updated!')
         handleClose()
         setSpinner(false)
-        loadAllFolders(ad?._id)
+        loadAllFolders(folderID)
 
         setData({
           id: '',

@@ -15,7 +15,7 @@ const ForgotPassReset = () => {
   let history = useHistory()
 
   const handleSubmit = async () => {
-    console.log(email, pass, OTP)
+    // console.log(email, pass, OTP)
     setSpin(true)
 
     if (email === '') {
@@ -38,7 +38,7 @@ const ForgotPassReset = () => {
           },
         }
       )
-      console.log(response)
+      // console.log(response)
       if (response.status === 200) {
         Toast('success', 'New Password Set!')
         setSpin(false)

@@ -1,22 +1,31 @@
 import axios from 'axios'
 import React, { useState } from 'react'
 import { Modal, Spinner } from 'react-bootstrap'
-import { DeleteAdEnd } from '../../../constants/api.constants'
+import { FolderDeleteEnd } from '../../../constants/api.constants'
 import Toast from '../../../utils/Toast/Toast'
 
-const DeleteAdModal = ({ show, handleClose, ad, loadAllFolders, folderID }) => {
+const DeleteFolderModal = ({
+  show,
+  handleClose,
+  folder,
+  loadAllFolders,
+  folderID,
+}) => {
   const [spinner, setSpinner] = useState(false)
-  // console.log(ad)
+  // console.log(folderID)
   const handleDeleteAd = async () => {
     setSpinner(true)
     try {
-      const response = await axios.delete(DeleteAdEnd + `?_id=${ad?._id}`, {
-        headers: {
-          menuboard: localStorage.getItem('menu_token'),
-        },
-      })
+      const response = await axios.delete(
+        FolderDeleteEnd + `?_id=${folder?._id}`,
+        {
+          headers: {
+            menuboard: localStorage.getItem('menu_token'),
+          },
+        }
+      )
       if (response.status === 200) {
-        Toast('success', 'Ad Deleted successfully!')
+        Toast('success', 'Folder Deleted successfully!')
         loadAllFolders(folderID)
         setSpinner(false)
         handleClose()
@@ -27,14 +36,13 @@ const DeleteAdModal = ({ show, handleClose, ad, loadAllFolders, folderID }) => {
       handleClose()
     }
   }
-
   return (
     <Modal show={show} onHide={handleClose}>
       <Modal.Header closeButton style={{ border: 'none' }}>
-        <Modal.Title style={{ fontSize: '22px' }}>Delete AD</Modal.Title>
+        <Modal.Title style={{ fontSize: '22px' }}>Delete Folder</Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <h4>Are You sure to delete {ad?.name}?</h4>
+        <h4>Are You sure to delete {folder?.name}?</h4>
       </Modal.Body>
       <Modal.Footer style={{ border: 'none' }}>
         <button className='primary-btn-light' onClick={handleClose}>
@@ -49,4 +57,4 @@ const DeleteAdModal = ({ show, handleClose, ad, loadAllFolders, folderID }) => {
   )
 }
 
-export default DeleteAdModal
+export default DeleteFolderModal

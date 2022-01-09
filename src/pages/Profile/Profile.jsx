@@ -31,7 +31,7 @@ const Profile = () => {
         },
       })
 
-      console.log(response)
+      // console.log(response)
       if (response.status === 200) {
         setUserData(response.data.data)
         setLoadInfoSpinner(false)

@@ -112,5 +112,10 @@
   }
 }
 
-.custom-folder {
+.custom-folder:hover {
+  background-color: var(--gray_six_color);
+  border-radius: 4px;
+  img {
+    display: block !important;
+  }
 }

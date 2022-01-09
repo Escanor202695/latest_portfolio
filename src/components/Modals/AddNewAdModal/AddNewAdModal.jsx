@@ -71,7 +71,7 @@ const AddNewAdModal = ({ show, handleClose, folderId, loadAllFolders }) => {
           },
         }
       )
-      console.log(response)
+      // console.log(response)
       if (response.status === 200) {
         Toast('success', 'AD Created!')
         handleClose()
@@ -94,7 +94,7 @@ const AddNewAdModal = ({ show, handleClose, folderId, loadAllFolders }) => {
         description: '',
         link: '',
       })
-      Toast('err', error.data?.msg)
+      Toast('err', error.response?.data?.msg)
       handleClose()
     }
   }
@@ -126,7 +126,7 @@ const AddNewAdModal = ({ show, handleClose, folderId, loadAllFolders }) => {
         </div>
         <div className='my-3'>
           <div className='plain-input my-3'>
-            <label for=''>Folder Name* </label>
+            <label for=''>Ad Name* </label>
             <br />
             <input
               type='text'

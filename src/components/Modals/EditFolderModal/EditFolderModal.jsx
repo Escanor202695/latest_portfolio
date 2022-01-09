@@ -5,21 +5,34 @@ import axios from 'axios'
 import {
   FileUploadEnd,
   FolderCreateEnd,
+  FolderEditEnd,
 } from '../../../constants/api.constants'
 import Toast from '../../../utils/Toast/Toast'
 
-const AddNewFolderModal = ({ show, handleClose, parent, loadAllFolders }) => {
+const EditFolderModal = ({
+  show,
+  handleClose,
+  details,
+  loadAllFolders,
+  parentID,
+}) => {
   const [photoSpinner, setPhotoSpinner] = useState(false)
   const [spinner, setSpinner] = useState(false)
   const [photoUrl, setPhotoUrl] = useState('')
   const [data, setData] = useState({
-    parent_id: '',
+    id: '',
     name: '',
     description: '',
-    photo: '',
   })
 
-  // console.log(parent)
+  useEffect(() => {
+    setData({
+      id: details?._id,
+      name: details?.name,
+      description: details?.description,
+    })
+    setPhotoUrl(details?.photo)
+  }, [details])
 
   const handleImageUpload = async (e) => {
     setPhotoSpinner(true)
@@ -45,7 +58,7 @@ const AddNewFolderModal = ({ show, handleClose, parent, loadAllFolders }) => {
     }
   }
 
-  const handleFolderCreation = async () => {
+  const handleFolderUpdate = async () => {
     setSpinner(true)
     if (!data?.name) {
       Toast('err', 'Please insert folder name')
@@ -53,10 +66,10 @@ const AddNewFolderModal = ({ show, handleClose, parent, loadAllFolders }) => {
       return
     }
     try {
-      const response = await axios.post(
-        FolderCreateEnd,
+      const response = await axios.put(
+        FolderEditEnd,
         {
-          parent_id: parent,
+          id: data?.id,
           name: data?.name,
           description: data?.description || '',
           photo: photoUrl || '',
@@ -69,18 +82,19 @@ const AddNewFolderModal = ({ show, handleClose, parent, loadAllFolders }) => {
       )
       // console.log(response)
       if (response.status === 200) {
-        Toast('success', 'Folder Created!')
+        Toast('success', 'Folder updated!')
+        loadAllFolders(parentID)
+
         handleClose()
         setSpinner(false)
         setPhotoUrl(null)
-        setData({ parent_id: '', name: '', description: '', photo: '' })
-        loadAllFolders(parent)
+        setData({ id: '', name: '', description: '' })
       } else throw new Error(response.data?.msg || 'Try again later')
     } catch (error) {
       setSpinner(false)
       setPhotoUrl(null)
-      setData({ parent_id: '', name: '', description: '', photo: '' })
-      Toast('err', error.data?.msg)
+      setData({ id: '', name: '', description: '' })
+      Toast('err', error.response?.data?.msg)
       handleClose()
     }
   }
@@ -89,7 +103,7 @@ const AddNewFolderModal = ({ show, handleClose, parent, loadAllFolders }) => {
     <Modal show={show} onHide={handleClose} size='lg'>
       <Modal.Header closeButton style={{ border: 'none' }}>
         <Modal.Title style={{ fontSize: '22px' }}>
-          Create New Folder
+          Edit {data?.name}
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>
@@ -119,6 +133,7 @@ const AddNewFolderModal = ({ show, handleClose, parent, loadAllFolders }) => {
             <input
               type='text'
               placeholder='enter name'
+              value={data?.name}
               onChange={(e) => setData({ ...data, name: e.target.value })}
             />
           </div>
@@ -128,6 +143,7 @@ const AddNewFolderModal = ({ show, handleClose, parent, loadAllFolders }) => {
             <input
               type='text'
               placeholder='enter details'
+              value={data?.description}
               onChange={(e) =>
                 setData({ ...data, description: e.target.value })
               }
@@ -139,7 +155,7 @@ const AddNewFolderModal = ({ show, handleClose, parent, loadAllFolders }) => {
         <button className='primary-btn-light' onClick={handleClose}>
           Close
         </button>
-        <button className='primary-btn' onClick={() => handleFolderCreation()}>
+        <button className='primary-btn' onClick={() => handleFolderUpdate()}>
           Save Changes{' '}
           {spinner && <Spinner animation='border' size='sm' className='ms-2' />}
         </button>
@@ -148,4 +164,4 @@ const AddNewFolderModal = ({ show, handleClose, parent, loadAllFolders }) => {
   )
 }
 
-export default AddNewFolderModal
+export default EditFolderModal

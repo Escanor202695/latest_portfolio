@@ -25,6 +25,10 @@ export const DeleteStoreEnd = BaseUrl + '/store/delete'
 // folder
 export const GetAllFoldersEnd = BaseUrl + '/folder/get'
 export const FolderCreateEnd = BaseUrl + '/folder/create'
+export const FolderEditEnd = BaseUrl + '/folder/edit'
+export const FolderDeleteEnd = BaseUrl + '/folder/delete'
+
+
 
 // ad
 export const AdGetEnd = BaseUrl + '/ad/get'

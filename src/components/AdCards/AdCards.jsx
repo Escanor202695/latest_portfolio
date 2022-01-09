@@ -7,6 +7,7 @@ import { Dropdown, Modal } from 'react-bootstrap'
 import Menues from '../../assets/images/menus.png'
 import { EditAdModal } from '../../components/Modals/EditAdModal'
 import DeleteAdModal from '../Modals/DeleteAdModal/DeleteAdModal'
+
 const AdCards = ({ ad, index, loadAllFolders }) => {
   const [show, setShow] = useState(false)
   const [editModal, setEditModal] = useState(false)
@@ -29,11 +30,12 @@ const AdCards = ({ ad, index, loadAllFolders }) => {
       _id: ad?._id,
     })
   }, [ad])
+  // console.log(ad)
 
   const handleClose = () => setShow(false)
   const handleShow = () => setShow(true)
   return (
-    <div className='my-3 row ad-card '>
+    <div className='my-3 row ad-card mx-1'>
       <div
         className='col-6 d-flex justify-content-between align-items-center '
         style={{ borderRight: '2px solid #CCCCCC' }}
@@ -95,6 +97,7 @@ const AdCards = ({ ad, index, loadAllFolders }) => {
         show={editModal}
         handleClose={() => setEditModal()}
         ad={ad}
+        folderID={ad?.folder_id}
         loadAllFolders={loadAllFolders}
       />
       <DeleteAdModal
@@ -102,6 +105,7 @@ const AdCards = ({ ad, index, loadAllFolders }) => {
         handleClose={() => setDeleteModal()}
         loadAllFolders={loadAllFolders}
         ad={ad}
+        folderID={ad?.folder_id}
       />
     </div>
   )

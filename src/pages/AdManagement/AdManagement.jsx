@@ -9,8 +9,12 @@ import { AdGetEnd, GetAllFoldersEnd } from '../../constants/api.constants'
 import Toast from '../../utils/Toast/Toast'
 import { AiFillFolder, AiFillFolderAdd } from 'react-icons/ai'
 import { FaArrowLeft } from 'react-icons/fa'
-import { Spinner } from 'react-bootstrap'
+import { Dropdown, Spinner } from 'react-bootstrap'
 import AddNewFolderModal from '../../components/Modals/AddNewFolderModal/AddNewFolderModal'
+import threedot from '../../assets/icons/threedot.svg'
+import EditFolderModal from '../../components/Modals/EditFolderModal/EditFolderModal'
+import DeleteFolderModal from '../../components/Modals/DeleteFolderModal/DeleteFolderModal'
+import Breadcrumb from 'react-bootstrap/Breadcrumb'
 
 const AdManagement = () => {
   const [show, setShow] = useState(false)
@@ -22,6 +26,10 @@ const AdManagement = () => {
   const [view, setView] = useState('grid')
   const [adSearchKey, setAdSearchKey] = useState('')
   const [addNewFolder, setAddNewFolder] = useState(false)
+  const [editFolder, setEditFolder] = useState(false)
+  const [editFolderDetails, setEditFolderDetails] = useState({})
+  const [deleteFolder, setDeleteFolder] = useState(false)
+  const [deleteFolderDetails, setDeleteFolderDetails] = useState({})
 
   useEffect(() => {
     if (view === 'grid') {
@@ -29,7 +37,12 @@ const AdManagement = () => {
     } else {
       loadAllAds()
     }
-  }, [folderSearchId, adSearchKey, view])
+  }, [folderSearchId, view])
+
+  useEffect(() => {
+    // setFolderSearchId(null)
+    loadAllAds()
+  }, [adSearchKey])
 
   const loadAllFolders = async (id) => {
     setSpinner(true)
@@ -88,6 +101,7 @@ const AdManagement = () => {
       let adGetUrl = AdGetEnd
       if (adSearchKey) {
         adGetUrl += `?name=${adSearchKey}`
+        setView('list')
       }
 
       const response = await axios.get(adGetUrl, {
@@ -108,6 +122,18 @@ const AdManagement = () => {
       setSpinner(false)
     }
   }
+
+  const handleEditFolder = (folder) => {
+    setEditFolderDetails(folder)
+    setEditFolder(true)
+  }
+
+  const handleDeleteFolder = (folder) => {
+    setDeleteFolderDetails(folder)
+    setDeleteFolder(true)
+  }
+
+  // console.log(deleteFolderDetails)
 
   return (
     <div className='row py-3'>
@@ -138,11 +164,37 @@ const AdManagement = () => {
           <div className='custom-dropdown ms-2'>
             <label for=''>View</label>
             <select onChange={(e) => setView(e.target.value)}>
-              <option value='grid'>Grid view</option>
-              <option value='list'>List View (all ad)</option>
+              <option value='grid' selected={view === 'grid' ? true : false}>
+                Grid view
+              </option>
+              <option value='list' selected={view === 'list' ? true : false}>
+                List View (all ad)
+              </option>
             </select>
           </div>
         </div>
+        {/* {!spinner && view === 'grid' && allFolders[0]?.parent_id?.name && (
+          <div className='d-flex justify-content-start align-items-center '>
+            <button
+              className='primary-btn  px-2 py-1 me-3 '
+              style={{ display: folderSearchId ? 'block ' : 'none' }}
+              disabled={folderSearchId ? false : true}
+              onClick={() =>
+                setFolderSearchId(
+                  previousSearchId === folderSearchId ? '' : previousSearchId
+                )
+              }
+            >
+              <FaArrowLeft />
+            </button>
+
+            <Breadcrumb className='mt-3'>
+              <Breadcrumb.Item>
+                .../{allFolders[0]?.parent_id?.name}
+              </Breadcrumb.Item>
+            </Breadcrumb>
+          </div>
+        )} */}
         {spinner && (
           <div className='text-center my-5'>
             <Spinner
@@ -158,45 +210,82 @@ const AdManagement = () => {
                 allFolders.map((folder, idx) => (
                   <div
                     key={idx}
-                    className='mx-2'
-                    style={{ cursor: 'pointer' }}
-                    onClick={() => {
-                      setPreviousSearchId(folderSearchId)
-                      setFolderSearchId(folder?._id)
-                    }}
+                    className='m-2 px-2 custom-folder d-flex  justify-content-between align-items-start'
+                    style={{ cursor: 'pointer', width: '5.3rem' }}
                   >
-                    <AiFillFolder
-                      style={{
-                        height: '7rem',
-                        width: '7rem',
-                        fontColor: 'blue',
-                      }}
-                      color='var(--primary_color)'
-                      title={folder?.name}
-                    />
-                    <p
-                      className='m-0 text-center'
-                      style={{
-                        position: 'relative',
-                        top: '-1rem',
+                    <div
+                      onClick={() => {
+                        setPreviousSearchId(folderSearchId)
+                        setFolderSearchId(folder?._id)
                       }}
                     >
-                      {folder?.name}
-                    </p>
+                      <AiFillFolder
+                        style={{
+                          height: '3.5rem',
+                          width: '3.5rem',
+                        }}
+                        color='#bad9ba'
+                        title={folder?.name}
+                      />
+                      <p
+                        className='m-0 text-center'
+                        style={{
+                          position: 'relative',
+                          top: '-0.5rem',
+                          maxWidth: '4rem',
+                          overflowWrap: 'break-word',
+                        }}
+                      >
+                        <small>{folder?.name}</small>
+                      </p>
+                    </div>
+                    <Dropdown
+                      drop='bottom'
+                      style={{
+                        cursor: 'pointer',
+                        marginLeft: '-14px',
+                        marginTop: '2px',
+                        padding: '0px',
+                      }}
+                    >
+                      <Dropdown.Toggle
+                        variant='transparent'
+                        id='dropdown-basic'
+                      >
+                        <img
+                          src={threedot}
+                          alt=''
+                          style={{
+                            transform: ' rotate(90deg)',
+                            display: 'none',
+                          }}
+                        />{' '}
+                      </Dropdown.Toggle>
+
+                      <Dropdown.Menu className='mt-2'>
+                        <Dropdown.Item onClick={() => handleEditFolder(folder)}>
+                          Edit Folder{' '}
+                        </Dropdown.Item>
+                        <Dropdown.Item
+                          onClick={() => handleDeleteFolder(folder)}
+                        >
+                          Delete Folder
+                        </Dropdown.Item>
+                      </Dropdown.Menu>
+                    </Dropdown>
                   </div>
                 ))}
               <div
                 onClick={() => setAddNewFolder(true)}
                 style={{ cursor: 'pointer' }}
-                className='mx-2'
+                className='m-2 px-2'
               >
                 <AiFillFolderAdd
                   style={{
-                    height: '7rem',
-                    width: '7rem',
-                    fontColor: 'blue',
+                    height: '3.5rem',
+                    width: '3.5rem',
                   }}
-                  color='var(--primary_color)'
+                  color='#bad9ba'
                   title='Add New Folder'
                 />
               </div>
@@ -230,8 +319,8 @@ const AdManagement = () => {
                     folderId={folderSearchId}
                   />
                 ))
-              : folderSearchId && (
-                  <h3 className='text-secondary my-5 text-center'>
+              : !spinner && (
+                  <h3 className='text-secondary my-5 py-5 text-center'>
                     No ad Found!
                   </h3>
                 )}
@@ -263,6 +352,20 @@ const AdManagement = () => {
         show={addNewFolder}
         handleClose={() => setAddNewFolder()}
         parent={folderSearchId}
+        loadAllFolders={loadAllFolders}
+      />
+      <EditFolderModal
+        show={editFolder}
+        details={editFolderDetails}
+        parentID={editFolderDetails?.parent_id}
+        handleClose={() => setEditFolder()}
+        loadAllFolders={loadAllFolders}
+      />
+      <DeleteFolderModal
+        show={deleteFolder}
+        folder={deleteFolderDetails}
+        folderID={deleteFolderDetails?.parent_id}
+        handleClose={() => setDeleteFolder()}
         loadAllFolders={loadAllFolders}
       />
     </div>

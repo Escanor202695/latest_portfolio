@@ -1,1 +1,1 @@
-export { default as DeleteAdModal } from './DeleteAdModal.jsx'
+export { default as DeleteAdModal } from './DeleteAdModal'
