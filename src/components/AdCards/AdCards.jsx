@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import screenImg from '../../assets/images/screen-img.png'
 import threedot from '../../assets/icons/threedot.svg'
 import './AdCards.scss'
@@ -6,9 +6,29 @@ import Frame from '../../assets/images/Frame.png'
 import { Dropdown, Modal } from 'react-bootstrap'
 import Menues from '../../assets/images/menus.png'
 import { EditAdModal } from '../../components/Modals/EditAdModal'
-const AdCards = () => {
+const AdCards = ({ folder }) => {
   const [show, setShow] = useState(false)
   const [editModal, setEditModal] = useState(false)
+
+  const [adDetails, setAdDetails] = useState({
+    description: '',
+    folder_id: '',
+    link: '',
+    name: '',
+    _id: '',
+  })
+
+  useEffect(() => {
+    setAdDetails({
+      description: folder?.description,
+      folder_id: folder?.folder_id,
+      link: folder?.link,
+      name: folder?.name,
+      _id: folder?._id,
+    })
+  }, [folder])
+
+  console.log(folder)
 
   const handleClose = () => setShow(false)
   const handleShow = () => setShow(true)
@@ -30,10 +50,8 @@ const AdCards = () => {
           />
         </div>
         <div className='pe-5'>
-          <h6 className='fw-bold'>Advertisement Name</h6>
-          <h6 style={{ fontWeight: 'normal' }}>
-            Product Manufacturer, Manufacturer Type
-          </h6>
+          <h6 className='fw-bold'> {adDetails.name} </h6>
+          <h6 style={{ fontWeight: 'normal' }}>{adDetails.description}</h6>
           <h6 style={{ fontWeight: 'normal' }}>
             Filetype: Image, Ad Type: Lorem
           </h6>
@@ -72,7 +90,10 @@ const AdCards = () => {
         </div>
       </div>
       <Modal show={show} onHide={handleClose} size='xl' centered>
-        <img src={Menues} alt='' />
+        <img
+          src={adDetails.link.status === 200 ? adDetails.link : Menues}
+          alt=''
+        />
       </Modal>
       <EditAdModal show={editModal} handleClose={() => setEditModal()} />
     </div>

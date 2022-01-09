@@ -1,1 +1,1 @@
-export { default as AdMnagement } from './AdMnagement.jsx'
+export { default as AdManagement } from './AdManagement.jsx'

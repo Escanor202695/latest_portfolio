@@ -41,7 +41,6 @@ function App() {
           menuboard: token,
         },
       })
-      console.log(response)
       if (response.status === 200) {
         Object.keys(response.data.data[0]).map((key) => {
           const value = response.data.data[0][key]
