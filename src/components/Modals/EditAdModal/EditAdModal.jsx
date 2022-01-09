@@ -1,77 +1,111 @@
-import React from 'react'
-import { Modal } from 'react-bootstrap'
-import demoImg from '../../../assets/images/demoLogoImg.png'
-import uploadBtn from '../../../assets/icons/upload.svg'
-const EditAdModal = ({ show, handleClose }) => {
+import React, { useEffect, useState } from 'react'
+import { Modal, Spinner } from 'react-bootstrap'
+import axios from 'axios'
+import { AdEditEnd } from '../../../constants/api.constants'
+import Toast from '../../../utils/Toast/Toast'
+
+const EditAdModal = ({ show, handleClose, ad, loadAllFolders }) => {
+  const [spinner, setSpinner] = useState(false)
+  const [data, setData] = useState({
+    id: '',
+    folder_id: '',
+    name: '',
+    description: '',
+  })
+
+  useEffect(() => {
+    setData({
+      id: ad?._id,
+      folder_id: ad?.folder_id,
+      name: ad?.name,
+      description: ad?.description,
+    })
+  }, [ad])
+
+  const handleAdEdit = async () => {
+    setSpinner(true)
+    if (!data?.name) {
+      Toast('err', 'Please insert folder name')
+      setSpinner(false)
+      return
+    }
+
+    try {
+      const response = await axios.put(
+        AdEditEnd,
+
+        data,
+        {
+          headers: {
+            menuboard: localStorage.getItem('menu_token'),
+          },
+        }
+      )
+      console.log(response)
+      if (response.status === 200) {
+        Toast('success', 'AD updated!')
+        handleClose()
+        setSpinner(false)
+        loadAllFolders(ad?._id)
+
+        setData({
+          id: '',
+          folder_id: '',
+          name: '',
+          description: '',
+        })
+      } else throw new Error(response.data?.msg || 'Try again later')
+    } catch (error) {
+      setSpinner(false)
+      setData({
+        id: '',
+        folder_id: '',
+        name: '',
+        description: '',
+      })
+      Toast('err', error.data?.msg)
+      handleClose()
+    }
+  }
+
   return (
     <Modal show={show} onHide={handleClose} size='lg'>
       <Modal.Header closeButton style={{ border: 'none' }}>
-        <Modal.Title style={{ fontSize: '22px' }}>
-          Edit Advertisement
-        </Modal.Title>
+        <Modal.Title style={{ fontSize: '22px' }}>Edit AD</Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <h6>Images</h6>
-        <div className='d-flex justify-content-start align-items-end'>
-          <img
-            src={demoImg}
-            alt='demoImg'
-            height='100'
-            width='100'
-            className='me-4'
-          />
-          <button className='upload-btn d-flex justify-content-between align-items-center'>
-            <span>Upload</span>
-            <img
-              className='mx-2'
-              src={uploadBtn}
-              alt=''
-              width='24'
-              height='24'
-            />{' '}
-          </button>
-        </div>
-        <div className='my-3'>
+        <div className='mb-3'>
           <div className='plain-input my-3'>
-            <label for=''>Product Manufacturer</label>
+            <label for=''>Folder Name* </label>
             <br />
-            <input type='text' placeholder='Search something' value='Toyota' />
+            <input
+              type='text'
+              placeholder='enter name'
+              value={data?.name}
+              onChange={(e) => setData({ ...data, name: e.target.value })}
+            />
           </div>
-
-          <div className='plain-dropdown '>
-            <label for=''>Product Type</label>
-            <select>
-              <option value='1' style={{ border: 'none' }}>
-                {' '}
-                type 1
-              </option>
-              <option value='2' selected>
-                {' '}
-                type 2
-              </option>
-              <option value='3'> type 3</option>
-            </select>
-          </div>
-
-          <div className='plain-dropdown mt-3'>
-            <label for=''>Ad Type</label>
-            <select>
-              <option value='1' style={{ border: 'none' }} selected>
-                {' '}
-                type 1
-              </option>
-              <option value='2'> type 2</option>
-              <option value='3'> type 3</option>
-            </select>
+          <div className='plain-input my-3'>
+            <label for=''>Description</label>
+            <br />
+            <input
+              type='text'
+              placeholder='enter details'
+              value={data?.description}
+              onChange={(e) =>
+                setData({ ...data, description: e.target.value })
+              }
+            />
           </div>
         </div>
       </Modal.Body>
-      <Modal.Footer>
+      <Modal.Footer style={{ border: 'none' }}>
         <button className='primary-btn-light' onClick={handleClose}>
           Close
         </button>
-        <button className='primary-btn' onClick={handleClose}>
-          Update Changes
+        <button className='primary-btn' onClick={() => handleAdEdit()}>
+          Save Changes{' '}
+          {spinner && <Spinner animation='border' size='sm' className='ms-2' />}
         </button>
       </Modal.Footer>
     </Modal>

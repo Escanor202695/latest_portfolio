@@ -6,9 +6,11 @@ import Frame from '../../assets/images/Frame.png'
 import { Dropdown, Modal } from 'react-bootstrap'
 import Menues from '../../assets/images/menus.png'
 import { EditAdModal } from '../../components/Modals/EditAdModal'
-const AdCards = ({ folder }) => {
+import DeleteAdModal from '../Modals/DeleteAdModal/DeleteAdModal'
+const AdCards = ({ ad, index, loadAllFolders }) => {
   const [show, setShow] = useState(false)
   const [editModal, setEditModal] = useState(false)
+  const [deleteModal, setDeleteModal] = useState(false)
 
   const [adDetails, setAdDetails] = useState({
     description: '',
@@ -20,15 +22,13 @@ const AdCards = ({ folder }) => {
 
   useEffect(() => {
     setAdDetails({
-      description: folder?.description,
-      folder_id: folder?.folder_id,
-      link: folder?.link,
-      name: folder?.name,
-      _id: folder?._id,
+      description: ad?.description,
+      folder_id: ad?.folder_id,
+      link: ad?.link,
+      name: ad?.name,
+      _id: ad?._id,
     })
-  }, [folder])
-
-  console.log(folder)
+  }, [ad])
 
   const handleClose = () => setShow(false)
   const handleShow = () => setShow(true)
@@ -38,7 +38,7 @@ const AdCards = ({ folder }) => {
         className='col-6 d-flex justify-content-between align-items-center '
         style={{ borderRight: '2px solid #CCCCCC' }}
       >
-        <h4 className='me-2'>1</h4>
+        <h4 className='me-2'>{index}</h4>
         <div className='mx-3  preview-bg '>
           {/* <img src={screenImg} alt='' className='me-3' /> */}
           <img
@@ -78,24 +78,31 @@ const AdCards = ({ folder }) => {
             </Dropdown.Toggle>
 
             <Dropdown.Menu className='mt-4'>
-              <Dropdown.Item
-                href='#/action-1'
-                onClick={() => setEditModal(true)}
-              >
+              <Dropdown.Item onClick={() => setEditModal(true)}>
                 Edit Ad
               </Dropdown.Item>
-              <Dropdown.Item href='#/action-2'>Delete</Dropdown.Item>
+              <Dropdown.Item onClick={() => setDeleteModal(true)}>
+                Delete
+              </Dropdown.Item>
             </Dropdown.Menu>
           </Dropdown>
         </div>
       </div>
       <Modal show={show} onHide={handleClose} size='xl' centered>
-        <img
-          src={adDetails.link.status === 200 ? adDetails.link : Menues}
-          alt=''
-        />
+        <img src={adDetails.link || Menues} alt='' />
       </Modal>
-      <EditAdModal show={editModal} handleClose={() => setEditModal()} />
+      <EditAdModal
+        show={editModal}
+        handleClose={() => setEditModal()}
+        ad={ad}
+        loadAllFolders={loadAllFolders}
+      />
+      <DeleteAdModal
+        show={deleteModal}
+        handleClose={() => setDeleteModal()}
+        loadAllFolders={loadAllFolders}
+        ad={ad}
+      />
     </div>
   )
 }

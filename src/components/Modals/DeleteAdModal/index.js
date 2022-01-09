@@ -1,0 +1,1 @@
+export { default as DeleteAdModal } from './DeleteAdModal.jsx'

@@ -25,18 +25,18 @@ const AdManagement = () => {
 
   useEffect(() => {
     if (view === 'grid') {
-      loadAllFolders()
+      loadAllFolders(folderSearchId)
     } else {
       loadAllAds()
     }
   }, [folderSearchId, adSearchKey, view])
 
-  const loadAllFolders = async () => {
+  const loadAllFolders = async (id) => {
     setSpinner(true)
     try {
       let url = GetAllFoldersEnd
       if (folderSearchId) {
-        url += `?parent_id=${folderSearchId}`
+        url += `?parent_id=${id}`
       }
 
       const response = await axios.get(url, {
@@ -44,7 +44,6 @@ const AdManagement = () => {
           menuboard: localStorage.getItem('menu_token'),
         },
       })
-      console.log(response.data.data)
       if (response.status === 200) {
         setAllFolders(response.data.data)
         // setSpinner(false)
@@ -69,7 +68,6 @@ const AdManagement = () => {
           menuboard: localStorage.getItem('menu_token'),
         },
       })
-      console.log(response.data.data)
       if (response.status === 200) {
         setAd(response.data.data)
         setSpinner(false)
@@ -97,7 +95,6 @@ const AdManagement = () => {
           menuboard: localStorage.getItem('menu_token'),
         },
       })
-      console.log(response.data.data)
       if (response.status === 200) {
         setAd(response.data.data)
         setSpinner(false)
@@ -112,8 +109,6 @@ const AdManagement = () => {
     }
   }
 
-  console.log('p=', previousSearchId)
-  console.log('f=', folderSearchId)
   return (
     <div className='row py-3'>
       <div className='col-3'>
@@ -207,7 +202,15 @@ const AdManagement = () => {
               </div>
             </section>
             {ad.length > 0 && folderSearchId
-              ? ad.map((folder, idx) => <AdCards key={idx} folder={folder} />)
+              ? ad.map((ad, idx) => (
+                  <AdCards
+                    index={idx + 1}
+                    key={idx}
+                    ad={ad}
+                    loadAllFolders={loadAllFolders}
+                    folderId={folderSearchId}
+                  />
+                ))
               : folderSearchId && (
                   <h3 className='text-secondary my-5 text-center'>
                     No ad Found!
@@ -218,7 +221,15 @@ const AdManagement = () => {
         {view === 'list' && (
           <div>
             {!spinner && ad.length > 0
-              ? ad.map((folder, idx) => <AdCards key={idx} folder={folder} />)
+              ? ad.map((ad, idx) => (
+                  <AdCards
+                    key={idx}
+                    index={idx + 1}
+                    ad={ad}
+                    loadAllFolders={loadAllFolders}
+                    folderId={folderSearchId}
+                  />
+                ))
               : folderSearchId && (
                   <h3 className='text-secondary my-5 text-center'>
                     No ad Found!
@@ -242,11 +253,17 @@ const AdManagement = () => {
           </button>
         )}
       </div>
-      <AddNewAdModal show={show} handleClose={() => setShow()} />
+      <AddNewAdModal
+        show={show}
+        handleClose={() => setShow()}
+        folderId={folderSearchId}
+        loadAllFolders={loadAllFolders}
+      />
       <AddNewFolderModal
         show={addNewFolder}
         handleClose={() => setAddNewFolder()}
         parent={folderSearchId}
+        loadAllFolders={loadAllFolders}
       />
     </div>
   )
