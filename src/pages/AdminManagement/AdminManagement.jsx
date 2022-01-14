@@ -103,7 +103,7 @@ const AdminManagement = () => {
         },
       })
       if (response.status === 200) {
-        Toast('success', 'Role Updated!')
+        // Toast('success', 'Role Updated!')
         return true
       } else
         throw new Error(

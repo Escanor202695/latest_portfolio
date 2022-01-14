@@ -102,29 +102,6 @@ const EditProfileModal = ({ show, handleClose, data, getAdminInfo }) => {
               disabled
             />
           </div>
-
-          {/* <div className='plain-dropdown '>
-            <label for=''>Role </label>
-            <select onChange={(e) => setRole(e.target.value)}>
-              <option
-                value='manager'
-                selected={role === 'manager' ? true : false}
-              >
-                manager
-              </option>
-              <option value='admin' selected={role === 'admin' ? true : false}>
-                {' '}
-                admin
-              </option>
-              <option
-                value='super_admin'
-                selected={role === 'super_admin' ? true : false}
-              >
-                {' '}
-                super admin{' '}
-              </option>
-            </select>
-          </div> */}
         </div>
       </Modal.Body>
       <Modal.Footer>

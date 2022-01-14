@@ -52,22 +52,6 @@ function App() {
     }
   }
 
-  // const getAdminInfo = async (token) => {
-  //   try {
-  //     const response = await axios.get(GetAdminProfileUrl, {
-  //       headers: {
-  //         menuboard: token,
-  //       },
-  //     })
-  //     console.log(response)
-  //     if (response.status === 200) {
-  //       auth.setUser(response.data.data)
-  //     } else throw new Error(response?.data?.msg)
-  //   } catch (error) {
-  //     Toast('err', error.response?.data?.msg)
-  //   }
-  // }
-
   return (
     <Router>
       <NavigationBar />

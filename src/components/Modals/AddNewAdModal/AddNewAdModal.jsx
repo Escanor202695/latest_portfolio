@@ -60,7 +60,7 @@ const AddNewAdModal = ({ show, handleClose, folderId, loadAllFolders }) => {
       const response = await axios.post(
         AdCreateEnd,
         {
-          folder_id: folderId,
+          folder_id: folderId || '',
           name: data?.name,
           description: data?.description,
           link: photoUrl,
