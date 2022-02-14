@@ -12,7 +12,7 @@ const DeleteFolderModal = ({
   folderID,
 }) => {
   const [spinner, setSpinner] = useState(false)
-  // console.log(folderID)
+
   const handleDeleteAd = async () => {
     setSpinner(true)
     try {

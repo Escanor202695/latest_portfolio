@@ -41,10 +41,10 @@ const NewAdminModal = ({ show, handleClose, loadAllAdmin }) => {
       return
     }
     setSpinner(true)
-    // console.log(data)
+
     try {
       const response = await axios.post(CreateAdmin, data)
-      // console.log(response)
+
       if (response.status === 200) {
         Toast('success', 'Admin Created!')
         handleClose()

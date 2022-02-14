@@ -71,7 +71,7 @@ const AddNewAdModal = ({ show, handleClose, folderId, loadAllFolders }) => {
           },
         }
       )
-      // console.log(response)
+
       if (response.status === 200) {
         Toast('success', 'AD Created!')
         handleClose()

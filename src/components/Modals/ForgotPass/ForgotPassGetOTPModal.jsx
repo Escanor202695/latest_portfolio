@@ -36,7 +36,7 @@ const ForgotPassGetOTPModal = ({ show, handleClose }) => {
           },
         }
       )
-      // console.log(response)
+
       if (response.status === 200) {
         Toast('success', 'OTP HAS BEEN SENT TO YOUR EMAIL!')
         handleClose()

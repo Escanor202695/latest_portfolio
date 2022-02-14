@@ -9,7 +9,6 @@ import Toast from '../../../utils/Toast/Toast'
 import '../CreateThemeModal/ThemeStyle.scss'
 
 const EditTheme = ({ show, handleClose, getAllTheme, data }) => {
-  console.log(data)
   const [photoSpinner, setPhotoSpinner] = useState(false)
   const [spinner, setSpinner] = useState(false)
   const [themeData, setThemeData] = useState({
@@ -100,7 +99,7 @@ const EditTheme = ({ show, handleClose, getAllTheme, data }) => {
           menuboard: localStorage.getItem('menu_token'),
         },
       })
-      console.log(res)
+
       if (res.status === 200) {
         Toast('success', 'Theme updated successfully!')
         getAllTheme()

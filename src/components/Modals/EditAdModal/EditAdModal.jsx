@@ -13,8 +13,6 @@ const EditAdModal = ({ show, handleClose, ad, loadAllFolders, folderID }) => {
     description: '',
   })
 
-  // console.log(ad)
-
   useEffect(() => {
     setData({
       id: ad?._id,
@@ -43,7 +41,7 @@ const EditAdModal = ({ show, handleClose, ad, loadAllFolders, folderID }) => {
           },
         }
       )
-      // console.log(response.data)
+
       if (response.status === 200) {
         Toast('success', 'AD updated!')
         handleClose()

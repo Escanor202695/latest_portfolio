@@ -35,10 +35,6 @@ export default function StoreFronManagementModal({
 
   function handleSubmit(e) {
     e.preventDefault()
-    // console.log(types)
-    // console.log(typeof types)
-    // console.log("clicked");
-    // console.log(storeData);
   }
 
   const [tags, setTags] = useState([])
@@ -61,16 +57,13 @@ export default function StoreFronManagementModal({
     setTags(newTags)
   }
 
-  const handleTagClick = (index) => {
-    // console.log('The tag at index ' + index + ' was clicked');
-  }
+  const handleTagClick = (index) => {}
 
   async function postStoreData() {
     setEditSpinner(true)
 
     const tagArray = []
     tags.map((tag) => {
-      // console.log(tag)
       return tagArray.push(tag.text)
     })
     if (storeData.name === '') {
@@ -111,7 +104,6 @@ export default function StoreFronManagementModal({
       type: types,
     }
     try {
-      // console.log(dataObj)
       await axios
         .post(StoreCreate, dataObj, {
           headers: {
@@ -119,7 +111,6 @@ export default function StoreFronManagementModal({
           },
         })
         .then((response) => {
-          // console.log(response)
           if (response.status === 200) {
             setEditSpinner(false)
             Toast('success', 'Store Created!')
@@ -152,7 +143,6 @@ export default function StoreFronManagementModal({
       )
       handleClose()
       setTypes('Category')
-      // console.log(error)
     }
   }
 

@@ -19,8 +19,6 @@ const AddNewFolderModal = ({ show, handleClose, parent, loadAllFolders }) => {
     photo: '',
   })
 
-  // console.log(parent)
-
   const handleImageUpload = async (e) => {
     setPhotoSpinner(true)
     const file = e.target.files[0]
@@ -67,7 +65,7 @@ const AddNewFolderModal = ({ show, handleClose, parent, loadAllFolders }) => {
           },
         }
       )
-      // console.log(response)
+
       if (response.status === 200) {
         Toast('success', 'Folder Created!')
         handleClose()

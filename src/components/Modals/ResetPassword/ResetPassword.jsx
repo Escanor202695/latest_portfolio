@@ -39,7 +39,7 @@ const ResetPassword = ({ show, handleClose }) => {
           },
         }
       )
-      // console.log(response)
+
       if (response.status === 200) {
         Toast('success', 'Password updated!')
         handleClose()

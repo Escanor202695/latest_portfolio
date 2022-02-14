@@ -6,7 +6,7 @@ import Toast from '../../../utils/Toast/Toast'
 
 const DeleteAdModal = ({ show, handleClose, ad, loadAllFolders, folderID }) => {
   const [spinner, setSpinner] = useState(false)
-  // console.log(ad)
+
   const handleDeleteAd = async () => {
     setSpinner(true)
     try {

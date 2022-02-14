@@ -133,8 +133,6 @@ const AdManagement = () => {
     setDeleteFolder(true)
   }
 
-  // console.log(deleteFolderDetails)
-
   return (
     <div className='row py-3'>
       <div className='col-3'>

@@ -45,7 +45,7 @@ const StoreFrontManagement = () => {
           menuboard: localStorage.getItem('menu_token'),
         },
       })
-      // console.log(response)
+
       if (response.status === 200) {
         setAllStore(response.data.data)
         setSpin(false)
@@ -54,7 +54,6 @@ const StoreFrontManagement = () => {
           response?.data?.msg || ' Something went wrong! Try again later.'
         )
     } catch (error) {
-      // console.log(error)
       setSpin(false)
       Toast(
         'err',

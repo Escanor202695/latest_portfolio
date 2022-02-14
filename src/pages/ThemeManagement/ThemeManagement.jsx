@@ -34,7 +34,7 @@ const ThemeManagement = () => {
           menuboard: localStorage.getItem('menu_token'),
         },
       })
-      console.log(res)
+
       if (res.status === 200) {
         setAllThemes(res?.data?.data)
         setDocumentCount(res?.data?.total_document)

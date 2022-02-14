@@ -5,13 +5,12 @@ import { Modal, Spinner } from 'react-bootstrap'
 import { AdminEdit, ChangeRole } from '../../../constants/api.constants'
 import Toast from '../../../utils/Toast/Toast'
 const EditOthersProfileModal = ({ show, handleClose, data, loadAdmin }) => {
-  // console.log(data)
   const [spinner, setSpinner] = useState(false)
   const [adminData, setAdminData] = useState({
     name: '',
     phone: null,
   })
-  // console.log(adminData)
+
   const [role, setRole] = useState(data?.effective_role)
 
   const updateRole = async () => {
@@ -62,7 +61,7 @@ const EditOthersProfileModal = ({ show, handleClose, data, loadAdmin }) => {
           menuboard: localStorage.getItem('menu_token'),
         },
       })
-      // console.log(response)
+
       if (response.status === 200) {
         Toast('success', 'Admin updated!')
         handleClose()
@@ -82,7 +81,6 @@ const EditOthersProfileModal = ({ show, handleClose, data, loadAdmin }) => {
       )
     }
   }
-  console.log(adminData)
 
   return (
     <Modal show={show} onHide={handleClose} size='md'>

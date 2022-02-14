@@ -56,7 +56,7 @@ const AdminManagement = () => {
           menuboard: localStorage.getItem('menu_token'),
         },
       })
-      // console.log(response)
+
       if (response.status === 200) {
         setAllAdmins(response.data.data)
         setTotalDoc(response.data.total_document)
@@ -67,7 +67,7 @@ const AdminManagement = () => {
         )
     } catch (error) {
       setSpinner(false)
-      // console.log(error)
+
       Toast(
         'err',
         error.response?.data?.msg || 'Cant load admins data, try again later'
@@ -139,7 +139,7 @@ const AdminManagement = () => {
           menuboard: localStorage.getItem('menu_token'),
         },
       })
-      // console.log(response)
+
       if (response.status === 200) {
         Toast('success', 'Admin updated!')
         setEditSpinner(false)
@@ -163,15 +163,13 @@ const AdminManagement = () => {
   const handleDelete = async (id) => {
     setDeleteSpinner(true)
 
-    // console.log(id, localStorage.getItem('menu_token'))
-
     try {
       const response = await axios.delete(UserDeleteEnd + `?_id=${id}`, {
         headers: {
           menuboard: localStorage.getItem('menu_token'),
         },
       })
-      // console.log(response)
+
       if (response.status === 200) {
         Toast('success', 'User Deleted!')
         handleClose()

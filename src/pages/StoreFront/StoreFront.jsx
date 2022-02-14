@@ -31,8 +31,6 @@ const StoreFront = () => {
   })
   // const store = ''
   // // const store = useContext(StoreProvider)
-  // console.log(store)
-  // console.log(store[0]?.tags[0])
 
   const [adnewAdd, setAdnewAdd] = useState(false)
 
@@ -66,8 +64,6 @@ const StoreFront = () => {
   useEffect(() => {
     loadStoreData()
   }, [])
-
-  console.log(storeData)
 
   return (
     <div className='row py-3'>

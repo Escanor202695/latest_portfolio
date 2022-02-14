@@ -10,7 +10,7 @@ import { useHistory } from 'react-router-dom'
 
 const EditStoreModal = ({ show, handleClose, data, loadStoreData }) => {
   const [editSpinner, setEditSpinner] = useState(false)
-  // console.log(data._id)
+
   const [storeData, setStoreData] = useState({
     id: '',
     name: '',
@@ -19,7 +19,6 @@ const EditStoreModal = ({ show, handleClose, data, loadStoreData }) => {
     email: '',
     address: '',
   })
-  // console.log(storeData)
 
   useEffect(() => {
     setStoreData({
@@ -46,7 +45,7 @@ const EditStoreModal = ({ show, handleClose, data, loadStoreData }) => {
   }
   let emptyObj = []
   const dbData = data.tag
-  // console.log(dbData)
+
   // if (dbData.length !== 0) {
   //   for (var i = 0; i < dbData.length; i++) {
   //     let tmpEmptyObj = {
@@ -57,7 +56,7 @@ const EditStoreModal = ({ show, handleClose, data, loadStoreData }) => {
   //   }
   // }
   const [tags, setTags] = useState(emptyObj)
-  // console.log(data.tag)
+
   // useEffect(() => {
   //   const obj = {
   //     id: 'Thailand',
@@ -87,9 +86,7 @@ const EditStoreModal = ({ show, handleClose, data, loadStoreData }) => {
     setTags(newTags)
   }
 
-  const handleTagClick = (index) => {
-    // console.log('The tag at index ' + index + ' was clicked');
-  }
+  const handleTagClick = (index) => {}
 
   async function postStoreData() {
     setEditSpinner(true)
@@ -127,7 +124,6 @@ const EditStoreModal = ({ show, handleClose, data, loadStoreData }) => {
 
     const tagArray = []
     tags.map((tag) => {
-      // console.log(tag)
       return tagArray.push(tag.text)
     })
 
@@ -142,7 +138,6 @@ const EditStoreModal = ({ show, handleClose, data, loadStoreData }) => {
       type: types,
     }
     try {
-      // console.log(dataObj)
       await axios
         .put(StoreEdit, dataObj, {
           headers: {
@@ -153,7 +148,7 @@ const EditStoreModal = ({ show, handleClose, data, loadStoreData }) => {
           if (response.status === 200) {
             Toast('success', 'Successfully Updated!')
             setEditSpinner(false)
-            // console.log(response)
+
             handleClose()
             loadStoreData()
             setStoreData({

@@ -30,7 +30,6 @@ const AdCards = ({ ad, index, loadAllFolders }) => {
       _id: ad?._id,
     })
   }, [ad])
-  // console.log(ad)
 
   const handleClose = () => setShow(false)
   const handleShow = () => setShow(true)

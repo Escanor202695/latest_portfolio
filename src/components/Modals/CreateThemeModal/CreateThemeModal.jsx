@@ -78,7 +78,7 @@ const CreateThemeModal = ({ show, handleClose, getAllTheme }) => {
           menuboard: localStorage.getItem('menu_token'),
         },
       })
-      console.log(res)
+
       if (res.status === 200) {
         Toast('success', 'Theme created successfully!')
         getAllTheme()
