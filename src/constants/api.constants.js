@@ -41,3 +41,6 @@ export const FileUploadEnd = BaseUrl + '/file/upload'
 
 // theme
 export const GetThemeEnd = BaseUrl + '/theme/get'
+export const CreateThemeEnd = BaseUrl + '/theme/create'
+export const EditThemeEnd = BaseUrl + '/theme/edit'
+export const DeleteThemeEnd = BaseUrl + '/theme/delete'

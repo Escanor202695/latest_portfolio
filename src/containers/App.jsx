@@ -22,6 +22,7 @@ import { useEffect } from 'react'
 import axios from 'axios'
 import { GetThemeEnd } from '../constants/api.constants'
 import { ForgotPassReset } from '../pages/ForgotPassReset'
+import ThemeManagement from '../pages/ThemeManagement/ThemeManagement'
 export const UserContext = createContext()
 
 function App() {
@@ -85,8 +86,11 @@ function App() {
           <PrivateRoute exact path={ROUTENAME.STOREFRONT}>
             <StoreFront />
           </PrivateRoute>
-          <PrivateRoute exact path={ROUTENAME.GLOBALSETTINGS}>
+          {/* <PrivateRoute exact path={ROUTENAME.GLOBALSETTINGS}>
             <GlobalSettings />
+          </PrivateRoute> */}
+          <PrivateRoute exact path={ROUTENAME.THEMEMANAGEMENT}>
+            <ThemeManagement />
           </PrivateRoute>
           <PrivateRoute exact path={ROUTENAME.PROFILE}>
             <Profile />

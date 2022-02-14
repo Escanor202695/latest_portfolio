@@ -19,7 +19,7 @@ const Login = () => {
   const [spin, setSpin] = useState(false)
   const [authValue, setAuthValue] = useState({
     email: 'super@admin.com',
-    password: 'forgot',
+    password: 'string',
   })
 
   const handleSubmit = async (e) => {

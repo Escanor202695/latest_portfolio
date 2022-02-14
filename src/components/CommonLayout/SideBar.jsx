@@ -43,11 +43,19 @@ const SideBar = () => {
           <NavLink
             as='li'
             className='list-group-item'
+            to='/theme-management'
+            exact
+          >
+            <Vector /> <span className='ps-3'>Theme</span>
+          </NavLink>
+          {/* <NavLink
+            as='li'
+            className='list-group-item'
             to='/global-settings'
             exact
           >
             <Vector /> <span className='ps-3'>Global Settings</span>
-          </NavLink>
+          </NavLink> */}
         </ul>
       </div>
     </div>
