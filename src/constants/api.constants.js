@@ -44,3 +44,18 @@ export const GetThemeEnd = BaseUrl + '/theme/get'
 export const CreateThemeEnd = BaseUrl + '/theme/create'
 export const EditThemeEnd = BaseUrl + '/theme/edit'
 export const DeleteThemeEnd = BaseUrl + '/theme/delete'
+
+
+// screens
+
+export const GetScreenEnd = BaseUrl + '/screen/get'
+export const CreateScreenEnd = BaseUrl + '/screen/create'
+export const EditScreenEnd = BaseUrl + '/screen/edit'
+export const DeleteScreenEnd = BaseUrl + '/screen/delete'
+
+
+
+
+
+
+

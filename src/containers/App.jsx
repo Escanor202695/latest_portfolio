@@ -29,29 +29,29 @@ function App() {
   const { user } = useAuth()
   const token = localStorage.getItem('menu_token')
 
-  useEffect(() => {
-    if (token) {
-      getTheme(token)
-    }
-  }, [token])
+  // useEffect(() => {
+  //   if (token) {
+  //     getTheme(token)
+  //   }
+  // }, [token])
 
-  const getTheme = async (token) => {
-    try {
-      const response = await axios.get(GetThemeEnd, {
-        headers: {
-          menuboard: token,
-        },
-      })
-      if (response.status === 200) {
-        Object.keys(response.data.data[0]).map((key) => {
-          const value = response.data.data[0][key]
-          document.documentElement.style.setProperty(`--${key}`, value)
-        })
-      } else throw new Error(response?.data?.msg)
-    } catch (error) {
-      // Toast('err', error.response?.data?.msg)
-    }
-  }
+  // const getTheme = async (token) => {
+  //   try {
+  //     const response = await axios.get(GetThemeEnd, {
+  //       headers: {
+  //         menuboard: token,
+  //       },
+  //     })
+  //     if (response.status === 200) {
+  //       Object.keys(response.data.data[0]).map((key) => {
+  //         const value = response.data.data[0][key]
+  //         document.documentElement.style.setProperty(`--${key}`, value)
+  //       })
+  //     } else throw new Error(response?.data?.msg)
+  //   } catch (error) {
+  //     // Toast('err', error.response?.data?.msg)
+  //   }
+  // }
 
   return (
     <Router>

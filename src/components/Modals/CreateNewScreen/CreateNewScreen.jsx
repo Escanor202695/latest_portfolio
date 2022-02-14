@@ -3,17 +3,11 @@ import React, { useEffect } from 'react'
 import { useState } from 'react'
 import { Modal, Spinner } from 'react-bootstrap'
 import InputRange from 'react-input-range'
-import { EditScreenEnd, GetThemeEnd } from '../../../constants/api.constants'
+import { CreateScreenEnd, GetThemeEnd } from '../../../constants/api.constants'
 import Toast from '../../../utils/Toast/Toast'
 import { GiCancel } from 'react-icons/gi'
 
-const EditScreenModal = ({
-  show,
-  handleClose,
-  store,
-  loadStoreScreen,
-  data,
-}) => {
+const CreateNewScreen = ({ show, handleClose, store, loadStoreScreen }) => {
   const [rangeValue, setRangeValue] = useState({
     value: { min: 0, max: 0 },
   })
@@ -25,21 +19,6 @@ const EditScreenModal = ({
     screen_type: 'click-n-collect',
   })
   const [spinner, setSpinner] = useState(false)
-
-  useEffect(() => {
-    setNewScreenData({
-      theme_id: data?.theme_id?._id,
-      category_names: data?.category_names,
-      screen_name: data?.screen_name,
-      screen_type: data?.screen_type,
-    })
-    setRangeValue({
-      value: {
-        min: 0,
-        max: parseInt(data?.product_count),
-      },
-    })
-  }, [data])
 
   useEffect(() => {
     getAllTheme()
@@ -62,12 +41,9 @@ const EditScreenModal = ({
   const handleCreate = async () => {
     setSpinner(true)
     const mergedData = {
-      id: data?._id,
       ...newScreenData,
       store_id: store?._id,
-      product_count: (
-        rangeValue?.value?.max - rangeValue?.value?.min
-      ).toString(),
+      product_count: rangeValue?.value?.max - rangeValue?.value?.min,
     }
     if (!mergedData?.screen_name) {
       Toast('err', 'Screen name is required')
@@ -90,8 +66,8 @@ const EditScreenModal = ({
       return
     }
     try {
-      const res = await axios.put(
-        EditScreenEnd,
+      const res = await axios.post(
+        CreateScreenEnd,
         { ...mergedData },
         {
           headers: {
@@ -102,7 +78,7 @@ const EditScreenModal = ({
 
       if (res.status === 200) {
         setSpinner(false)
-        Toast('success', 'Screen updated successfully')
+        Toast('success', 'Screen created successfully')
         handleClose()
         loadStoreScreen()
         setNewScreenData({
@@ -144,7 +120,7 @@ const EditScreenModal = ({
     <Modal show={show} onHide={handleClose} size='lg'>
       <Modal.Header closeButton style={{ border: 'none' }}>
         <Modal.Title style={{ fontSize: '22px' }}>
-          Edit {data?.screen_name} Screen
+          Create New Screen for {store?.name}{' '}
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>
@@ -155,7 +131,6 @@ const EditScreenModal = ({
             <input
               type='text'
               placeholder='Screen Name'
-              value={newScreenData?.screen_name}
               onChange={(e) =>
                 setNewScreenData({
                   ...newScreenData,
@@ -247,38 +222,31 @@ const EditScreenModal = ({
               <option hidden>no theme selected</option>
               {themes.length > 0 &&
                 themes.map((theme) => (
-                  <option
-                    value={theme?._id}
-                    selected={
-                      newScreenData?.theme_id === theme._id ? true : false
-                    }
-                  >
-                    {theme?.name}
-                  </option>
+                  <option value={theme?._id}>{theme?.name}</option>
                 ))}
             </select>
           </div>
           {/* <div className='plain-dropdown mt-3'>
-          <label for=''>Categories of Products</label>
-          <select>
-            <option value='1' style={{ border: 'none' }}>
-              {' '}
-              Stock
-            </option>
-            <option value='2'> Bond</option>
-          </select>
-        </div> */}
+            <label for=''>Categories of Products</label>
+            <select>
+              <option value='1' style={{ border: 'none' }}>
+                {' '}
+                Stock
+              </option>
+              <option value='2'> Bond</option>
+            </select>
+          </div> */}
 
           {/* <div className='plain-input my-3'>
-          <label for=''>Android ID (TV-Stick)</label>
-          <br />
-          <input type='text' placeholder='input something' />
-        </div> */}
+            <label for=''>Android ID (TV-Stick)</label>
+            <br />
+            <input type='text' placeholder='input something' />
+          </div> */}
           {/* <div className='plain-input my-3'>
-          <label for=''>Screen ID</label>
-          <br />
-          <input type='number' placeholder='12323213' />
-        </div> */}
+            <label for=''>Screen ID</label>
+            <br />
+            <input type='number' placeholder='12323213' />
+          </div> */}
           <div className='plain-input my-3'>
             <label for=''>Screen Password*</label>
             <br />
@@ -300,10 +268,11 @@ const EditScreenModal = ({
           Close
         </button>
         <button className='primary-btn' onClick={handleCreate}>
-          Update Theme {spinner && <Spinner animation='border' size='sm' />}
+          Create Theme {spinner && <Spinner animation='border' size='sm' />}
         </button>
       </Modal.Footer>
     </Modal>
   )
 }
-export default EditScreenModal
+
+export default CreateNewScreen

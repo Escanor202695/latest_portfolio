@@ -6,16 +6,20 @@ import './Screens.scss'
 import BoardView from '../../assets/images/BoardView.png'
 import { Dropdown, Modal } from 'react-bootstrap'
 import { EditScreenModal } from '../Modals/EditScreenModal'
+import { DeleteScreenModal } from '../Modals/DeleteScreenModal'
 
-const Screens = () => {
+const Screens = ({ screen, loadStoreScreen }) => {
   const [show, setShow] = useState(false)
 
   const handleClose = () => setShow(false)
   const handleShow = () => setShow(true)
 
+  const [showDeleteModal, setShowDeleteModal] = useState(false)
+  const handleCloseForDeleteModal = () => setShowDeleteModal(false)
+
   const [editScreen, setEditScreen] = useState(false)
 
-  const goToScreen = (dt) => {
+  const goToScreen = () => {
     setEditScreen(true)
   }
 
@@ -33,17 +37,14 @@ const Screens = () => {
               // top: '.2rem',
               cursor: 'pointer',
             }}
-            onClick={() => handleShow(true)}
+            // onClick={() => handleShow(true)}
           />
         </div>
         <div className='ms-3 screen-right'>
-          <h6 className='fw-bold'>Screen 01:SCR 2323</h6>
-          <h6>Category Screens</h6>
-          <h6>
-            Categories: CategoryName, CategoryName, CategoryName, CategoryName,{' '}
-          </h6>
-          <h6>Theme: ThemeName</h6>
-          <h6>Android ID</h6>
+          <h6 className='fw-bold'>{screen?.screen_name}</h6>
+          <h6>Categories: {screen?.category_names?.map((c) => c + ', ')}</h6>
+          <h6>Theme: {screen?.theme_id?.name}</h6>
+          <h6> Unique Id: {screen?.unique_id}</h6>
         </div>
       </div>
       <div>
@@ -53,10 +54,15 @@ const Screens = () => {
           </Dropdown.Toggle>
 
           <Dropdown.Menu className='mt-4'>
-            <Dropdown.Item onClick={() => goToScreen()}>
+            <Dropdown.Item className='fw-bold ' onClick={() => goToScreen()}>
               Edit Screen
             </Dropdown.Item>
-            <Dropdown.Item href=''>show details</Dropdown.Item>
+            <Dropdown.Item
+              className='fw-bold text-danger'
+              onClick={() => setShowDeleteModal(true)}
+            >
+              Delete
+            </Dropdown.Item>
           </Dropdown.Menu>
         </Dropdown>
         {/* <img
@@ -69,7 +75,18 @@ const Screens = () => {
       <Modal show={show} onHide={handleClose} size='xl' centered>
         <img src={BoardView} alt='' />
       </Modal>
-      <EditScreenModal show={editScreen} handleClose={() => setEditScreen()} />
+      <EditScreenModal
+        show={editScreen}
+        handleClose={() => setEditScreen()}
+        data={screen}
+        loadStoreScreen={loadStoreScreen}
+      />
+      <DeleteScreenModal
+        show={showDeleteModal}
+        handleClose={handleCloseForDeleteModal}
+        loadStoreScreen={loadStoreScreen}
+        data={screen}
+      />
     </div>
   )
 }

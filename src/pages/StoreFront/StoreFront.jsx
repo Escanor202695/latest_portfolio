@@ -8,34 +8,35 @@ import { EditScheduleModal } from '../../components/Modals/EditScheduleModal'
 // import { StoreProvider } from '../../Providers'
 import { useHistory, useParams } from 'react-router-dom'
 import { EditStoreModal } from '../../components/Modals/EditStoreModal'
-import InputRange from 'react-input-range'
 import 'react-input-range/lib/css/index.css'
 import AdCard from '../../components/AdCard/AdCard'
 import { AddNewAdModal } from '../../components/Modals/AddNewAdModal'
 import axios from 'axios'
-import { StoreAPI } from '../../constants/api.constants'
+import { GetScreenEnd, StoreAPI } from '../../constants/api.constants'
 import Toast from '../../utils/Toast/Toast'
+import { CreateNewScreen } from '../../components/Modals/CreateNewScreen'
 
 const StoreFront = () => {
-  const [show, setShow] = React.useState(false)
-  const [selectedBtn, setSelectedBtn] = React.useState(true)
+  const [showCreateScreen, setShowCreateScreen] = React.useState(false)
+
   const [editModal, setEditModal] = useState(false)
-  const handleClose = () => setShow(false)
-  const handleShow = () => setShow(true)
+  const handleClose = () => setShowCreateScreen(false)
   let history = useHistory()
   const [spinner, setSpinner] = useState(false)
-
+  const [screenSpinner, setScreenSpinner] = useState(false)
   const [editInfoModal, setEditInfoModal] = useState(false)
-  const [rangeValue, setRangeValue] = useState({
-    value: { min: 500, max: 1000 },
-  })
-  // const store = ''
-  // // const store = useContext(StoreProvider)
-
+  const [screenSearchKey, setScreenSearchKey] = useState('')
   const [adnewAdd, setAdnewAdd] = useState(false)
 
   const { id } = useParams()
   const [storeData, setStoreData] = useState({})
+
+  useEffect(() => {
+    loadStoreData()
+  }, [])
+  useEffect(() => {
+    loadStoreScreen()
+  }, [screenSearchKey])
 
   const loadStoreData = async () => {
     setSpinner(true)
@@ -60,10 +61,35 @@ const StoreFront = () => {
       )
     }
   }
+  const [screens, setScreens] = useState([])
 
-  useEffect(() => {
-    loadStoreData()
-  }, [])
+  const loadStoreScreen = async () => {
+    setScreenSpinner(true)
+    let url = GetScreenEnd
+    if (screenSearchKey) {
+      url += `?filter=${screenSearchKey}`
+    }
+    try {
+      const response = await axios.get(url, {
+        headers: {
+          menuboard: localStorage.getItem('menu_token'),
+        },
+      })
+      if (response.status === 200) {
+        setScreens(response?.data?.data)
+        setScreenSpinner(false)
+      } else
+        throw new Error(
+          response?.data?.msg || ' Something went wrong! Try again later.'
+        )
+    } catch (error) {
+      setScreenSpinner(false)
+      Toast(
+        'err',
+        error.response?.data?.msg || 'Something went wrong! Try again later.'
+      )
+    }
+  }
 
   return (
     <div className='row py-3'>
@@ -132,21 +158,45 @@ const StoreFront = () => {
             Edit Info
           </button>
         </section>
-        <section className='my-5'>
+        <section className='my-5' style={{ minHeight: '10rem' }}>
           <div className='d-flex justify-content-between align-items-center'>
-            <h5 className='fw-bold'>Screens</h5>
+            <h5 className='fw-bold'>
+              Screens{' '}
+              {screenSpinner && <Spinner animation='border' size='sm' />}
+            </h5>
             <button
               className='primary-btn d-flex justify-content-center align-items-center'
-              onClick={handleShow}
+              onClick={() => setShowCreateScreen(true)}
             >
               {' '}
               <img className='me-3' src={plus} alt='' /> Add New Screen
             </button>
           </div>
-          <div>
-            <Screens />
-            <Screens />
+
+          <div className='custom-input mt-3 me-2 w-100'>
+            <input
+              type='text'
+              placeholder='Search by
+              screen name , unique id '
+              onChange={(e) => setScreenSearchKey(e.target.value)}
+            />
           </div>
+
+          {!screenSpinner && (
+            <div>
+              {screens.length > 0 ? (
+                screens.map((s, idx) => (
+                  <Screens
+                    screen={s}
+                    key={idx}
+                    loadStoreScreen={loadStoreScreen}
+                  />
+                ))
+              ) : (
+                <h3 className='text-center text-muted my-5 py-5'>No screens</h3>
+              )}
+            </div>
+          )}
         </section>
 
         <section className='my-5'>
@@ -191,97 +241,12 @@ const StoreFront = () => {
         data={storeData}
         loadStoreData={loadStoreData}
       />
-
-      <Modal show={show} onHide={handleClose} size='lg'>
-        <Modal.Header closeButton style={{ border: 'none' }}>
-          <Modal.Title style={{ fontSize: '22px' }}>
-            Create New Screen for Shop Name{' '}
-          </Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <div className='my-3'>
-            <div className='plain-input my-3'>
-              <label for=''> Screen Name</label>
-              <br />
-              <input type='text' placeholder='Screen Name' />
-            </div>
-            <div className='screen-types my-3'>
-              <p className='fw-bold mb-2'>Screen Type</p>
-              <button
-                className={
-                  selectedBtn ? 'primary-btn-light me-2 ' : 'btn-white-bg me-2'
-                }
-                onClick={() => setSelectedBtn(!selectedBtn)}
-              >
-                Category Screen
-              </button>
-              <button
-                className={
-                  selectedBtn ? 'btn-white-bg me-2' : 'primary-btn-light me-2'
-                }
-                onClick={() => setSelectedBtn(!selectedBtn)}
-              >
-                Click-n-Collect
-              </button>
-            </div>
-            <div className='plain-dropdown my-3'>
-              <label for=''>Product Count</label>
-              <InputRange
-                maxValue={2000}
-                minValue={0}
-                value={rangeValue.value}
-                onChange={(value) => setRangeValue({ value })}
-                style={{ padding: '0px 10px' }}
-              />
-            </div>
-            <div className='plain-dropdown mt-4'>
-              <label for=''>Layout Theme</label>
-              <select>
-                <option value='1' style={{ border: 'none' }}>
-                  {' '}
-                  Blue
-                </option>
-                <option value='2'> Green</option>
-                <option value='3'> Tomato</option>
-              </select>
-            </div>
-            <div className='plain-dropdown mt-3'>
-              <label for=''>Categories of Products</label>
-              <select>
-                <option value='1' style={{ border: 'none' }}>
-                  {' '}
-                  Stock
-                </option>
-                <option value='2'> Bond</option>
-              </select>
-            </div>
-
-            <div className='plain-input my-3'>
-              <label for=''>Android ID (TV-Stick)</label>
-              <br />
-              <input type='text' placeholder='input something' />
-            </div>
-            <div className='plain-input my-3'>
-              <label for=''>Screen ID</label>
-              <br />
-              <input type='number' placeholder='12323213' />
-            </div>
-            <div className='plain-input my-3'>
-              <label for=''>Screen Password</label>
-              <br />
-              <input type='text' placeholder='ads@33TqRt' />
-            </div>
-          </div>
-        </Modal.Body>
-        <Modal.Footer>
-          <button className='primary-btn-light' onClick={handleClose}>
-            Close
-          </button>
-          <button className='primary-btn' onClick={handleClose}>
-            Save Changes
-          </button>
-        </Modal.Footer>
-      </Modal>
+      <CreateNewScreen
+        show={showCreateScreen}
+        handleClose={handleClose}
+        store={storeData}
+        loadStoreScreen={() => loadStoreScreen()}
+      />
     </div>
   )
 }

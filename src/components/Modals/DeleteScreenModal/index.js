@@ -1,0 +1,1 @@
+export { default as DeleteScreenModal } from './DeleteScreenModal'
