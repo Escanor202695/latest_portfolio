@@ -84,7 +84,7 @@ const AddStoreAd = ({ show, handleClose, storeData, loadStoreData }) => {
       const newState = [...state]
       newState[sInd] = result[sInd]
       newState[dInd] = result[dInd]
-      
+
       setState(newState)
     }
   }
@@ -104,7 +104,6 @@ const AddStoreAd = ({ show, handleClose, storeData, loadStoreData }) => {
         },
       })
 
-      
       if (res.status === 200) {
         setAllAds(res?.data?.data)
 
@@ -113,10 +112,7 @@ const AddStoreAd = ({ show, handleClose, storeData, loadStoreData }) => {
     } catch (error) {}
   }
 
-  
-
   const handleSubmit = async () => {
-    
     if (state[1].length === 0) {
       return
     }
@@ -146,7 +142,7 @@ const AddStoreAd = ({ show, handleClose, storeData, loadStoreData }) => {
           },
         }
       )
-      
+
       if (res.status === 200) {
         Toast('success', 'Ads added successfully')
         handleClose()
@@ -166,8 +162,6 @@ const AddStoreAd = ({ show, handleClose, storeData, loadStoreData }) => {
       )
     }
   }
-
-  
 
   return (
     <Modal show={show} onHide={handleClose} size='lg'>
@@ -230,7 +224,6 @@ const AddStoreAd = ({ show, handleClose, storeData, loadStoreData }) => {
                                   alignItems: 'center',
                                 }}
                               >
-                                {
                                 <div>
                                   <h5>{item?.name}</h5>
                                   <img

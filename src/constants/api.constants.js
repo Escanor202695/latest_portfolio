@@ -52,7 +52,7 @@ export const GetScreenEnd = BaseUrl + '/screen/get'
 export const CreateScreenEnd = BaseUrl + '/screen/create'
 export const EditScreenEnd = BaseUrl + '/screen/edit'
 export const DeleteScreenEnd = BaseUrl + '/screen/delete'
-
+export const GetAllCateEnd = BaseUrl + '/screen/get_all_categories'
 
 
 

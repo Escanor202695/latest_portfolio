@@ -3,7 +3,11 @@ import React, { useEffect } from 'react'
 import { useState } from 'react'
 import { Modal, Spinner } from 'react-bootstrap'
 import InputRange from 'react-input-range'
-import { EditScreenEnd, GetThemeEnd } from '../../../constants/api.constants'
+import {
+  EditScreenEnd,
+  GetAllCateEnd,
+  GetThemeEnd,
+} from '../../../constants/api.constants'
 import Toast from '../../../utils/Toast/Toast'
 import { GiCancel } from 'react-icons/gi'
 
@@ -25,6 +29,7 @@ const EditScreenModal = ({
     screen_type: 'click-n-collect',
   })
   const [spinner, setSpinner] = useState(false)
+  const [allCate, setAllCate] = useState([])
 
   useEffect(() => {
     setNewScreenData({
@@ -43,7 +48,22 @@ const EditScreenModal = ({
 
   useEffect(() => {
     getAllTheme()
+    getAllCate()
   }, [])
+
+  const getAllCate = async () => {
+    try {
+      const res = await axios.get(GetAllCateEnd, {
+        headers: {
+          menuboard: localStorage.getItem('menu_token'),
+        },
+      })
+
+      if (res.status === 200) {
+        setAllCate(res?.data?.data)
+      } else throw new Error(res?.data?.msg || 'Try again later!')
+    } catch (error) {}
+  }
 
   const getAllTheme = async () => {
     try {
@@ -207,7 +227,7 @@ const EditScreenModal = ({
               style={{ padding: '0px 10px' }}
             />
           </div>
-          <div className='plain-input my-3'>
+          {/* <div className='plain-input my-3'>
             <label for=''> Category*</label>
             <br />
             <input
@@ -233,6 +253,34 @@ const EditScreenModal = ({
                 />
               </span>
             ))}
+          </div> */}
+
+          <div className='plain-dropdown mt-3'>
+            <label for=''>Category*</label>
+            <select
+              onChange={(e) =>
+                setNewScreenData({
+                  ...newScreenData,
+                  category_names: [e.target.value],
+                })
+              }
+            >
+              <option value='' hidden>
+                not selected
+              </option>
+              {allCate?.map((c, idx) => (
+                <option
+                  value={c}
+                  key={idx}
+                  selected={
+                    c === newScreenData?.category_names[0] ? true : false
+                  }
+                >
+                  {' '}
+                  {c}
+                </option>
+              ))}
+            </select>
           </div>
           <div className='plain-dropdown mt-4'>
             <label for=''>Layout Theme*</label>
@@ -246,8 +294,9 @@ const EditScreenModal = ({
             >
               <option hidden>no theme selected</option>
               {themes.length > 0 &&
-                themes.map((theme) => (
+                themes.map((theme, idx) => (
                   <option
+                    key={idx}
                     value={theme?._id}
                     selected={
                       newScreenData?.theme_id === theme._id ? true : false

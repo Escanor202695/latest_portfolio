@@ -3,7 +3,11 @@ import React, { useEffect } from 'react'
 import { useState } from 'react'
 import { Modal, Spinner } from 'react-bootstrap'
 import InputRange from 'react-input-range'
-import { CreateScreenEnd, GetThemeEnd } from '../../../constants/api.constants'
+import {
+  CreateScreenEnd,
+  GetAllCateEnd,
+  GetThemeEnd,
+} from '../../../constants/api.constants'
 import Toast from '../../../utils/Toast/Toast'
 import { GiCancel } from 'react-icons/gi'
 
@@ -19,10 +23,26 @@ const CreateNewScreen = ({ show, handleClose, store, loadStoreScreen }) => {
     screen_type: 'click-n-collect',
   })
   const [spinner, setSpinner] = useState(false)
+  const [allCate, setAllCate] = useState([])
 
   useEffect(() => {
     getAllTheme()
+    getAllCate()
   }, [])
+
+  const getAllCate = async () => {
+    try {
+      const res = await axios.get(GetAllCateEnd, {
+        headers: {
+          menuboard: localStorage.getItem('menu_token'),
+        },
+      })
+
+      if (res.status === 200) {
+        setAllCate(res?.data?.data)
+      } else throw new Error(res?.data?.msg || 'Try again later!')
+    } catch (error) {}
+  }
 
   const getAllTheme = async () => {
     try {
@@ -182,7 +202,7 @@ const CreateNewScreen = ({ show, handleClose, store, loadStoreScreen }) => {
               style={{ padding: '0px 10px' }}
             />
           </div>
-          <div className='plain-input my-3'>
+          {/* <div className='plain-input my-3'>
             <label for=''> Category*</label>
             <br />
             <input
@@ -208,7 +228,30 @@ const CreateNewScreen = ({ show, handleClose, store, loadStoreScreen }) => {
                 />
               </span>
             ))}
+          </div> */}
+
+          <div className='plain-dropdown mt-3'>
+            <label for=''>Category*</label>
+            <select
+              onChange={(e) =>
+                setNewScreenData({
+                  ...newScreenData,
+                  category_names: [e.target.value],
+                })
+              }
+            >
+              <option value='' hidden>
+                not selected
+              </option>
+              {allCate?.map((c, idx) => (
+                <option value={c} key={idx}>
+                  {' '}
+                  {c}
+                </option>
+              ))}
+            </select>
           </div>
+
           <div className='plain-dropdown mt-4'>
             <label for=''>Layout Theme*</label>
             <select
@@ -221,21 +264,13 @@ const CreateNewScreen = ({ show, handleClose, store, loadStoreScreen }) => {
             >
               <option hidden>no theme selected</option>
               {themes.length > 0 &&
-                themes.map((theme) => (
-                  <option value={theme?._id}>{theme?.name}</option>
+                themes.map((theme, idx) => (
+                  <option key={idx} value={theme?._id}>
+                    {theme?.name}
+                  </option>
                 ))}
             </select>
           </div>
-          {/* <div className='plain-dropdown mt-3'>
-            <label for=''>Categories of Products</label>
-            <select>
-              <option value='1' style={{ border: 'none' }}>
-                {' '}
-                Stock
-              </option>
-              <option value='2'> Bond</option>
-            </select>
-          </div> */}
 
           {/* <div className='plain-input my-3'>
             <label for=''>Android ID (TV-Stick)</label>
