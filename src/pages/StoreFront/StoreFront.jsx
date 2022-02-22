@@ -15,6 +15,7 @@ import axios from 'axios'
 import { GetScreenEnd, StoreAPI } from '../../constants/api.constants'
 import Toast from '../../utils/Toast/Toast'
 import { CreateNewScreen } from '../../components/Modals/CreateNewScreen'
+import AddStoreAd from '../../components/Modals/AddStoreAd/AddStoreAd'
 
 const StoreFront = () => {
   const [showCreateScreen, setShowCreateScreen] = React.useState(false)
@@ -219,7 +220,9 @@ const StoreFront = () => {
           <div>
             <div className='d-flex justify-content-between align-items-center edit-schedule'>
               <h5>
-                Ads will play every <span>60 sec</span> for <span>10 sec</span>
+                Ads will play every{' '}
+                <span>{storeData?.ad_timing?.interval} sec</span> for{' '}
+                <span>{storeData?.ad_timing?.duration} sec</span>
               </h5>
               <button
                 className='primary-btn-light'
@@ -228,13 +231,25 @@ const StoreFront = () => {
                 EDIT SCHEDULE
               </button>
             </div>
-            <AdCard />
+            {storeData?.ads?.map((ad, idx) => (
+              <AdCard key={idx} ad={ad} index={idx + 1} />
+            ))}
           </div>
         </section>
       </div>
-      <AddNewAdModal show={adnewAdd} handleClose={() => setAdnewAdd()} />
+      <AddStoreAd
+        show={adnewAdd}
+        storeData={storeData}
+        handleClose={() => setAdnewAdd()}
+        loadStoreData={loadStoreData}
+      />
 
-      <EditScheduleModal show={editModal} hide={() => setEditModal()} />
+      <EditScheduleModal
+        show={editModal}
+        hide={() => setEditModal()}
+        loadStoreData={loadStoreData}
+        storeData={storeData}
+      />
       <EditStoreModal
         show={editInfoModal}
         handleClose={() => setEditInfoModal()}

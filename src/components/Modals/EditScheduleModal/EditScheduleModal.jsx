@@ -1,9 +1,73 @@
+import axios from 'axios'
 import React, { useState } from 'react'
-import { Form, Modal } from 'react-bootstrap'
+import { useEffect } from 'react'
+import { Form, Modal, Spinner } from 'react-bootstrap'
+import { StoreEdit } from '../../../constants/api.constants'
+import Toast from '../../../utils/Toast/Toast'
 
-const EditScheduleModal = ({ show, hide }) => {
+const EditScheduleModal = ({ show, hide, loadStoreData, storeData }) => {
   const [duration, setDuration] = useState(0)
-  const [interval, setInterval] = useState(0)
+  const [interval, setIntervall] = useState(0)
+  const [spinner, setSpinner] = useState(false)
+  useEffect(() => {
+    setDuration(storeData?.ad_timing?.duration)
+    setIntervall(storeData?.ad_timing?.interval)
+  }, [storeData])
+
+  const handleSubmit = async () => {
+    if (!interval) {
+      Toast('err', 'Interval can not be zero')
+      return
+    }
+    if (!duration) {
+      Toast('err', 'Duration can not be zero')
+      return
+    }
+    setSpinner(true)
+    let data = {
+      ...storeData,
+      id: storeData?._id,
+      ad_timing: {
+        duration: duration,
+        interval: interval,
+      },
+    }
+
+    delete data?._id
+    delete data?.short_id
+    delete data?.password
+    delete data?.__v
+    try {
+      const res = await axios.put(
+        StoreEdit,
+        {
+          ...data,
+        },
+        {
+          headers: {
+            menuboard: localStorage.getItem('menu_token'),
+          },
+        }
+      )
+
+      if (res.status === 200) {
+        Toast('success', 'Schedule updated successfully')
+        hide()
+        setSpinner(false)
+        loadStoreData()
+      } else
+        throw new Error(
+          res?.data?.msg || 'Something went wrong! Try again later.'
+        )
+    } catch (error) {
+      setSpinner(false)
+      Toast(
+        'err',
+        error.response?.data?.msg || 'Something went wrong! Try again later.'
+      )
+    }
+  }
+
   return (
     <Modal show={show} onHide={hide} size='md'>
       <Modal.Header closeButton style={{ border: 'none' }}>
@@ -32,7 +96,7 @@ const EditScheduleModal = ({ show, hide }) => {
           <Form.Label className='fw-bold'>Interval Between Ads</Form.Label>
           <Form.Range
             value={interval}
-            onChange={(e) => setInterval(e.target.value)}
+            onChange={(e) => setIntervall(e.target.value)}
           />
           <div className='plain-input my-3'>
             <input type='text' placeholder='' value={interval} />
@@ -53,8 +117,9 @@ const EditScheduleModal = ({ show, hide }) => {
         <button className='primary-btn-light' onClick={hide}>
           Close
         </button>
-        <button className='primary-btn' onClick={hide}>
-          Save Schedule
+        <button className='primary-btn' onClick={() => handleSubmit()}>
+          Save Schedule{' '}
+          {spinner && <Spinner className='ms-2' animation='border' size='sm' />}
         </button>
       </Modal.Footer>
     </Modal>

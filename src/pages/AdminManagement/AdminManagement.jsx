@@ -306,7 +306,7 @@ const AdminManagement = () => {
                     }}
                     style={{ cursor: 'pointer' }}
                   >
-                    {admin.role}
+                    {admin.role.map((r, idx) => (idx !== 0 ? ', ' + r : r))}
                   </td>
                   {/* <td className=''>
                     <HideShowToggle password={admin.password} />
