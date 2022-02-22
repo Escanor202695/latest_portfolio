@@ -42,7 +42,12 @@ const Screens = ({ screen, loadStoreScreen }) => {
         </div>
         <div className='ms-3 screen-right'>
           <h6 className='fw-bold'>{screen?.screen_name}</h6>
-          <h6>Categories: {screen?.category_names?.map((c) => c + ', ')}</h6>
+          <h6>
+            Categories:{' '}
+            {screen?.category_names?.map((c, idx) =>
+              idx !== 0 ? ', ' + c : c
+            )}
+          </h6>
           <h6>Theme: {screen?.theme_id?.name}</h6>
           <h6> Unique Id: {screen?.unique_id}</h6>
         </div>

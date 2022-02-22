@@ -81,7 +81,7 @@ const EditScheduleModal = ({ show, hide, loadStoreData, storeData }) => {
             onChange={(e) => setDuration(e.target.value)}
           />
           <div className='plain-input my-3'>
-            <input type='text' placeholder=' ' value={duration} />
+            <input type='number' placeholder=' ' value={duration} />
             <span
               style={{
                 position: 'relative',
@@ -97,9 +97,10 @@ const EditScheduleModal = ({ show, hide, loadStoreData, storeData }) => {
           <Form.Range
             value={interval}
             onChange={(e) => setIntervall(e.target.value)}
+            style={{ color: 'black' }}
           />
           <div className='plain-input my-3'>
-            <input type='text' placeholder='' value={interval} />
+            <input type='number' placeholder='' value={interval} />
             <span
               style={{
                 position: 'relative',
