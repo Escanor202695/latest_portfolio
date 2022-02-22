@@ -136,6 +136,17 @@ const CreateNewScreen = ({ show, handleClose, store, loadStoreScreen }) => {
     })
   }
 
+  const handleCate = (newCate) => {
+    if (!newScreenData?.category_names.includes(newCate)) {
+      let newArr = newScreenData?.category_names
+      newArr.push(newCate)
+      setNewScreenData({
+        ...newScreenData,
+        category_names: newArr,
+      })
+    }
+  }
+
   return (
     <Modal show={show} onHide={handleClose} size='lg'>
       <Modal.Header closeButton style={{ border: 'none' }}>
@@ -212,7 +223,22 @@ const CreateNewScreen = ({ show, handleClose, store, loadStoreScreen }) => {
                 handleKeyDown(e)
               }}
             />
+          </div> */}
+
+          <div className='plain-dropdown mt-3'>
+            <label for=''>Category*</label>
+            <select onChange={(e) => handleCate(e.target.value)}>
+              <option value='' hidden>
+                not selected
+              </option>
+              {allCate?.map((c, idx) => (
+                <option value={c} key={idx}>
+                  {c}
+                </option>
+              ))}
+            </select>
           </div>
+
           <div className='mt-3 d-flex justify-content-start align-items-center flex-wrap'>
             {newScreenData?.category_names?.map((c, idx) => (
               <span
@@ -228,28 +254,6 @@ const CreateNewScreen = ({ show, handleClose, store, loadStoreScreen }) => {
                 />
               </span>
             ))}
-          </div> */}
-
-          <div className='plain-dropdown mt-3'>
-            <label for=''>Category*</label>
-            <select
-              onChange={(e) =>
-                setNewScreenData({
-                  ...newScreenData,
-                  category_names: [e.target.value],
-                })
-              }
-            >
-              <option value='' hidden>
-                not selected
-              </option>
-              {allCate?.map((c, idx) => (
-                <option value={c} key={idx}>
-                  {' '}
-                  {c}
-                </option>
-              ))}
-            </select>
           </div>
 
           <div className='plain-dropdown mt-4'>
@@ -303,7 +307,7 @@ const CreateNewScreen = ({ show, handleClose, store, loadStoreScreen }) => {
           Close
         </button>
         <button className='primary-btn' onClick={handleCreate}>
-          Create Theme {spinner && <Spinner animation='border' size='sm' />}
+          Create Screen {spinner && <Spinner animation='border' size='sm' />}
         </button>
       </Modal.Footer>
     </Modal>

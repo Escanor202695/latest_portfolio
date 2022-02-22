@@ -160,6 +160,17 @@ const EditScreenModal = ({
     })
   }
 
+  const handleCate = (newCate) => {
+    if (!newScreenData?.category_names.includes(newCate)) {
+      let newArr = newScreenData?.category_names
+      newArr.push(newCate)
+      setNewScreenData({
+        ...newScreenData,
+        category_names: newArr,
+      })
+    }
+  }
+
   return (
     <Modal show={show} onHide={handleClose} size='lg'>
       <Modal.Header closeButton style={{ border: 'none' }}>
@@ -237,7 +248,25 @@ const EditScreenModal = ({
                 handleKeyDown(e)
               }}
             />
+          </div> */}
+
+          <div className='plain-dropdown mt-3'>
+            <label for=''>Category*</label>
+            <select onChange={(e) => handleCate(e.target.value)}>
+              {allCate.length === 0 && (
+                <option value='' hidden>
+                  not selected
+                </option>
+              )}
+              {allCate?.map((c, idx) => (
+                <option value={c} key={idx}>
+                  {' '}
+                  {c}
+                </option>
+              ))}
+            </select>
           </div>
+
           <div className='mt-3 d-flex justify-content-start align-items-center flex-wrap'>
             {newScreenData?.category_names?.map((c, idx) => (
               <span
@@ -253,34 +282,6 @@ const EditScreenModal = ({
                 />
               </span>
             ))}
-          </div> */}
-
-          <div className='plain-dropdown mt-3'>
-            <label for=''>Category*</label>
-            <select
-              onChange={(e) =>
-                setNewScreenData({
-                  ...newScreenData,
-                  category_names: [e.target.value],
-                })
-              }
-            >
-              <option value='' hidden>
-                not selected
-              </option>
-              {allCate?.map((c, idx) => (
-                <option
-                  value={c}
-                  key={idx}
-                  selected={
-                    c === newScreenData?.category_names[0] ? true : false
-                  }
-                >
-                  {' '}
-                  {c}
-                </option>
-              ))}
-            </select>
           </div>
           <div className='plain-dropdown mt-4'>
             <label for=''>Layout Theme*</label>
@@ -349,7 +350,7 @@ const EditScreenModal = ({
           Close
         </button>
         <button className='primary-btn' onClick={handleCreate}>
-          Update Theme {spinner && <Spinner animation='border' size='sm' />}
+          Update Screen {spinner && <Spinner animation='border' size='sm' />}
         </button>
       </Modal.Footer>
     </Modal>
