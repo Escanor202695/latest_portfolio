@@ -8,6 +8,7 @@ import { EditAdModal } from '../Modals/EditAdModal'
 import { useEffect } from 'react'
 
 const AdCard = ({ ad, index }) => {
+  console.log(ad)
   const [show, setShow] = useState(false)
 
   const handleClose = () => setShow(false)

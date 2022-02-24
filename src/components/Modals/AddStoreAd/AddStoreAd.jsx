@@ -11,6 +11,7 @@ import {
 } from '../../../constants/api.constants'
 import Toast from '../../../utils/Toast/Toast'
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
+import { MdDeleteForever } from 'react-icons/md'
 
 const getItems = (count, offset = 0) =>
   Array.from({ length: count }, (v, k) => k).map((k) => ({
@@ -62,6 +63,8 @@ const getListStyle = (isDraggingOver) => ({
 })
 
 const AddStoreAd = ({ show, handleClose, storeData, loadStoreData }) => {
+  console.log(storeData)
+
   const [state, setState] = useState([[], []])
 
   function onDragEnd(result) {
@@ -91,14 +94,23 @@ const AddStoreAd = ({ show, handleClose, storeData, loadStoreData }) => {
 
   const [allAds, setAllAds] = useState([])
   const [spinner, setSpinner] = useState(false)
-
+  const [searchKey, setSearchKey] = useState('')
+  const [adSpinner, setAdSpinner] = useState(false)
   useEffect(() => {
     loadAllAds()
-  }, [])
+  }, [show, searchKey])
 
   const loadAllAds = async () => {
+    console.log(state)
+
+    setAdSpinner(true)
+    let end = AdGetEnd
+    if (searchKey) {
+      end += `?name=${searchKey}`
+    }
+
     try {
-      const res = await axios.get(AdGetEnd, {
+      const res = await axios.get(end, {
         headers: {
           menuboard: localStorage.getItem('menu_token'),
         },
@@ -106,10 +118,22 @@ const AddStoreAd = ({ show, handleClose, storeData, loadStoreData }) => {
 
       if (res.status === 200) {
         setAllAds(res?.data?.data)
+        console.log(res?.data?.data)
+        let filteredArr = res?.data?.data
 
-        setState([[...res?.data?.data], []])
+        for (let i of state[1]) {
+          filteredArr = filteredArr.filter((d) => d?._id !== i?._id)
+          console.log(filteredArr)
+        }
+
+        console.log(filteredArr)
+
+        setState([filteredArr, state[1]])
+        setAdSpinner(false)
       } else throw new Error(res?.data?.msg)
-    } catch (error) {}
+    } catch (error) {
+      setAdSpinner(false)
+    }
   }
 
   const handleSubmit = async () => {
@@ -119,7 +143,7 @@ const AddStoreAd = ({ show, handleClose, storeData, loadStoreData }) => {
     setSpinner(true)
 
     let newAddData = []
-    state[1].map((d) => newAddData.push({ _id: d?._id, ad_link: d?.link }))
+    state[1].map((d) => newAddData.push({ ad_link: d?._id }))
     let data = {
       ...storeData,
       id: storeData._id,
@@ -145,11 +169,13 @@ const AddStoreAd = ({ show, handleClose, storeData, loadStoreData }) => {
 
       if (res.status === 200) {
         Toast('success', 'Ads added successfully')
-        handleClose()
         setSpinner(false)
         loadStoreData()
         setAllAds([])
+        setState([[], []])
+        console.log(state)
         loadAllAds()
+        handleClose()
       } else
         throw new Error(
           res?.data?.msg || 'Something went wrong! Try again later.'
@@ -163,14 +189,16 @@ const AddStoreAd = ({ show, handleClose, storeData, loadStoreData }) => {
     }
   }
 
+  console.log(state)
+
   return (
-    <Modal show={show} onHide={handleClose} size='lg'>
+    <Modal show={show} onHide={handleClose} size='xl'>
       <Modal.Header closeButton style={{ border: 'none' }}>
         <Modal.Title style={{ fontSize: '22px' }}>
           Add Advertisement To Store
         </Modal.Title>
       </Modal.Header>
-      <Modal.Body>
+      <Modal.Body style={{ overflowY: 'scroll', height: '80vh' }}>
         <div>
           {/* <button
             type='button'
@@ -188,6 +216,17 @@ const AddStoreAd = ({ show, handleClose, storeData, loadStoreData }) => {
           >
             Add new item
           </button> */}
+
+          <div className='plain-input my-3'>
+            <label for=''>Search </label>
+            <br />
+            <input
+              type='text'
+              placeholder='enter ad name'
+              onChange={(e) => setSearchKey(e.target.value)}
+            />
+          </div>
+
           <div style={{ display: 'flex', width: '100%' }}>
             <DragDropContext onDragEnd={onDragEnd}>
               {state.map((el, ind) => (
@@ -198,8 +237,15 @@ const AddStoreAd = ({ show, handleClose, storeData, loadStoreData }) => {
                       style={getListStyle(snapshot.isDraggingOver)}
                       {...provided.droppableProps}
                     >
-                      <h5 className='mb-4'>
-                        {ind === 0 ? 'All Ads' : 'Added For Store'}
+                      <h5 className='mb-4 d-flex justify-content-start align-items-center'>
+                        {ind === 0 ? `All Ad` : 'Added For Store'}
+                        {ind === 0 && adSpinner && (
+                          <Spinner
+                            animation='border'
+                            size='sm'
+                            className='ms-2'
+                          />
+                        )}
                       </h5>
                       {el.map((item, index) => (
                         <Draggable
@@ -218,35 +264,58 @@ const AddStoreAd = ({ show, handleClose, storeData, loadStoreData }) => {
                               )}
                             >
                               <div
-                                style={{
-                                  display: 'flex',
-                                  justifyContent: 'space-between',
-                                  alignItems: 'center',
-                                }}
+                                // style={{
+                                //   display: 'flex',
+                                //   justifyContent: 'space-between',
+                                //   alignItems: 'center',
+                                // }}
+                                className='row justify-content-between align-items-center '
                               >
-                                <div>
-                                  <h5>{item?.name}</h5>
-                                  <img
-                                    src={item?.link}
-                                    alt=''
-                                    height='90px'
-                                    width='180px'
-                                  />
+                                <div className='col-5 d-flex'>
+                                  <h5>
+                                    {index + 1}. {'  '}
+                                  </h5>
+                                  <div className='ms-2'>
+                                    <h5>{item?.name}</h5>
+                                    <h6
+                                      style={{ color: 'var(--primary_color)' }}
+                                    >
+                                      {item?.folder_id?.name}
+                                    </h6>
+                                  </div>
                                 </div>
+
+                                <img
+                                  className='col-4'
+                                  src={item?.link}
+                                  alt=''
+                                  height='80px'
+                                  width='100px'
+                                />
                                 {ind !== 0 && (
-                                  <button
-                                    type='button'
-                                    className='danger-btn-light'
-                                    onClick={() => {
-                                      const newState = [...state]
-                                      newState[ind].splice(index, 1)
-                                      setState(
-                                        newState.filter((group) => group.length)
-                                      )
-                                    }}
-                                  >
-                                    delete
-                                  </button>
+                                  // <button
+                                  //   type='button'
+                                  //   className='danger-btn-light'
+
+                                  // >
+                                  //   Remove
+                                  // </button>
+                                  <div className='col-1 mx-2 text-center'>
+                                    <MdDeleteForever
+                                      style={{
+                                        height: '50px',
+                                        width: '30px',
+                                        cursor: 'pointer',
+                                      }}
+                                      className='text-danger'
+                                      onClick={() => {
+                                        const newState = [...state]
+                                        newState[ind].splice(index, 1)
+                                        newState[0].push(item)
+                                        setState(newState)
+                                      }}
+                                    />
+                                  </div>
                                 )}
                               </div>
                             </div>
