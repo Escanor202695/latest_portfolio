@@ -8,7 +8,7 @@ import demoImg from '../../assets/images/demoLogoImg.png'
 import uploadBtn from '../../assets/icons/upload.svg'
 import { useHistory } from 'react-router-dom'
 import { useEffect } from 'react'
-import { GetAllStoreAPI } from '../../constants/api.constants'
+import { GetAllStoreAPI, GetAllTagUrl } from '../../constants/api.constants'
 import axios from 'axios'
 import Toast from '../../utils/Toast/Toast'
 import StoreFronManagementModal from '../../components/Modals/StoreFrontManagementModal/StoreFronManagementModal'
@@ -16,7 +16,7 @@ import StoreFronManagementModal from '../../components/Modals/StoreFrontManageme
 const StoreFrontManagement = () => {
   const [show, setShow] = useState(false)
   const [spin, setSpin] = useState(false)
-
+  const [allTags, setAllTags] = useState([])
   const handleClose = () => setShow(false)
   const handleShow = () => setShow(true)
   const history = useHistory()
@@ -28,16 +28,22 @@ const StoreFrontManagement = () => {
   const [allStore, setAllStore] = useState([])
   const [page, setPage] = useState(1)
   const [search, setSearch] = useState('')
-
+  const [searchTag, setSearchTag] = useState('')
+  useEffect(() => {
+    loadAllTags()
+  }, [])
   useEffect(() => {
     loadStoreData()
-  }, [page, search])
+  }, [page, search, searchTag])
 
   const loadStoreData = async () => {
     setSpin(true)
     let url = GetAllStoreAPI + `?page=${page}`
     if (search.length > 0) {
       url += `&filter=${search}`
+    }
+    if (searchTag.length > 0) {
+      url += `&tag=${searchTag}`
     }
     try {
       const response = await axios.get(url, {
@@ -55,6 +61,30 @@ const StoreFrontManagement = () => {
         )
     } catch (error) {
       setSpin(false)
+      Toast(
+        'err',
+        error.response?.data?.msg || 'Something went wrong! Try again later.'
+      )
+    }
+  }
+
+  const loadAllTags = async () => {
+    setSpin(true)
+
+    try {
+      const response = await axios.get(GetAllTagUrl, {
+        headers: {
+          menuboard: localStorage.getItem('menu_token'),
+        },
+      })
+
+      if (response.status === 200) {
+        setAllTags(response.data?.data)
+      } else
+        throw new Error(
+          response?.data?.msg || ' Something went wrong! Try again later.'
+        )
+    } catch (error) {
       Toast(
         'err',
         error.response?.data?.msg || 'Something went wrong! Try again later.'
@@ -119,13 +149,14 @@ const StoreFrontManagement = () => {
           </div>
           <div className='custom-dropdown ms-2'>
             <label for=''>Tags</label>
-            <select>
-              <option value='3'> all</option>
-              <option value='1' style={{ border: 'none' }}>
+            <select onChange={(e) => setSearchTag(e.target.value)}>
+              <option value='' hidden>
                 {' '}
-                most popular
+                not selected
               </option>
-              <option value='2'>most unpopular </option>
+              {allTags?.map((t, idx) => (
+                <option value={t?._id?.tag}>{t?._id?.tag}</option>
+              ))}
             </select>
           </div>
           <div className='custom-dropdown ms-2'>

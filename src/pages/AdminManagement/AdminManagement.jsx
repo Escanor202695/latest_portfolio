@@ -199,7 +199,7 @@ const AdminManagement = () => {
   let items = []
   let totalPage = 0
   if (totalDoc < 10) totalPage = 1
-  else totalPage = totalDoc / 10
+  else totalPage = Math.ceil(totalDoc / 10)
   for (let number = 1; number <= totalPage; number++) {
     items.push(
       <Pagination.Item key={number} active={number == page}>

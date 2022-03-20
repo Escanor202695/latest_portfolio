@@ -8,14 +8,12 @@ import { EditAdModal } from '../Modals/EditAdModal'
 import { useEffect } from 'react'
 
 const AdCard = ({ ad, index }) => {
-  console.log(ad)
   const [show, setShow] = useState(false)
 
   const handleClose = () => setShow(false)
   const handleShow = () => setShow(true)
 
   const [adEdit, setAdEdit] = useState(false)
-  console.log(ad)
 
   return (
     <div className='my-3 d-flex justify-content-between align-items-start screen-section'>

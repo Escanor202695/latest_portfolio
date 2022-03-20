@@ -4,7 +4,6 @@ import AdCard from '../../components/AdCard/AdCard'
 import '../../components/CommonLayout/SideBar.scss'
 
 const StoreHome = () => {
-  console.log(JSON.parse(localStorage.getItem('store_info')))
   const storeData = JSON.parse(localStorage.getItem('store_info'))
 
   let history = useHistory()

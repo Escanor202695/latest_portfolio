@@ -53,7 +53,7 @@ function App() {
   //     // Toast('err', error.response?.data?.msg)
   //   }
   // }
-  console.log(user)
+
   return (
     <Router>
       <NavigationBar />

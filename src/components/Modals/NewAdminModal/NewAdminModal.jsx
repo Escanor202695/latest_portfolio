@@ -40,6 +40,13 @@ const NewAdminModal = ({ show, handleClose, loadAllAdmin }) => {
       Toast('err', 'Please enter role')
       return
     }
+
+    if (passRetype !== data.password) {
+      Toast('err', 'Password and confirm password are not same')
+      setSpinner(false)
+
+      return
+    }
     setSpinner(true)
 
     try {
@@ -62,15 +69,15 @@ const NewAdminModal = ({ show, handleClose, loadAllAdmin }) => {
           response?.data?.msg || ' Something went wrong! Try again later.'
         )
     } catch (error) {
-      handleClose()
+      // handleClose()
       setSpinner(false)
-      setData({
-        email: '',
-        name: '',
-        role: 'manager',
-        phone: '+88',
-        password: '',
-      })
+      // setData({
+      //   email: '',
+      //   name: '',
+      //   role: 'manager',
+      //   phone: '+88',
+      //   password: '',
+      // })
       Toast(
         'err',
         error.response?.data?.msg || 'Something went wrong! Try again later.'
@@ -127,7 +134,7 @@ const NewAdminModal = ({ show, handleClose, loadAllAdmin }) => {
           <br />
           <input
             type='password'
-            placeholder='minimum length 8'
+            placeholder='minimum length 5'
             onChange={(e) => setData({ ...data, password: e.target.value })}
           />
           {data.password.length > 0 && data.password.length < 5 && (

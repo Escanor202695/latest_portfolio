@@ -88,15 +88,15 @@ const AddNewAdModal = ({ show, handleClose, folderId, loadAllFolders }) => {
       } else throw new Error(response.data?.msg || 'Try again later')
     } catch (error) {
       setSpinner(false)
-      setPhotoUrl(null)
-      setData({
-        folder_id: '',
-        name: '',
-        description: '',
-        link: '',
-      })
+      // setPhotoUrl(null)
+      // setData({
+      //   folder_id: '',
+      //   name: '',
+      //   description: '',
+      //   link: '',
+      // })
       Toast('err', error.response?.data?.msg)
-      handleClose()
+      // handleClose()
     }
   }
 

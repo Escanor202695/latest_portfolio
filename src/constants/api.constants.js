@@ -22,6 +22,8 @@ export const StoreCreate = BaseUrl + '/store/create'
 export const StoreEdit = BaseUrl + '/store/edit'
 export const DeleteStoreEnd = BaseUrl + '/store/delete'
 export const StoreLogInUrl = BaseUrl + '/store/login'
+export const GetAllTagUrl = BaseUrl + '/store/get_all_tags'
+
 
 
 // folder
@@ -57,8 +59,6 @@ export const DeleteScreenEnd = BaseUrl + '/screen/delete'
 export const GetAllCateEnd = BaseUrl + '/screen/get_all_categories'
 
 
-//files 
-export const FileUploadUrl = BaseUrl + '/file/upload'
 
 
 

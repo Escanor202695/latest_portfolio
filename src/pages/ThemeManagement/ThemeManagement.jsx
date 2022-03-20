@@ -20,13 +20,13 @@ const ThemeManagement = () => {
 
   useEffect(() => {
     getAllTheme()
-  }, [search])
+  }, [search, page])
 
   const getAllTheme = async () => {
     setSpinner(true)
-    let url = GetThemeEnd
+    let url = GetThemeEnd + `?page=${page}`
     if (search.length > 0) {
-      url += `?name=${search}`
+      url += `&name=${search}`
     }
     try {
       const res = await axios.get(url, {
@@ -53,7 +53,7 @@ const ThemeManagement = () => {
   let items = []
   let totalPage = 0
   if (documentCount < 10) totalPage = 1
-  else totalPage = documentCount / 10
+  else totalPage = Math.ceil(documentCount / 10)
   for (let number = 1; number <= totalPage; number++) {
     items.push(
       <Pagination.Item key={number} active={number == page}>

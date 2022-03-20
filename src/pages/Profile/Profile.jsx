@@ -47,7 +47,7 @@ const Profile = () => {
   return (
     <div className='profile-page'>
       <h3 className='d-flex justify-content-start align-items-center'>
-        User Profile Name
+        User Profile
         <Spinner
           className={loadInfoSpinner ? 'd-block ms-2' : 'd-none ms-2'}
           animation='border'

@@ -231,8 +231,8 @@ const StoreFront = () => {
             <div className='d-flex justify-content-between align-items-center edit-schedule'>
               <h5>
                 Ads will play every{' '}
-                <span>{storeData?.ad_timing?.interval} sec</span> for{' '}
-                <span>{storeData?.ad_timing?.duration} sec</span>
+                <span>{storeData?.ad_timing?.interval || 0} sec</span> for{' '}
+                <span>{storeData?.ad_timing?.duration || 0} sec</span>
               </h5>
               <button
                 className='primary-btn-light'

@@ -1,15 +1,20 @@
 import React, { useState, useEffect } from 'react'
-import { Modal, Spinner } from 'react-bootstrap'
+import { Form, Modal, Spinner } from 'react-bootstrap'
 import demoImg from '../../../assets/images/demoLogoImg.png'
 import uploadBtn from '../../../assets/icons/upload.svg'
 import axios from 'axios'
-import { DeleteStoreEnd, StoreEdit } from '../../../constants/api.constants'
+import {
+  DeleteStoreEnd,
+  FileUploadEnd,
+  StoreEdit,
+} from '../../../constants/api.constants'
 import { InputTag } from '../../Tag'
 import Toast from '../../../utils/Toast/Toast'
 import { useHistory } from 'react-router-dom'
 
 const EditStoreModal = ({ show, handleClose, data, loadStoreData }) => {
   const [editSpinner, setEditSpinner] = useState(false)
+  const [photoSpinner, setPhotoSpinner] = useState(false)
 
   const [storeData, setStoreData] = useState({
     id: '',
@@ -54,27 +59,7 @@ const EditStoreModal = ({ show, handleClose, data, loadStoreData }) => {
   }
   const dbData = data.tag
 
-  // if (dbData.length !== 0) {
-  //   for (var i = 0; i < dbData.length; i++) {
-  //     let tmpEmptyObj = {
-  //       id: dbData[i],
-  //       text: dbData[i],
-  //     }
-  //     emptyObj.push(tmpEmptyObj)
-  //   }
-  // }
   const [tags, setTags] = useState(emptyObj)
-
-  // useEffect(() => {
-  //   const obj = {
-  //     id: 'Thailand',
-  //     text: 'Thailand',
-  //   }
-  //   setTags({
-  //     ...tags,
-  //     obj,
-  //   })
-  // }, [data])
 
   const handleDelete = (i) => {
     setTags(tags.filter((tag, index) => index !== i))
@@ -150,6 +135,7 @@ const EditStoreModal = ({ show, handleClose, data, loadStoreData }) => {
       address: storeData.address,
       tag: tagArray,
       type: types,
+      icon: storeData?.icon,
     }
     try {
       await axios
@@ -227,6 +213,31 @@ const EditStoreModal = ({ show, handleClose, data, loadStoreData }) => {
     }
   }
 
+  const handleImageUpload = async (e) => {
+    setPhotoSpinner(true)
+    const file = e.target.files[0]
+
+    const formData = new FormData()
+    formData.append('files', file)
+
+    try {
+      const res = await axios.post(FileUploadEnd, formData, {
+        headers: {
+          menuboard: localStorage.getItem('menu_token'),
+        },
+      })
+      if (res.status === 200) {
+        // setPhotoUrl(res.data?.files[0]?.path)
+        setStoreData({ ...storeData, icon: res?.data?.files[0].path })
+
+        setPhotoSpinner(false)
+        Toast('success', 'Photo uploaded successfully')
+      }
+    } catch (error) {
+      setPhotoSpinner(false)
+    }
+  }
+
   return (
     <>
       <Modal show={show} onHide={handleClose} size='lg'>
@@ -240,22 +251,25 @@ const EditStoreModal = ({ show, handleClose, data, loadStoreData }) => {
           <h6>Store Brand Icon / Logo</h6>
           <div className='d-flex justify-content-start align-items-end'>
             <img
-              src={demoImg}
+              src={storeData?.icon || demoImg}
               alt='demoImg'
               height='100'
               width='100'
               className='me-4'
             />
-            <button className='upload-btn d-flex justify-content-between align-items-center'>
-              <span>Upload</span>
-              <img
-                className='mx-2'
-                src={uploadBtn}
-                alt=''
-                width='24'
-                height='24'
-              />{' '}
-            </button>
+
+            <Form.Group className='' controlId='formBasicEmail'>
+              <Form.Label>
+                BackGround Image*
+                {photoSpinner && (
+                  <Spinner className='ms-1' animation='border' size='sm' />
+                )}
+              </Form.Label>
+              <Form.Control
+                type='file'
+                onChange={(e) => handleImageUpload(e)}
+              />
+            </Form.Group>
           </div>
           <div className='my-3'>
             <div className='plain-input my-3'>

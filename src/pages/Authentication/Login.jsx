@@ -55,7 +55,6 @@ const Login = () => {
           localStorage.setItem('menu_token', token)
           getAdminInfo(token)
         } else {
-          console.log(response?.data?.menuboard?.store)
           localStorage.setItem('store_token', token)
           localStorage.setItem(
             'store_info',

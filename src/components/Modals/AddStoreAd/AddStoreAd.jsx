@@ -57,8 +57,6 @@ const getListStyle = (isDraggingOver) => ({
 })
 
 const AddStoreAd = ({ show, handleClose, storeData, loadStoreData }) => {
-  console.log(storeData)
-
   const [state, setState] = useState([[], []])
 
   function onDragEnd(result) {
@@ -95,8 +93,6 @@ const AddStoreAd = ({ show, handleClose, storeData, loadStoreData }) => {
   }, [show, searchKey])
 
   const loadAllAds = async () => {
-    console.log(state)
-
     setAdSpinner(true)
     let end = AdGetEnd
     if (searchKey) {
@@ -112,7 +108,6 @@ const AddStoreAd = ({ show, handleClose, storeData, loadStoreData }) => {
 
       if (res.status === 200) {
         setAllAds(res?.data?.data)
-        console.log(res?.data?.data)
 
         // let addedToStoreSet = new Set()
         // for (let i of storeData?.ads) {
@@ -122,19 +117,13 @@ const AddStoreAd = ({ show, handleClose, storeData, loadStoreData }) => {
         //   addedToStoreSet.add(i)
         // }
         // const convertedArrFromSet = [state[0], [...addedToStoreSet]]
-        // console.log(convertedArrFromSet)
         // setState(convertedArrFromSet)
-        // console.log(state)
 
         let filteredArr = res?.data?.data
 
         for (let i of state[1]) {
-          console.log(state)
           filteredArr = filteredArr.filter((d) => d?._id !== i?._id)
-          console.log(filteredArr)
         }
-
-        console.log(filteredArr)
 
         setState([filteredArr, state[1]])
         setAdSpinner(false)
@@ -182,7 +171,7 @@ const AddStoreAd = ({ show, handleClose, storeData, loadStoreData }) => {
         loadStoreData()
         setAllAds([])
         setState([[], []])
-        console.log(state)
+
         loadAllAds()
         handleClose()
       } else
@@ -197,8 +186,6 @@ const AddStoreAd = ({ show, handleClose, storeData, loadStoreData }) => {
       )
     }
   }
-
-  console.log(state)
 
   return (
     <Modal show={show} onHide={handleClose} size='xl'>

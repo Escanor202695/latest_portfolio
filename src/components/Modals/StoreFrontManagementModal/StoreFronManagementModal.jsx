@@ -1,8 +1,8 @@
 import axios from 'axios'
 import Toast from '../../../utils/Toast/Toast'
 import React, { useEffect, useState } from 'react'
-import { Modal, Spinner } from 'react-bootstrap'
-import { FileUploadUrl, StoreCreate } from '../../../constants/api.constants'
+import { Form, Modal, Spinner } from 'react-bootstrap'
+import { FileUploadEnd, StoreCreate } from '../../../constants/api.constants'
 import { InputTag } from '../../Tag'
 import { useRef } from 'react'
 export default function StoreFronManagementModal({
@@ -24,8 +24,7 @@ export default function StoreFronManagementModal({
     social_link: '',
     icon: '',
   })
-  const fileInputRef = useRef()
-  const [files, setFiles] = useState([])
+  const [photoSpinner, setPhotoSpinner] = useState(false)
 
   const [types, setTypes] = useState('Category')
 
@@ -40,9 +39,9 @@ export default function StoreFronManagementModal({
     }
   }
 
-  function handleSubmit(e) {
-    e.preventDefault()
-  }
+  // function handleSubmit(e) {
+  //   e.preventDefault()
+  // }
 
   const [tags, setTags] = useState([])
 
@@ -123,6 +122,7 @@ export default function StoreFronManagementModal({
       social_link: storeData.social_link,
       link: storeData.link,
       api_key: '2d108b5e-ec42-45cb-a0cf-c5f432ea637a',
+      icon: storeData?.icon,
     }
     try {
       await axios
@@ -167,23 +167,28 @@ export default function StoreFronManagementModal({
     }
   }
 
-  useEffect(() => {
-    fileUpload()
-  }, [files])
+  const handleImageUpload = async (e) => {
+    setPhotoSpinner(true)
+    const file = e.target.files[0]
 
-  const fileUpload = async () => {
+    const formData = new FormData()
+    formData.append('files', file)
+
     try {
-      const formData = new FormData()
-      formData.append('file', files)
+      const res = await axios.post(FileUploadEnd, formData, {
+        headers: {
+          menuboard: localStorage.getItem('menu_token'),
+        },
+      })
+      if (res.status === 200) {
+        // setPhotoUrl(res.data?.files[0]?.path)
+        setStoreData({ ...storeData, icon: res?.data?.files[0].path })
 
-      console.log(formData)
-
-      const responseData = await axios.post(FileUploadUrl, formData)
-      //maybe check for response data
-      setStoreData({ ...storeData, icon: responseData.url })
-      console.log(responseData.url)
-    } catch (err) {
-      console.log(err)
+        setPhotoSpinner(false)
+        Toast('success', 'Photo uploaded successfully')
+      }
+    } catch (error) {
+      setPhotoSpinner(false)
     }
   }
 
@@ -200,13 +205,26 @@ export default function StoreFronManagementModal({
           <h6>Store Brand Icon / Logo</h6>
           <div className='d-flex justify-content-start align-items-end'>
             <img
-              src={demoImg}
+              src={storeData?.icon || demoImg}
               alt='demoImg'
               height='100'
               width='100'
               className='me-4'
             />
-            <button
+
+            <Form.Group className='' controlId='formBasicEmail'>
+              <Form.Label>
+                BackGround Image*
+                {photoSpinner && (
+                  <Spinner className='ms-1' animation='border' size='sm' />
+                )}
+              </Form.Label>
+              <Form.Control
+                type='file'
+                onChange={(e) => handleImageUpload(e)}
+              />
+            </Form.Group>
+            {/* <button
               className='upload-btn d-flex justify-content-between align-items-center'
               onClick={(event) => {
                 fileInputRef.current.click()
@@ -226,9 +244,10 @@ export default function StoreFronManagementModal({
               style={{ display: 'none' }}
               ref={fileInputRef}
               onChange={(event) => {
+                
                 setFiles(event.target.files[0])
               }}
-            />
+            /> */}
           </div>
           <div className='my-3'>
             <div className='plain-input my-3'>
