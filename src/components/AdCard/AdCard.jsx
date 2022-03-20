@@ -15,17 +15,18 @@ const AdCard = ({ ad, index }) => {
   const handleShow = () => setShow(true)
 
   const [adEdit, setAdEdit] = useState(false)
+  console.log(ad)
 
   return (
     <div className='my-3 d-flex justify-content-between align-items-start screen-section'>
       <div className=' d-flex justify-content-between align-items-center '>
         <h5 className='me-2'>{index}. </h5>
         <img
-          src={ad?.ad_link || screenImg}
+          src={ad?.ad_id?.link || screenImg}
           alt=''
           className='me-3'
-          width='500px'
-          height='180px'
+          width='240px'
+          height='100px'
         />
         {/* <img
           src={Frame}
@@ -38,11 +39,10 @@ const AdCard = ({ ad, index }) => {
           }}
           // onClick={() => handleShow(true)}
         /> */}
-        {/* <div className='ms-3 screen-right'>
-          <h6 className='fw-bold'>Advertisement Name</h6>
-          <h6>Product Manufacturer, Manufacturer Type</h6>
-          <h6>Filetype: Image, Ad Type: Lorem</h6>
-        </div> */}
+        <div className='ms-3 screen-right'>
+          <h6 className='fw-bold'>{ad?.ad_id?.name}</h6>
+          <h6 style={{ color: 'dimgray' }}>{ad?.ad_id?.description}</h6>
+        </div>
       </div>
       {/* <div>
         <Dropdown drop='start' style={{ cursor: 'pointer' }}>

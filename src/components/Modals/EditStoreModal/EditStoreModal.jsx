@@ -18,7 +18,12 @@ const EditStoreModal = ({ show, handleClose, data, loadStoreData }) => {
     phone: '+88',
     email: '',
     address: '',
+    link: '',
+    social_link: '',
+    footer: '',
+    icon: '',
   })
+  let emptyObj = []
 
   useEffect(() => {
     setStoreData({
@@ -28,6 +33,10 @@ const EditStoreModal = ({ show, handleClose, data, loadStoreData }) => {
       phone: data?.phone,
       email: data?.email,
       address: data?.address,
+      link: data?.link,
+      social_link: data?.social_link,
+      footer: data?.footer,
+      icon: data?.icon,
     })
   }, [data])
 
@@ -43,7 +52,6 @@ const EditStoreModal = ({ show, handleClose, data, loadStoreData }) => {
       })
     }
   }
-  let emptyObj = []
   const dbData = data.tag
 
   // if (dbData.length !== 0) {
@@ -116,13 +124,19 @@ const EditStoreModal = ({ show, handleClose, data, loadStoreData }) => {
       setEditSpinner(false)
       return
     }
+
     if (storeData.types === '') {
       Toast('err', 'Types cant be empty')
       setEditSpinner(false)
       return
     }
+    if (storeData.link === '') {
+      Toast('err', 'Link must be provided')
+      setEditSpinner(false)
+      return
+    }
 
-    const tagArray = []
+    const tagArray = [...data?.tag]
     tags.map((tag) => {
       return tagArray.push(tag.text)
     })
@@ -245,7 +259,7 @@ const EditStoreModal = ({ show, handleClose, data, loadStoreData }) => {
           </div>
           <div className='my-3'>
             <div className='plain-input my-3'>
-              <label for=''>Store Name</label>
+              <label for=''>Store Name*</label>
               <br />
               <input
                 type='text'
@@ -256,7 +270,7 @@ const EditStoreModal = ({ show, handleClose, data, loadStoreData }) => {
               />
             </div>
             <div className='plain-input my-3'>
-              <label for=''>Manager / Owner Name</label>
+              <label for=''>Manager / Owner Name*</label>
               <br />
               <input
                 type='text'
@@ -267,7 +281,7 @@ const EditStoreModal = ({ show, handleClose, data, loadStoreData }) => {
               />
             </div>
             <div className='plain-input my-3'>
-              <label for=''>Manager / Owner Phone</label>
+              <label for=''>Manager / Owner Phone*</label>
               <br />
               <input
                 type='text'
@@ -278,7 +292,7 @@ const EditStoreModal = ({ show, handleClose, data, loadStoreData }) => {
               />
             </div>
             <div className='plain-input my-3'>
-              <label for=''>Manager / Owner Email</label>
+              <label for=''>Manager / Owner Email*</label>
               <br />
               <input
                 type='text'
@@ -289,7 +303,7 @@ const EditStoreModal = ({ show, handleClose, data, loadStoreData }) => {
               />
             </div>
             <div className='plain-input my-3'>
-              <label for=''>Address / Location</label>
+              <label for=''>Address / Location*</label>
               <br />
               <input
                 type='text'
@@ -300,7 +314,7 @@ const EditStoreModal = ({ show, handleClose, data, loadStoreData }) => {
               />
             </div>
             <div className='plain-textarea my-3'>
-              <label for=''>Tags</label>
+              <label for=''>Tags*</label>
               <br />
               <InputTag
                 tags={tags}
@@ -311,11 +325,52 @@ const EditStoreModal = ({ show, handleClose, data, loadStoreData }) => {
               />
             </div>
             <div className='plain-dropdown '>
-              <label for=''>Type</label>
+              <label for=''>Type*</label>
               <select onChange={handleInput} name='types'>
                 <option value='Category'> Catagory</option>
                 <option value='Click-n-Collect'> Click-n-Collect</option>
               </select>
+            </div>
+            <div className='plain-input my-3'>
+              <label for=''>Footer</label>
+              <br />
+              <input
+                type='text'
+                placeholder='Please input your address'
+                value={storeData.footer}
+                onChange={(e) =>
+                  setStoreData({ ...storeData, footer: e.target.value })
+                }
+                name='footer'
+              />
+            </div>
+
+            <div className='plain-input my-3'>
+              <label for=''>Social Link</label>
+              <br />
+              <input
+                type='text'
+                placeholder='Please input your address'
+                value={storeData.social_link}
+                onChange={(e) =>
+                  setStoreData({ ...storeData, social_link: e.target.value })
+                }
+                name='social_link'
+              />
+            </div>
+
+            <div className='plain-input my-3'>
+              <label for=''>Link*</label>
+              <br />
+              <input
+                type='text'
+                placeholder='Please input your address'
+                value={storeData.link}
+                onChange={(e) =>
+                  setStoreData({ ...storeData, link: e.target.value })
+                }
+                name='social_link'
+              />
             </div>
           </div>
 

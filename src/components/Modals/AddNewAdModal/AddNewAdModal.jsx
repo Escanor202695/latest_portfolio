@@ -18,6 +18,7 @@ const AddNewAdModal = ({ show, handleClose, folderId, loadAllFolders }) => {
     name: '',
     description: '',
     link: '',
+    type: 'video',
   })
 
   const handleImageUpload = async (e) => {
@@ -144,6 +145,20 @@ const AddNewAdModal = ({ show, handleClose, folderId, loadAllFolders }) => {
                 setData({ ...data, description: e.target.value })
               }
             />
+          </div>
+
+          <div className='plain-dropdown my-3'>
+            <label for=''>File Type</label>
+            <br />
+            <select
+              className=''
+              onChange={(e) => setData({ ...data, type: e.target.value })}
+            >
+              <option value='photo'>Photo</option>
+              <option value='video' selected>
+                Video
+              </option>
+            </select>
           </div>
         </div>
       </Modal.Body>

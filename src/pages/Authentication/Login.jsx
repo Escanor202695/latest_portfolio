@@ -1,7 +1,11 @@
 import axios from 'axios'
 import React, { useContext, useEffect, useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
-import { GetAdminProfileUrl, LogInUrl } from '../../constants/api.constants'
+import {
+  GetAdminProfileUrl,
+  LogInUrl,
+  StoreLogInUrl,
+} from '../../constants/api.constants'
 import './Login.scss'
 import Toast from '../../utils/Toast/Toast'
 import { Spinner } from 'react-bootstrap'
@@ -14,11 +18,12 @@ const Login = () => {
   let { from } = location.state || { from: { pathname: '/' } }
   let history = useHistory()
   const auth = useAuth()
+  const [loginAs, setLoginAs] = useState('admin')
 
   const [spin, setSpin] = useState(false)
   const [authValue, setAuthValue] = useState({
-    email: 'super@admin.com',
-    password: 'string',
+    email: '',
+    password: '',
   })
 
   const handleSubmit = async (e) => {
@@ -33,8 +38,12 @@ const Login = () => {
     }
 
     setSpin(true)
+    let url = LogInUrl
+    if (loginAs === 'manager') {
+      url = StoreLogInUrl
+    }
     try {
-      const response = await axios.post(LogInUrl, {
+      const response = await axios.post(url, {
         email: authValue.email,
         password: authValue.password,
       })
@@ -42,8 +51,20 @@ const Login = () => {
 
       if (response.status === 200) {
         Toast('success', 'Successfully Logged In!')
-        localStorage.setItem('menu_token', token)
-        getAdminInfo(token)
+        if (loginAs === 'admin') {
+          localStorage.setItem('menu_token', token)
+          getAdminInfo(token)
+        } else {
+          console.log(response?.data?.menuboard?.store)
+          localStorage.setItem('store_token', token)
+          localStorage.setItem(
+            'store_info',
+            JSON.stringify(response?.data?.menuboard?.store)
+          )
+
+          setSpin(false)
+          history.push('/store')
+        }
       } else
         throw new Error(
           response?.data?.msg || ' Something went wrong! Try again later.'
@@ -81,9 +102,32 @@ const Login = () => {
   return (
     <div className='login-card  '>
       <h2 className='text-center fw-bold'>Login</h2>
+      <div className='d-flex justify-content-between align-items-center'>
+        <button
+          className={
+            loginAs === 'admin'
+              ? 'primary-btn me-2 w-50'
+              : 'primary-btn-light me-2 w-50'
+          }
+          onClick={() => setLoginAs('admin')}
+        >
+          Login as Admin
+        </button>
+        <button
+          onClick={() => setLoginAs('manager')}
+          className={
+            loginAs === 'admin'
+              ? 'primary-btn-light me-2 w-50'
+              : 'primary-btn me-2 w-50'
+          }
+        >
+          Login in Store
+        </button>
+      </div>
+
       <form onSubmit={handleSubmit}>
         <div className='plain-input mt-3 '>
-          <label for=''>Email</label>
+          <label for=''> {loginAs === 'admin' ? 'User' : 'Store'} Email</label>
           <br />
           <input
             type='text'
@@ -95,7 +139,9 @@ const Login = () => {
           />
         </div>
         <div className='plain-input mt-3 '>
-          <label for=''>Password</label>
+          <label for=''>
+            {loginAs === 'admin' ? 'User' : 'Store'} Password
+          </label>
           <br />
           <input
             type='password'

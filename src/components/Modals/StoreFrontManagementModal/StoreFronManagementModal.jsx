@@ -2,8 +2,9 @@ import axios from 'axios'
 import Toast from '../../../utils/Toast/Toast'
 import React, { useEffect, useState } from 'react'
 import { Modal, Spinner } from 'react-bootstrap'
-import { StoreCreate } from '../../../constants/api.constants'
+import { FileUploadUrl, StoreCreate } from '../../../constants/api.constants'
 import { InputTag } from '../../Tag'
+import { useRef } from 'react'
 export default function StoreFronManagementModal({
   show,
   handleClose,
@@ -18,7 +19,13 @@ export default function StoreFronManagementModal({
     phone: '+88',
     email: '',
     address: '',
+    footer: '',
+    link: '',
+    social_link: '',
+    icon: '',
   })
+  const fileInputRef = useRef()
+  const [files, setFiles] = useState([])
 
   const [types, setTypes] = useState('Category')
 
@@ -93,6 +100,16 @@ export default function StoreFronManagementModal({
       setEditSpinner(false)
       return
     }
+    if (tagArray.length === 0) {
+      Toast('err', 'Please enter at least 1 tag')
+      setEditSpinner(false)
+      return
+    }
+    if (storeData.link === '') {
+      Toast('err', 'Please enter link')
+      setEditSpinner(false)
+      return
+    }
 
     const dataObj = {
       name: storeData.name,
@@ -102,6 +119,10 @@ export default function StoreFronManagementModal({
       address: storeData.address,
       tag: tagArray,
       type: types,
+      footer: storeData.footer,
+      social_link: storeData.social_link,
+      link: storeData.link,
+      api_key: '2d108b5e-ec42-45cb-a0cf-c5f432ea637a',
     }
     try {
       await axios
@@ -130,19 +151,39 @@ export default function StoreFronManagementModal({
     } catch (error) {
       setEditSpinner(false)
       setTags([])
-      setStoreData({
-        name: '',
-        manager: '',
-        phone: '+88',
-        email: '',
-        address: '',
-      })
+      // setStoreData({
+      //   name: '',
+      //   manager: '',
+      //   phone: '+88',
+      //   email: '',
+      //   address: '',
+      // })
       Toast(
         'err',
         error.response?.data?.msg || 'Something went wrong! Try again later.'
       )
       handleClose()
       setTypes('Category')
+    }
+  }
+
+  useEffect(() => {
+    fileUpload()
+  }, [files])
+
+  const fileUpload = async () => {
+    try {
+      const formData = new FormData()
+      formData.append('file', files)
+
+      console.log(formData)
+
+      const responseData = await axios.post(FileUploadUrl, formData)
+      //maybe check for response data
+      setStoreData({ ...storeData, icon: responseData.url })
+      console.log(responseData.url)
+    } catch (err) {
+      console.log(err)
     }
   }
 
@@ -165,7 +206,12 @@ export default function StoreFronManagementModal({
               width='100'
               className='me-4'
             />
-            <button className='upload-btn d-flex justify-content-between align-items-center'>
+            <button
+              className='upload-btn d-flex justify-content-between align-items-center'
+              onClick={(event) => {
+                fileInputRef.current.click()
+              }}
+            >
               <span>Upload</span>
               <img
                 className='mx-2'
@@ -175,10 +221,18 @@ export default function StoreFronManagementModal({
                 height='24'
               />{' '}
             </button>
+            <input
+              type='file'
+              style={{ display: 'none' }}
+              ref={fileInputRef}
+              onChange={(event) => {
+                setFiles(event.target.files[0])
+              }}
+            />
           </div>
           <div className='my-3'>
             <div className='plain-input my-3'>
-              <label for=''>Store Name</label>
+              <label for=''>Store Name*</label>
               <br />
               <input
                 type='text'
@@ -189,7 +243,7 @@ export default function StoreFronManagementModal({
               />
             </div>
             <div className='plain-input my-3'>
-              <label for=''>Manager / Owner Name</label>
+              <label for=''>Manager / Owner Name*</label>
               <br />
               <input
                 type='text'
@@ -200,7 +254,7 @@ export default function StoreFronManagementModal({
               />
             </div>
             <div className='plain-input my-3'>
-              <label for=''>Manager / Owner Phone</label>
+              <label for=''>Manager / Owner Phone*</label>
               <br />
               <input
                 type='text'
@@ -211,7 +265,7 @@ export default function StoreFronManagementModal({
               />
             </div>
             <div className='plain-input my-3'>
-              <label for=''>Manager / Owner Email</label>
+              <label for=''>Manager / Owner Email*</label>
               <br />
               <input
                 type='text'
@@ -222,7 +276,7 @@ export default function StoreFronManagementModal({
               />
             </div>
             <div className='plain-input my-3'>
-              <label for=''>Address / Location</label>
+              <label for=''>Address / Location*</label>
               <br />
               <input
                 type='text'
@@ -233,7 +287,7 @@ export default function StoreFronManagementModal({
               />
             </div>
             <div className='plain-textarea my-3'>
-              <label for=''>Tags</label>
+              <label for=''>Tags*</label>
               <br />
               <InputTag
                 tags={tags}
@@ -244,12 +298,54 @@ export default function StoreFronManagementModal({
               />
             </div>
             <div className='plain-dropdown '>
-              <label for=''>Type</label>
+              <label for=''>Type*</label>
               <select onChange={handleInput} name='types'>
                 <option value='Category'> Catagory</option>
                 <option value='Click-n-Collect'> Click-n-Collect</option>
               </select>
             </div>
+          </div>
+
+          <div className='plain-input my-3'>
+            <label for=''>Footer</label>
+            <br />
+            <input
+              type='text'
+              placeholder='Please input your address'
+              value={storeData.footer}
+              onChange={(e) =>
+                setStoreData({ ...storeData, footer: e.target.value })
+              }
+              name='footer'
+            />
+          </div>
+
+          <div className='plain-input my-3'>
+            <label for=''>Social Link</label>
+            <br />
+            <input
+              type='text'
+              placeholder='Please input your address'
+              value={storeData.social_link}
+              onChange={(e) =>
+                setStoreData({ ...storeData, social_link: e.target.value })
+              }
+              name='social_link'
+            />
+          </div>
+
+          <div className='plain-input my-3'>
+            <label for=''>Link*</label>
+            <br />
+            <input
+              type='text'
+              placeholder='Please input your address'
+              value={storeData.link}
+              onChange={(e) =>
+                setStoreData({ ...storeData, link: e.target.value })
+              }
+              name='social_link'
+            />
           </div>
 
           {/* </form> */}

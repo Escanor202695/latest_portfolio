@@ -13,12 +13,6 @@ import Toast from '../../../utils/Toast/Toast'
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
 import { MdDeleteForever } from 'react-icons/md'
 
-const getItems = (count, offset = 0) =>
-  Array.from({ length: count }, (v, k) => k).map((k) => ({
-    id: `item-${k + offset}-${new Date().getTime()}`,
-    content: `item ${k + offset}`,
-  }))
-
 const reorder = (list, startIndex, endIndex) => {
   const result = Array.from(list)
   const [removed] = result.splice(startIndex, 1)
@@ -119,9 +113,23 @@ const AddStoreAd = ({ show, handleClose, storeData, loadStoreData }) => {
       if (res.status === 200) {
         setAllAds(res?.data?.data)
         console.log(res?.data?.data)
+
+        // let addedToStoreSet = new Set()
+        // for (let i of storeData?.ads) {
+        //   addedToStoreSet.add(i)
+        // }
+        // for (let i of state[1]) {
+        //   addedToStoreSet.add(i)
+        // }
+        // const convertedArrFromSet = [state[0], [...addedToStoreSet]]
+        // console.log(convertedArrFromSet)
+        // setState(convertedArrFromSet)
+        // console.log(state)
+
         let filteredArr = res?.data?.data
 
         for (let i of state[1]) {
+          console.log(state)
           filteredArr = filteredArr.filter((d) => d?._id !== i?._id)
           console.log(filteredArr)
         }
@@ -143,10 +151,11 @@ const AddStoreAd = ({ show, handleClose, storeData, loadStoreData }) => {
     setSpinner(true)
 
     let newAddData = []
-    state[1].map((d) => newAddData.push({ ad_link: d?._id }))
+    state[1].map((d) => newAddData.push({ ad_id: d?._id }))
     let data = {
       ...storeData,
       id: storeData._id,
+      footer: storeData?.footer ? storeData?.footer : '',
     }
     delete data?._id
     delete data?.short_id

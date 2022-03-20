@@ -23,6 +23,7 @@ import axios from 'axios'
 import { GetThemeEnd } from '../constants/api.constants'
 import { ForgotPassReset } from '../pages/ForgotPassReset'
 import ThemeManagement from '../pages/ThemeManagement/ThemeManagement'
+import StoreHome from '../pages/Home/StoreHome'
 export const UserContext = createContext()
 
 function App() {
@@ -52,7 +53,7 @@ function App() {
   //     // Toast('err', error.response?.data?.msg)
   //   }
   // }
-
+  console.log(user)
   return (
     <Router>
       <NavigationBar />
@@ -70,6 +71,9 @@ function App() {
           />
 
           {/* <Route path={ROUTENAME.LOGIN} component={Login} exact /> */}
+          <Route path={ROUTENAME.STOREHOME} exact>
+            <StoreHome />
+          </Route>
           <PrivateRoute path={ROUTENAME.HOME} exact>
             <Home />
           </PrivateRoute>

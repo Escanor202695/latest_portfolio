@@ -21,6 +21,8 @@ export const StoreAPI = BaseUrl + '/store/get'
 export const StoreCreate = BaseUrl + '/store/create'
 export const StoreEdit = BaseUrl + '/store/edit'
 export const DeleteStoreEnd = BaseUrl + '/store/delete'
+export const StoreLogInUrl = BaseUrl + '/store/login'
+
 
 // folder
 export const GetAllFoldersEnd = BaseUrl + '/folder/get'
@@ -53,6 +55,10 @@ export const CreateScreenEnd = BaseUrl + '/screen/create'
 export const EditScreenEnd = BaseUrl + '/screen/edit'
 export const DeleteScreenEnd = BaseUrl + '/screen/delete'
 export const GetAllCateEnd = BaseUrl + '/screen/get_all_categories'
+
+
+//files 
+export const FileUploadUrl = BaseUrl + '/file/upload'
 
 
 

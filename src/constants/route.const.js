@@ -10,6 +10,7 @@ const ROUTENAME = {
     PROFILE: '/profile',
     THEMEMANAGEMENT: '/theme-management',
     FROGOTPASSRESET: '/forgot-pass-reset',
+    STOREHOME: '/store',
     NOTFOUND: '*',
 
 }

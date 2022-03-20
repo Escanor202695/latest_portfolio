@@ -130,8 +130,8 @@ const NewAdminModal = ({ show, handleClose, loadAllAdmin }) => {
             placeholder='minimum length 8'
             onChange={(e) => setData({ ...data, password: e.target.value })}
           />
-          {data.password.length > 0 && data.password.length < 8 && (
-            <p className='text-danger'> at least 8 characters required!</p>
+          {data.password.length > 0 && data.password.length < 5 && (
+            <p className='text-danger'> at least 5 characters required!</p>
           )}
         </div>
         <div className='plain-input me-2 mt-2'>
