@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import DashBoard from '../../components/DashBoard/DashBoard'
 import plus from '../../assets/icons/plus.svg'
 import './StoreFrontManagement.scss'
-import { Dropdown, Modal, Spinner, Table } from 'react-bootstrap'
+import { Dropdown, Modal, Pagination, Spinner, Table } from 'react-bootstrap'
 import threedot from '../../assets/icons/threedot.svg'
 import demoImg from '../../assets/images/demoLogoImg.png'
 import uploadBtn from '../../assets/icons/upload.svg'
@@ -24,6 +24,7 @@ const StoreFrontManagement = () => {
   const goToStore = (id) => {
     history.push(`/storefront/${id}`)
   }
+  const [totalDoc, setTotalDoc] = useState(0)
 
   const [allStore, setAllStore] = useState([])
   const [page, setPage] = useState(1)
@@ -54,6 +55,8 @@ const StoreFrontManagement = () => {
 
       if (response.status === 200) {
         setAllStore(response.data.data)
+        console.log(response)
+        setTotalDoc(response?.data?.total_document)
         setSpin(false)
       } else
         throw new Error(
@@ -91,7 +94,17 @@ const StoreFrontManagement = () => {
       )
     }
   }
-
+  let items = []
+  let totalPage = 0
+  if (totalDoc < 10) totalPage = 1
+  else totalPage = Math.ceil(totalDoc / 10)
+  for (let number = 1; number <= totalPage; number++) {
+    items.push(
+      <Pagination.Item key={number} active={number == page}>
+        {number}
+      </Pagination.Item>
+    )
+  }
   return (
     <div className='row py-3'>
       <div className='col-3'>
@@ -234,88 +247,20 @@ const StoreFrontManagement = () => {
             <h2 className='text-center my-5 text-secondary'>No Data Found!</h2>
           )
         )}
+
+        {!spin && (
+          <div className='d-flex justify-content-center align-items-center my-5'>
+            <Pagination
+              onClick={(e) => {
+                setPage(e.target.innerText)
+              }}
+            >
+              {items}
+            </Pagination>
+          </div>
+        )}
       </div>
 
-      {/* <Modal show={show} onHide={handleClose} size='lg'>
-        <Modal.Header closeButton style={{ border: 'none' }}>
-          <Modal.Title style={{ fontSize: '22px' }}>
-            Create New Store
-          </Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <h6>Store Brand Icon / Logo</h6>
-          <div className='d-flex justify-content-start align-items-end'>
-            <img
-              src={demoImg}
-              alt='demoImg'
-              height='100'
-              width='100'
-              className='me-4'
-            />
-            <button className='upload-btn d-flex justify-content-between align-items-center'>
-              <span>Upload</span>
-              <img
-                className='mx-2'
-                src={uploadBtn}
-                alt=''
-                width='24'
-                height='24'
-              />{' '}
-            </button>
-          </div>
-          <div className='my-3'>
-            <div className='plain-input my-3'>
-              <label for=''>Store Name</label>
-              <br />
-              <input type='text' placeholder='Search something' />
-            </div>
-            <div className='plain-input my-3'>
-              <label for=''>Manager / Owner Name</label>
-              <br />
-              <input type='text' placeholder='Search something' />
-            </div>
-            <div className='plain-input my-3'>
-              <label for=''>Manager / Owner Phone</label>
-              <br />
-              <input type='text' placeholder='Search something' />
-            </div>
-            <div className='plain-input my-3'>
-              <label for=''>Manager / Owner Email</label>
-              <br />
-              <input type='text' placeholder='Search something' />
-            </div>
-            <div className='plain-input my-3'>
-              <label for=''>Address / Location</label>
-              <br />
-              <input type='text' placeholder='Search something' />
-            </div>
-            <div className='plain-textarea my-3'>
-              <label for=''>Tags</label>
-              <br />
-              <textarea rows='3' cols=''></textarea>
-            </div>
-            <div className='plain-dropdown '>
-              <label for=''>Show</label>
-              <select>
-                <option value='1' style={{ border: 'none' }}>
-                  {' '}
-                  value 1
-                </option>
-                <option value='2'> value 2</option>
-                <option value='3'> value 3</option>
-              </select>
-            </div>
-          </div>
-        </Modal.Body>
-        <Modal.Footer>
-          <button className='primary-btn-light' onClick={handleClose}>
-            Close
-          </button>
-          <button className='primary-btn' onClick={handleClose}>
-            Save Changes
-          </button>
-        </Modal.Footer>
-      </Modal> */}
       <StoreFronManagementModal
         show={show}
         handleClose={handleClose}

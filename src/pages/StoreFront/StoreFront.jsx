@@ -123,6 +123,8 @@ const StoreFront = () => {
               <h6>Phone</h6>
               <h6>Email</h6>
               <h6>Address</h6>
+              <h6>Short Id</h6>
+
               <h6>Footer</h6>
               <h6>Link</h6>
               <h6>Social Link</h6>
@@ -135,6 +137,8 @@ const StoreFront = () => {
               <h6>{storeData?.phone}</h6>
               <h6>{storeData?.email}</h6>
               <h6>{storeData?.address}</h6>
+              <h6>{storeData?.short_id}</h6>
+
               <h6>{storeData?.footer || '_'}</h6>
               <a href={storeData?.link || '_'} className='d-block'>
                 <h6> Go to link</h6>

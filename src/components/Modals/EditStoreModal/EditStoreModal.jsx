@@ -28,7 +28,6 @@ const EditStoreModal = ({ show, handleClose, data, loadStoreData }) => {
     footer: '',
     icon: '',
   })
-  let emptyObj = []
 
   useEffect(() => {
     setStoreData({
@@ -57,9 +56,8 @@ const EditStoreModal = ({ show, handleClose, data, loadStoreData }) => {
       })
     }
   }
-  const dbData = data.tag
 
-  const [tags, setTags] = useState(emptyObj)
+  const [tags, setTags] = useState([])
 
   const handleDelete = (i) => {
     setTags(tags.filter((tag, index) => index !== i))

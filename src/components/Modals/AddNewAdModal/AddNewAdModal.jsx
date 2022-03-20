@@ -65,6 +65,7 @@ const AddNewAdModal = ({ show, handleClose, folderId, loadAllFolders }) => {
           name: data?.name,
           description: data?.description,
           link: photoUrl,
+          type: data?.type,
         },
         {
           headers: {
