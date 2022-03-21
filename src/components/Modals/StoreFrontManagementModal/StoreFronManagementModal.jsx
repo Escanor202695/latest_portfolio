@@ -16,7 +16,7 @@ export default function StoreFronManagementModal({
   const [storeData, setStoreData] = useState({
     name: '',
     manager: '',
-    phone: '+88',
+    phone: '',
     email: '',
     address: '',
     footer: '',
@@ -26,22 +26,14 @@ export default function StoreFronManagementModal({
   })
   const [photoSpinner, setPhotoSpinner] = useState(false)
 
-  const [types, setTypes] = useState('Category')
+  const [types, setTypes] = useState('')
 
   function handleInput(e) {
-    if (e.target.name === 'types') {
-      setTypes(e.target.value)
-    } else {
-      setStoreData({
-        ...storeData,
-        [e.target.name]: e.target.value,
-      })
-    }
+    setStoreData({
+      ...storeData,
+      [e.target.name]: e.target.value,
+    })
   }
-
-  // function handleSubmit(e) {
-  //   e.preventDefault()
-  // }
 
   const [tags, setTags] = useState([])
 
@@ -104,6 +96,11 @@ export default function StoreFronManagementModal({
       setEditSpinner(false)
       return
     }
+    if (types.length === 0) {
+      Toast('err', 'Please enter store type')
+      setEditSpinner(false)
+      return
+    }
     if (storeData.link === '') {
       Toast('err', 'Please enter link')
       setEditSpinner(false)
@@ -140,7 +137,7 @@ export default function StoreFronManagementModal({
             setStoreData({
               name: '',
               manager: '',
-              phone: '+88',
+              phone: '',
               email: '',
               address: '',
             })
@@ -151,13 +148,7 @@ export default function StoreFronManagementModal({
     } catch (error) {
       setEditSpinner(false)
       setTags([])
-      // setStoreData({
-      //   name: '',
-      //   manager: '',
-      //   phone: '+88',
-      //   email: '',
-      //   address: '',
-      // })
+
       Toast(
         'err',
         error.response?.data?.msg || 'Something went wrong! Try again later.'
@@ -202,7 +193,7 @@ export default function StoreFronManagementModal({
         </Modal.Header>
         <Modal.Body>
           {/* <form onSubmit={handleSubmit}> */}
-          <h6>Store Brand Icon / Logo</h6>
+          <h6>Store Brand Icon / Logo*</h6>
           <div className='d-flex justify-content-start align-items-end'>
             <img
               src={storeData?.icon || demoImg}
@@ -214,7 +205,8 @@ export default function StoreFronManagementModal({
 
             <Form.Group className='' controlId='formBasicEmail'>
               <Form.Label>
-                BackGround Image*
+                <strong>Image </strong> (aspect ratio should be 1:1. e.g. 512px
+                x 512px)
                 {photoSpinner && (
                   <Spinner className='ms-1' animation='border' size='sm' />
                 )}
@@ -249,84 +241,86 @@ export default function StoreFronManagementModal({
               }}
             /> */}
           </div>
-          <div className='my-3'>
-            <div className='plain-input my-3'>
-              <label for=''>Store Name*</label>
-              <br />
-              <input
-                type='text'
-                placeholder='Please input store name'
-                value={storeData.name}
-                onChange={handleInput}
-                name='name'
-              />
-            </div>
-            <div className='plain-input my-3'>
-              <label for=''>Manager / Owner Name*</label>
-              <br />
-              <input
-                type='text'
-                placeholder='Name of manager'
-                value={storeData.manager}
-                onChange={handleInput}
-                name='manager'
-              />
-            </div>
-            <div className='plain-input my-3'>
-              <label for=''>Manager / Owner Phone*</label>
-              <br />
-              <input
-                type='text'
-                placeholder='Please input your phone'
-                value={storeData.phone}
-                onChange={handleInput}
-                name='phone'
-              />
-            </div>
-            <div className='plain-input my-3'>
-              <label for=''>Manager / Owner Email*</label>
-              <br />
-              <input
-                type='text'
-                placeholder='Please input your email'
-                value={storeData.email}
-                onChange={handleInput}
-                name='email'
-              />
-            </div>
-            <div className='plain-input my-3'>
-              <label for=''>Address / Location*</label>
-              <br />
-              <input
-                type='text'
-                placeholder='Please input your address'
-                value={storeData.address}
-                onChange={handleInput}
-                name='address'
-              />
-            </div>
-            <div className='plain-textarea my-3'>
-              <label for=''>Tags*</label>
-              <br />
-              <InputTag
-                tags={tags}
-                handleDelete={handleDelete}
-                handleAddition={handleAddition}
-                handleDrag={handleDrag}
-                handleTagClick={handleTagClick}
-              />
-            </div>
-            <div className='plain-dropdown '>
-              <label for=''>Type*</label>
-              <select onChange={handleInput} name='types'>
-                <option value='Category'> Catagory</option>
-                <option value='Click-n-Collect'> Click-n-Collect</option>
-              </select>
-            </div>
+          <div className='plain-input my-3'>
+            <label for=''>Store Name*</label>
+            <br />
+            <input
+              type='text'
+              placeholder='Please input store name'
+              value={storeData.name}
+              onChange={handleInput}
+              name='name'
+            />
+          </div>
+          <div className='plain-input my-3'>
+            <label for=''>Store Manager / POC*</label>
+            <br />
+            <input
+              type='text'
+              placeholder='Name of manager'
+              value={storeData.manager}
+              onChange={handleInput}
+              name='manager'
+            />
+          </div>
+          <div className='plain-input my-3'>
+            <label for=''>Store Phone*</label>
+            <br />
+            <input
+              type='text'
+              placeholder='Please input your phone'
+              value={storeData.phone}
+              onChange={handleInput}
+              name='phone'
+            />
+          </div>
+          <div className='plain-input my-3'>
+            <label for=''>Store Email*</label>
+            <br />
+            <input
+              type='text'
+              placeholder='Please input your email'
+              value={storeData.email}
+              onChange={handleInput}
+              name='email'
+            />
+          </div>
+          <div className='plain-input my-3'>
+            <label for=''>Address / Location*</label>
+            <br />
+            <input
+              type='text'
+              placeholder='Please input your address'
+              value={storeData.address}
+              onChange={handleInput}
+              name='address'
+            />
+          </div>
+          <div className='plain-textarea my-3'>
+            <label for=''>Tags*</label>
+            <br />
+            <InputTag
+              tags={tags}
+              handleDelete={handleDelete}
+              handleAddition={handleAddition}
+              handleDrag={handleDrag}
+              handleTagClick={handleTagClick}
+            />
+          </div>
+          <div className='plain-input my-3'>
+            <label for=''>Type*</label>
+            <br />
+            <input
+              type='text'
+              placeholder='Please input store type'
+              value={types}
+              onChange={(e) => setTypes(e.target.value)}
+              name='address'
+            />
           </div>
 
           <div className='plain-input my-3'>
-            <label for=''>Footer</label>
+            <label for=''>Footer Text</label>
             <br />
             <input
               type='text'
@@ -340,7 +334,7 @@ export default function StoreFronManagementModal({
           </div>
 
           <div className='plain-input my-3'>
-            <label for=''>Social Link</label>
+            <label for=''>QR Link</label>
             <br />
             <input
               type='text'
@@ -354,7 +348,7 @@ export default function StoreFronManagementModal({
           </div>
 
           <div className='plain-input my-3'>
-            <label for=''>Link*</label>
+            <label for=''>API Link*</label>
             <br />
             <input
               type='text'

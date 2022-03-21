@@ -10,7 +10,7 @@ const NewAdminModal = ({ show, handleClose, loadAllAdmin }) => {
     email: '',
     name: '',
     role: 'manager',
-    phone: '+88',
+    phone: '',
     password: '',
   })
   const [passRetype, setPassReType] = useState('')
@@ -61,7 +61,7 @@ const NewAdminModal = ({ show, handleClose, loadAllAdmin }) => {
           email: '',
           name: '',
           role: 'manager',
-          phone: '+88',
+          phone: '',
           password: '',
         })
       } else
@@ -71,13 +71,7 @@ const NewAdminModal = ({ show, handleClose, loadAllAdmin }) => {
     } catch (error) {
       // handleClose()
       setSpinner(false)
-      // setData({
-      //   email: '',
-      //   name: '',
-      //   role: 'manager',
-      //   phone: '+88',
-      //   password: '',
-      // })
+
       Toast(
         'err',
         error.response?.data?.msg || 'Something went wrong! Try again later.'

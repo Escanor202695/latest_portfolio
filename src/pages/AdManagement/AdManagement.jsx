@@ -133,6 +133,8 @@ const AdManagement = () => {
     setDeleteFolder(true)
   }
 
+  console.log(ad)
+
   return (
     <div className='row py-3'>
       <div className='col-3'>
@@ -171,28 +173,6 @@ const AdManagement = () => {
             </select>
           </div>
         </div>
-        {/* {!spinner && view === 'grid' && allFolders[0]?.parent_id?.name && (
-          <div className='d-flex justify-content-start align-items-center '>
-            <button
-              className='primary-btn  px-2 py-1 me-3 '
-              style={{ display: folderSearchId ? 'block ' : 'none' }}
-              disabled={folderSearchId ? false : true}
-              onClick={() =>
-                setFolderSearchId(
-                  previousSearchId === folderSearchId ? '' : previousSearchId
-                )
-              }
-            >
-              <FaArrowLeft />
-            </button>
-
-            <Breadcrumb className='mt-3'>
-              <Breadcrumb.Item>
-                .../{allFolders[0]?.parent_id?.name}
-              </Breadcrumb.Item>
-            </Breadcrumb>
-          </div>
-        )} */}
         {spinner && (
           <div className='text-center my-5'>
             <Spinner
@@ -288,7 +268,7 @@ const AdManagement = () => {
                 />
               </div>
             </section>
-            {ad.length > 0 && folderSearchId
+            {ad.length > 0
               ? ad.map((ad, idx) => (
                   <AdCards
                     index={idx + 1}

@@ -18,7 +18,7 @@ const AddNewAdModal = ({ show, handleClose, folderId, loadAllFolders }) => {
     name: '',
     description: '',
     link: '',
-    type: 'video',
+    type: 'photo',
   })
 
   const handleImageUpload = async (e) => {
@@ -118,7 +118,7 @@ const AddNewAdModal = ({ show, handleClose, folderId, loadAllFolders }) => {
 
           <Form.Group className='' controlId='formBasicEmail'>
             <Form.Label>
-              Photo*
+              {data?.type}*
               {photoSpinner && (
                 <Spinner className='ms-1' animation='border' size='sm' />
               )}
@@ -155,10 +155,10 @@ const AddNewAdModal = ({ show, handleClose, folderId, loadAllFolders }) => {
               className=''
               onChange={(e) => setData({ ...data, type: e.target.value })}
             >
-              <option value='photo'>Photo</option>
-              <option value='video' selected>
-                Video
+              <option value='photo' selected>
+                Photo
               </option>
+              <option value='video'>Video</option>
             </select>
           </div>
         </div>

@@ -155,7 +155,7 @@ const EditTheme = ({ show, handleClose, getAllTheme, data }) => {
 
           <Form.Group className='' controlId='formBasicEmail'>
             <Form.Label>
-              BackGround Image*
+              BackGround Image*(Content Aspect Ratio recommended 16:9)
               {photoSpinner && (
                 <Spinner className='ms-1' animation='border' size='sm' />
               )}
@@ -178,25 +178,31 @@ const EditTheme = ({ show, handleClose, getAllTheme, data }) => {
 
         <div className='my-3 custom-color-picker'>
           <h5 className='fw-bold mb-3'>Choose Theme Color</h5>
-          <div className='row'>
-            <div className='col-3 mb-2 p-2'>
+          <div
+            style={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))',
+              gridGap: '10px',
+            }}
+          >
+            <div className=''>
               <Form.Label>primary color</Form.Label>
               <Form.Control
                 type='color'
                 id='primary_color'
-                defaultValue={themeData?.primary_color || '#FFFFFF'}
+                defaultValue='#558f55'
                 title='Choose your color'
                 onChange={(e) =>
                   setThemeData({ ...themeData, primary_color: e.target.value })
                 }
               />
             </div>
-            <div className='col-3 mb-2 p-2'>
+            <div>
               <Form.Label>primary light color</Form.Label>
               <Form.Control
                 type='color'
                 id='primary_light_color'
-                defaultValue={themeData?.primary_light_color || '#FFFFFF'}
+                defaultValue='#dfecdf'
                 title='Choose your color'
                 onChange={(e) =>
                   setThemeData({
@@ -206,12 +212,12 @@ const EditTheme = ({ show, handleClose, getAllTheme, data }) => {
                 }
               />
             </div>
-            <div className='col-3 mb-2 p-2'>
+            <div>
               <Form.Label>secondary color</Form.Label>
               <Form.Control
                 type='color'
                 id='secondary_color'
-                defaultValue={themeData?.secondary_color || '#FFFFFF'}
+                defaultValue='#f4f4f4'
                 title='Choose your color'
                 onChange={(e) =>
                   setThemeData({
@@ -221,18 +227,156 @@ const EditTheme = ({ show, handleClose, getAllTheme, data }) => {
                 }
               />
             </div>
-            <div className='col-3 mb-2 p-2'>
+            <div>
               <Form.Label>secondary light color</Form.Label>
               <Form.Control
                 type='color'
                 id='secondary_light_color'
-                defaultValue={themeData?.secondary_light_color || '#FFFFFF'}
+                defaultValue='#f4f4f4'
                 title='Choose your color'
                 onChange={(e) =>
                   setThemeData({
                     ...themeData,
                     secondary_light_color: e.target.value,
                   })
+                }
+              />
+            </div>
+            <div>
+              <Form.Label>text color</Form.Label>
+              <Form.Control
+                type='color'
+                id='text_color'
+                defaultValue='#563d7c'
+                title='Choose your color'
+                onChange={(e) =>
+                  setThemeData({ ...themeData, text_color: e.target.value })
+                }
+              />
+            </div>
+            <div>
+              <Form.Label>text light color</Form.Label>
+              <Form.Control
+                type='color'
+                id='text_light_color'
+                defaultValue='#696969'
+                title='Choose your color'
+                onChange={(e) =>
+                  setThemeData({
+                    ...themeData,
+                    text_light_color: e.target.value,
+                  })
+                }
+              />
+            </div>
+            <div>
+              <Form.Label>gray one color</Form.Label>
+              <Form.Control
+                type='color'
+                id='gray_one_color'
+                defaultValue='#333333'
+                title='Choose your color'
+                onChange={(e) =>
+                  setThemeData({ ...themeData, gray_one_color: e.target.value })
+                }
+              />
+            </div>
+            <div>
+              <Form.Label>gray two color</Form.Label>
+              <Form.Control
+                type='color'
+                id='gray_two_color'
+                defaultValue='#666666'
+                title='Choose your color'
+                onChange={(e) =>
+                  setThemeData({ ...themeData, gray_two_color: e.target.value })
+                }
+              />
+            </div>
+            <div>
+              <Form.Label>gray three color</Form.Label>
+              <Form.Control
+                type='color'
+                id='gray_three_color'
+                defaultValue='#999999'
+                title='Choose your color'
+                onChange={(e) =>
+                  setThemeData({
+                    ...themeData,
+                    gray_three_color: e.target.value,
+                  })
+                }
+              />
+            </div>
+            <div>
+              <Form.Label>sativa color </Form.Label>
+              <Form.Control
+                type='color'
+                id='sativa_color'
+                defaultValue='#77ca59'
+                title='Choose your color'
+                onChange={(e) =>
+                  setThemeData({ ...themeData, sativa_color: e.target.value })
+                }
+              />
+            </div>
+            <div>
+              <Form.Label>indica color</Form.Label>
+              <Form.Control
+                type='color'
+                id='indica_color'
+                defaultValue='#ca8259'
+                title='Choose your color'
+                onChange={(e) =>
+                  setThemeData({ ...themeData, indica_color: e.target.value })
+                }
+              />
+            </div>{' '}
+            <div>
+              <Form.Label>blend color</Form.Label>
+              <Form.Control
+                type='color'
+                id='blend_color'
+                defaultValue='#ba59ca'
+                title='Choose your color'
+                onChange={(e) =>
+                  setThemeData({ ...themeData, blend_color: e.target.value })
+                }
+              />
+            </div>
+            <div>
+              <Form.Label>hybrid color</Form.Label>
+              <Form.Control
+                type='color'
+                id='hybrid_color'
+                defaultValue='#59afca'
+                title='Choose your color'
+                onChange={(e) =>
+                  setThemeData({ ...themeData, hybrid_color: e.target.value })
+                }
+              />
+            </div>
+            <div>
+              <Form.Label>thc color </Form.Label>
+              <Form.Control
+                type='color'
+                id='thc_color'
+                defaultValue='#59afca'
+                title='Choose your color'
+                onChange={(e) =>
+                  setThemeData({ ...themeData, thc_color: e.target.value })
+                }
+              />
+            </div>
+            <div>
+              <Form.Label>cbd color</Form.Label>
+              <Form.Control
+                type='color'
+                id='cbd_color'
+                defaultValue='#59afca'
+                title='Choose your color'
+                onChange={(e) =>
+                  setThemeData({ ...themeData, cbd_color: e.target.value })
                 }
               />
             </div>

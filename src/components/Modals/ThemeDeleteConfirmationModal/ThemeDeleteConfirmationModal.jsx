@@ -40,7 +40,7 @@ const ThemeDeleteConfirmationModal = ({
   return (
     <Modal show={show} onHide={handleClose}>
       <Modal.Header style={{ border: 'none' }}>
-        <Modal.Title className='text-danger'> Caution! </Modal.Title>
+        <Modal.Title className='text-danger '>Caution!</Modal.Title>
       </Modal.Header>
       <Modal.Body className='text-secondary'>
         Are you sure you want to Delete <span className='fw-bold'>{name}</span>{' '}

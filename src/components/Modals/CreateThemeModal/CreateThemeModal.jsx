@@ -133,7 +133,7 @@ const CreateThemeModal = ({ show, handleClose, getAllTheme }) => {
 
           <Form.Group className='' controlId='formBasicEmail'>
             <Form.Label>
-              BackGround Image*
+              BackGround Image*(Content Aspect Ratio recommended 16:9)
               {photoSpinner && (
                 <Spinner className='ms-1' animation='border' size='sm' />
               )}
@@ -156,8 +156,14 @@ const CreateThemeModal = ({ show, handleClose, getAllTheme }) => {
 
         <div className='my-3 custom-color-picker'>
           <h5 className='fw-bold mb-3'>Choose Theme Color</h5>
-          <div className='row'>
-            <div className='col-3 mb-2 p-2'>
+          <div
+            style={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))',
+              gridGap: '10px',
+            }}
+          >
+            <div className=''>
               <Form.Label>primary color</Form.Label>
               <Form.Control
                 type='color'
@@ -169,7 +175,7 @@ const CreateThemeModal = ({ show, handleClose, getAllTheme }) => {
                 }
               />
             </div>
-            <div className='col-3 mb-2 p-2'>
+            <div>
               <Form.Label>primary light color</Form.Label>
               <Form.Control
                 type='color'
@@ -184,7 +190,7 @@ const CreateThemeModal = ({ show, handleClose, getAllTheme }) => {
                 }
               />
             </div>
-            <div className='col-3 mb-2 p-2'>
+            <div>
               <Form.Label>secondary color</Form.Label>
               <Form.Control
                 type='color'
@@ -199,7 +205,7 @@ const CreateThemeModal = ({ show, handleClose, getAllTheme }) => {
                 }
               />
             </div>
-            <div className='col-3 mb-2 p-2'>
+            <div>
               <Form.Label>secondary light color</Form.Label>
               <Form.Control
                 type='color'
@@ -214,10 +220,7 @@ const CreateThemeModal = ({ show, handleClose, getAllTheme }) => {
                 }
               />
             </div>
-          </div>
-
-          <div className='row'>
-            <div className='col-3 mb-2 p-2'>
+            <div>
               <Form.Label>text color</Form.Label>
               <Form.Control
                 type='color'
@@ -229,8 +232,7 @@ const CreateThemeModal = ({ show, handleClose, getAllTheme }) => {
                 }
               />
             </div>
-
-            <div className='col-3 mb-2 p-2'>
+            <div>
               <Form.Label>text light color</Form.Label>
               <Form.Control
                 type='color'
@@ -245,7 +247,7 @@ const CreateThemeModal = ({ show, handleClose, getAllTheme }) => {
                 }
               />
             </div>
-            <div className='col-3 mb-2 p-2'>
+            <div>
               <Form.Label>gray one color</Form.Label>
               <Form.Control
                 type='color'
@@ -257,7 +259,7 @@ const CreateThemeModal = ({ show, handleClose, getAllTheme }) => {
                 }
               />
             </div>
-            <div className='col-3 mb-2 p-2'>
+            <div>
               <Form.Label>gray two color</Form.Label>
               <Form.Control
                 type='color'
@@ -269,9 +271,7 @@ const CreateThemeModal = ({ show, handleClose, getAllTheme }) => {
                 }
               />
             </div>
-          </div>
-          <div className='row'>
-            <div className='col-3 mb-2 p-2'>
+            <div>
               <Form.Label>gray three color</Form.Label>
               <Form.Control
                 type='color'
@@ -286,7 +286,7 @@ const CreateThemeModal = ({ show, handleClose, getAllTheme }) => {
                 }
               />
             </div>
-            <div className='col-3 mb-2 p-2'>
+            <div>
               <Form.Label>sativa color </Form.Label>
               <Form.Control
                 type='color'
@@ -298,7 +298,7 @@ const CreateThemeModal = ({ show, handleClose, getAllTheme }) => {
                 }
               />
             </div>
-            <div className='col-3 mb-2 p-2'>
+            <div>
               <Form.Label>indica color</Form.Label>
               <Form.Control
                 type='color'
@@ -310,7 +310,7 @@ const CreateThemeModal = ({ show, handleClose, getAllTheme }) => {
                 }
               />
             </div>{' '}
-            <div className='col-3 mb-2 p-2'>
+            <div>
               <Form.Label>blend color</Form.Label>
               <Form.Control
                 type='color'
@@ -322,10 +322,7 @@ const CreateThemeModal = ({ show, handleClose, getAllTheme }) => {
                 }
               />
             </div>
-          </div>
-
-          <div className='row'>
-            <div className='col-3 mb-2 p-2'>
+            <div>
               <Form.Label>hybrid color</Form.Label>
               <Form.Control
                 type='color'
@@ -337,7 +334,7 @@ const CreateThemeModal = ({ show, handleClose, getAllTheme }) => {
                 }
               />
             </div>
-            <div className='col-3 mb-2 p-2'>
+            <div>
               <Form.Label>thc color </Form.Label>
               <Form.Control
                 type='color'
@@ -349,7 +346,7 @@ const CreateThemeModal = ({ show, handleClose, getAllTheme }) => {
                 }
               />
             </div>
-            <div className='col-3 mb-2 p-2'>
+            <div>
               <Form.Label>cbd color</Form.Label>
               <Form.Control
                 type='color'

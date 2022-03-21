@@ -76,7 +76,7 @@ const EditAdModal = ({ show, handleClose, ad, loadAllFolders, folderID }) => {
       <Modal.Body>
         <div className='mb-3'>
           <div className='plain-input my-3'>
-            <label for=''>Folder Name* </label>
+            <label for=''>Ad Name* </label>
             <br />
             <input
               type='text'

@@ -43,12 +43,14 @@ const StoreHome = () => {
             <div className='me-5 custom-header'>
               <h6>Store name</h6>
               <h6>Store Type</h6>
-              <h6>Manager</h6>
-              <h6>Phone</h6>
-              <h6>Email</h6>
+              <h6>Store Manager / POC*</h6>
+              <h6>Store Phone</h6>
+              <h6>Store Email</h6>
               <h6>Address</h6>
-              <h6>Short Id</h6>
-
+              <h6>Store Id</h6>
+              <h6>Footer Text</h6>
+              <h6>API Link</h6>
+              <h6>QR Link</h6>
               <h6>Tags</h6>
             </div>
             <div className='ms-5'>
@@ -59,7 +61,21 @@ const StoreHome = () => {
               <h6>{storeData?.email}</h6>
               <h6>{storeData?.address}</h6>
               <h6>{storeData?.short_id}</h6>
-
+              <h6>{storeData?.footer || '_'}</h6>
+              <a
+                href={storeData?.link || '_'}
+                className='d-block'
+                target='_blank'
+              >
+                <h6> Go to link</h6>
+              </a>
+              <a
+                href={storeData?.social_link || '_'}
+                className='d-block'
+                target='_blank'
+              >
+                <h6>Go to social link</h6>
+              </a>
               <h6>
                 {storeData?.tag?.length > 0
                   ? storeData?.tag.map((dt, idx) => (

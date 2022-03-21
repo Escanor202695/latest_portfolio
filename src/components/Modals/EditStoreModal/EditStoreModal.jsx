@@ -15,12 +15,13 @@ import { useHistory } from 'react-router-dom'
 const EditStoreModal = ({ show, handleClose, data, loadStoreData }) => {
   const [editSpinner, setEditSpinner] = useState(false)
   const [photoSpinner, setPhotoSpinner] = useState(false)
-
+  const [confirmModalShow, setConfirmModalShow] = useState(false)
+  const [deleteSpinner, setDeleteSpinner] = useState(false)
   const [storeData, setStoreData] = useState({
     id: '',
     name: '',
     manager: '',
-    phone: '+88',
+    phone: '',
     email: '',
     address: '',
     link: '',
@@ -28,7 +29,8 @@ const EditStoreModal = ({ show, handleClose, data, loadStoreData }) => {
     footer: '',
     icon: '',
   })
-
+  const [types, setTypes] = useState('')
+  console.log(data)
   useEffect(() => {
     setStoreData({
       id: data?._id,
@@ -42,9 +44,8 @@ const EditStoreModal = ({ show, handleClose, data, loadStoreData }) => {
       footer: data?.footer,
       icon: data?.icon,
     })
+    setTypes(data?.type)
   }, [data])
-
-  const [types, setTypes] = useState('Category')
 
   function handleInput(e) {
     if (e.target.name === 'types') {
@@ -153,7 +154,7 @@ const EditStoreModal = ({ show, handleClose, data, loadStoreData }) => {
               id: '',
               name: '',
               manager: '',
-              phone: '+88',
+              phone: '',
               email: '',
               address: '',
             })
@@ -166,7 +167,7 @@ const EditStoreModal = ({ show, handleClose, data, loadStoreData }) => {
         id: '',
         name: '',
         manager: '',
-        phone: '+88',
+        phone: '',
         email: '',
         address: '',
       })
@@ -182,7 +183,6 @@ const EditStoreModal = ({ show, handleClose, data, loadStoreData }) => {
   }
 
   const history = useHistory()
-  const [deleteSpinner, setDeleteSpinner] = useState(false)
 
   const handleStoreDelete = async () => {
     setDeleteSpinner(true)
@@ -246,7 +246,7 @@ const EditStoreModal = ({ show, handleClose, data, loadStoreData }) => {
         </Modal.Header>
         <Modal.Body>
           {/* <form onSubmit={handleSubmit}> */}
-          <h6>Store Brand Icon / Logo</h6>
+          <h6>Store Brand Icon / Logo*</h6>
           <div className='d-flex justify-content-start align-items-end'>
             <img
               src={storeData?.icon || demoImg}
@@ -258,7 +258,8 @@ const EditStoreModal = ({ show, handleClose, data, loadStoreData }) => {
 
             <Form.Group className='' controlId='formBasicEmail'>
               <Form.Label>
-                BackGround Image*
+                <strong>Image </strong> (aspect ratio should be 1:1. e.g. 512px
+                x 512px)
                 {photoSpinner && (
                   <Spinner className='ms-1' animation='border' size='sm' />
                 )}
@@ -282,7 +283,7 @@ const EditStoreModal = ({ show, handleClose, data, loadStoreData }) => {
               />
             </div>
             <div className='plain-input my-3'>
-              <label for=''>Manager / Owner Name*</label>
+              <label for=''>Store Manager / POC*</label>
               <br />
               <input
                 type='text'
@@ -293,7 +294,7 @@ const EditStoreModal = ({ show, handleClose, data, loadStoreData }) => {
               />
             </div>
             <div className='plain-input my-3'>
-              <label for=''>Manager / Owner Phone*</label>
+              <label for=''>Store Phone*</label>
               <br />
               <input
                 type='text'
@@ -304,7 +305,7 @@ const EditStoreModal = ({ show, handleClose, data, loadStoreData }) => {
               />
             </div>
             <div className='plain-input my-3'>
-              <label for=''>Manager / Owner Email*</label>
+              <label for=''>Store Email*</label>
               <br />
               <input
                 type='text'
@@ -336,15 +337,19 @@ const EditStoreModal = ({ show, handleClose, data, loadStoreData }) => {
                 handleTagClick={handleTagClick}
               />
             </div>
-            <div className='plain-dropdown '>
+            <div className='plain-input my-3'>
               <label for=''>Type*</label>
-              <select onChange={handleInput} name='types'>
-                <option value='Category'> Catagory</option>
-                <option value='Click-n-Collect'> Click-n-Collect</option>
-              </select>
+              <br />
+              <input
+                type='text'
+                placeholder='Please input store type'
+                value={types}
+                onChange={(e) => setTypes(e.target.value)}
+                name='address'
+              />
             </div>
             <div className='plain-input my-3'>
-              <label for=''>Footer</label>
+              <label for=''>Footer Text</label>
               <br />
               <input
                 type='text'
@@ -358,7 +363,7 @@ const EditStoreModal = ({ show, handleClose, data, loadStoreData }) => {
             </div>
 
             <div className='plain-input my-3'>
-              <label for=''>Social Link</label>
+              <label for=''>QR Link</label>
               <br />
               <input
                 type='text'
@@ -372,7 +377,7 @@ const EditStoreModal = ({ show, handleClose, data, loadStoreData }) => {
             </div>
 
             <div className='plain-input my-3'>
-              <label for=''>Link*</label>
+              <label for=''>API Link*</label>
               <br />
               <input
                 type='text'
@@ -392,12 +397,12 @@ const EditStoreModal = ({ show, handleClose, data, loadStoreData }) => {
           {' '}
           <button
             className='danger-btn-light d-flex justify-content-center align-items-center'
-            onClick={() => handleStoreDelete()}
+            onClick={() => {
+              handleClose()
+              setConfirmModalShow(true)
+            }}
           >
             Delete{' '}
-            {deleteSpinner && (
-              <Spinner className='ms-2' animation='border' size='sm' />
-            )}
           </button>
           <button className='primary-btn-light' onClick={handleClose}>
             Close
@@ -411,6 +416,26 @@ const EditStoreModal = ({ show, handleClose, data, loadStoreData }) => {
             {editSpinner && (
               <Spinner className='ms-2' animation='border' size='sm' />
             )}
+          </button>
+        </Modal.Footer>
+      </Modal>
+
+      <Modal show={confirmModalShow} onHide={() => setConfirmModalShow(false)}>
+        <Modal.Header style={{ border: 'none' }}>
+          <Modal.Title className='text-danger '>Caution!</Modal.Title>
+        </Modal.Header>
+        <Modal.Body className='text-secondary'>
+          Are you sure you want to Delete Theme? This can't be undone.
+        </Modal.Body>
+        <Modal.Footer style={{ border: 'none' }}>
+          <button
+            className='primary-btn-light '
+            onClick={() => setConfirmModalShow(false)}
+          >
+            No
+          </button>
+          <button className='primary-btn ' onClick={handleStoreDelete}>
+            Yes {deleteSpinner && <Spinner animation='border' size='sm' />}
           </button>
         </Modal.Footer>
       </Modal>

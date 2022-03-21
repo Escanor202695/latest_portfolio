@@ -20,7 +20,7 @@ const CreateNewScreen = ({ show, handleClose, store, loadStoreScreen }) => {
     theme_id: '',
     category_names: [],
     screen_name: '',
-    screen_type: 'click-n-collect',
+    screen_type: 'category-screen',
   })
   const [spinner, setSpinner] = useState(false)
   const [allCate, setAllCate] = useState([])
@@ -105,7 +105,7 @@ const CreateNewScreen = ({ show, handleClose, store, loadStoreScreen }) => {
           theme_id: '',
           category_names: [],
           screen_name: '',
-          screen_type: 'click-n-collect',
+          screen_type: 'category-screen',
         })
         setRangeValue({
           value: { min: 0, max: 0 },
@@ -175,21 +175,6 @@ const CreateNewScreen = ({ show, handleClose, store, loadStoreScreen }) => {
             <button
               className={
                 newScreenData?.screen_type === 'click-n-collect'
-                  ? 'primary-btn-light me-2 '
-                  : 'btn-white-bg me-2'
-              }
-              onClick={() => {
-                setNewScreenData({
-                  ...newScreenData,
-                  screen_type: 'click-n-collect',
-                })
-              }}
-            >
-              Click-n-Collect
-            </button>
-            <button
-              className={
-                newScreenData?.screen_type === 'click-n-collect'
                   ? 'btn-white-bg me-2'
                   : 'primary-btn-light me-2'
               }
@@ -201,6 +186,21 @@ const CreateNewScreen = ({ show, handleClose, store, loadStoreScreen }) => {
               }}
             >
               Category Screen
+            </button>{' '}
+            <button
+              className={
+                newScreenData?.screen_type === 'click-n-collect'
+                  ? 'primary-btn-light me-2 '
+                  : 'btn-white-bg me-2'
+              }
+              onClick={() => {
+                setNewScreenData({
+                  ...newScreenData,
+                  screen_type: 'click-n-collect',
+                })
+              }}
+            >
+              Click-n-Collect
             </button>
           </div>
           <div className='plain-dropdown my-3'>
@@ -276,29 +276,10 @@ const CreateNewScreen = ({ show, handleClose, store, loadStoreScreen }) => {
             </select>
           </div>
 
-          {/* <div className='plain-input my-3'>
-            <label for=''>Android ID (TV-Stick)</label>
-            <br />
-            <input type='text' placeholder='input something' />
-          </div> */}
-          {/* <div className='plain-input my-3'>
-            <label for=''>Screen ID</label>
-            <br />
-            <input type='number' placeholder='12323213' />
-          </div> */}
           <div className='plain-input my-3'>
             <label for=''>Screen Password*</label>
             <br />
-            <input
-              type='text'
-              placeholder='ads@33TqRt'
-              // onChange={(e) =>
-              //   setNewScreenData({
-              //     ...newScreenData,
-              //     theme_id: e.target.value,
-              //   })
-              // }
-            />
+            <input type='text' />
           </div>
         </div>
       </Modal.Body>

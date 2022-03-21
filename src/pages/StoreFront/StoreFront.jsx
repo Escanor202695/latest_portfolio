@@ -119,15 +119,15 @@ const StoreFront = () => {
             <div className='me-5 custom-header'>
               <h6>Store name</h6>
               <h6>Store Type</h6>
-              <h6>Manager</h6>
-              <h6>Phone</h6>
-              <h6>Email</h6>
-              <h6>Address</h6>
-              <h6>Short Id</h6>
+              <h6>Store Manager / POC*</h6>
+              <h6>Store Phone</h6>
+              <h6>Store Email</h6>
+              <h6>Store Address</h6>
+              <h6>Store Id</h6>
 
-              <h6>Footer</h6>
-              <h6>Link</h6>
-              <h6>Social Link</h6>
+              <h6>Footer Text</h6>
+              <h6>API Link</h6>
+              <h6>QR Link</h6>
               <h6>Tags</h6>
             </div>
             <div className='ms-5'>
@@ -140,10 +140,18 @@ const StoreFront = () => {
               <h6>{storeData?.short_id}</h6>
 
               <h6>{storeData?.footer || '_'}</h6>
-              <a href={storeData?.link || '_'} className='d-block'>
+              <a
+                href={storeData?.link || '_'}
+                className='d-block'
+                target='_blank'
+              >
                 <h6> Go to link</h6>
               </a>
-              <a href={storeData?.social_link || '_'} className='d-block'>
+              <a
+                href={storeData?.social_link || '_'}
+                className='d-block'
+                target='_blank'
+              >
                 <h6>Go to social link</h6>
               </a>
               <h6>
@@ -228,7 +236,7 @@ const StoreFront = () => {
               onClick={() => setAdnewAdd(true)}
             >
               {' '}
-              <img className='me-3' src={plus} alt='' /> Add New Ad
+              <img className='me-3' src={plus} alt='' /> Add/Remove
             </button>
           </div>
           <div>
