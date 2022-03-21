@@ -84,6 +84,7 @@ const AddNewAdModal = ({ show, handleClose, folderId, loadAllFolders }) => {
           name: '',
           description: '',
           link: '',
+          type: 'photo',
         })
         loadAllFolders(folderId)
       } else throw new Error(response.data?.msg || 'Try again later')

@@ -30,12 +30,13 @@ const StoreFrontManagement = () => {
   const [page, setPage] = useState(1)
   const [search, setSearch] = useState('')
   const [searchTag, setSearchTag] = useState('')
+  const [sort, setSort] = useState('')
   useEffect(() => {
     loadAllTags()
   }, [])
   useEffect(() => {
     loadStoreData()
-  }, [page, search, searchTag])
+  }, [page, search, searchTag, sort])
 
   const loadStoreData = async () => {
     setSpin(true)
@@ -45,6 +46,9 @@ const StoreFrontManagement = () => {
     }
     if (searchTag.length > 0) {
       url += `&tag=${searchTag}`
+    }
+    if (sort.length > 0) {
+      url += `&sort=${sort}`
     }
     try {
       const response = await axios.get(url, {
@@ -121,45 +125,44 @@ const StoreFrontManagement = () => {
           </button>
         </div>
 
-        <div className='d-flex justify-content-between align-items-center mt-4'>
-          <div className='custom-input me-2'>
-            <label for=''>Search Store</label>
-            <br />
-            <input
-              type='text'
-              placeholder='search by name, email etc.'
-              onChange={(e) => setSearch(e.target.value)}
-            />
-          </div>
-          <div className='custom-dropdown ms-2'>
-            <label for=''>Sort By</label>
-            <select>
-              <option value='1' style={{ border: 'none' }}>
-                Name (a to z)
-              </option>
-              <option value='2'> Name (z to a)</option>
-            </select>
-          </div>
+        <div className='mt-4 plain-input me-2'>
+          <label for=''>Search Store</label>
+          <br />
+          <input
+            type='text'
+            placeholder='search by name, email, location, phone etc.'
+            onChange={(e) => setSearch(e.target.value)}
+          />
         </div>
 
         <div className='d-flex justify-content-between align-items-center mt-3'>
+          <div className='custom-dropdown '>
+            <label for=''>Sort By</label>
+            <select onChange={(e) => setSort(e.target.value)}>
+              <option hidden>no selected</option>
+              <option value='name_ascending'>Name (a to z)</option>
+              <option value='name_descending'> Name (z to a)</option>
+              <option value='time_ascending'>Time (new to old)</option>
+              <option value='time_descending'>Time(old to new)</option>
+            </select>
+          </div>
           <div className='custom-dropdown ms-2'>
             <label for=''>Type</label>
             <select>
               <option value='1' style={{ border: 'none' }}>
                 {' '}
-                primary
+                Type A
               </option>
-              <option value='2'> secondary</option>
+              <option value='2'> Type B</option>
             </select>
           </div>
-          <div className='custom-dropdown ms-2'>
+          {/* <div className='custom-dropdown ms-2'>
             <label for=''>Time</label>
             <select>
               <option value='3'> Time (new to old)</option>
               <option value='3'> Time (old to new)</option>
             </select>
-          </div>
+          </div> */}
           <div className='custom-dropdown ms-2'>
             <label for=''>Tags</label>
             <select onChange={(e) => setSearchTag(e.target.value)}>
@@ -172,7 +175,7 @@ const StoreFrontManagement = () => {
               ))}
             </select>
           </div>
-          <div className='custom-dropdown ms-2'>
+          {/* <div className='custom-dropdown ms-2'>
             <label for=''>Location</label>
             <select>
               <option value='1' style={{ border: 'none' }}>
@@ -182,7 +185,7 @@ const StoreFrontManagement = () => {
               <option value='2'> Chattagram</option>
               <option value='3'> Sylet</option>
             </select>
-          </div>
+          </div> */}
         </div>
 
         {spin && (
