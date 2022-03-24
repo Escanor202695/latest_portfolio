@@ -81,6 +81,7 @@ const AddStoreAd = ({ show, handleClose, storeData, loadStoreData }) => {
   const [spinner, setSpinner] = useState(false)
   const [searchKey, setSearchKey] = useState('')
   const [adSpinner, setAdSpinner] = useState(false)
+
   useEffect(() => {
     loadAllAds()
   }, [show, searchKey])
@@ -102,23 +103,20 @@ const AddStoreAd = ({ show, handleClose, storeData, loadStoreData }) => {
       if (res.status === 200) {
         setAllAds(res?.data?.data)
 
-        // let addedToStoreSet = new Set()
-        // for (let i of storeData?.ads) {
-        //   addedToStoreSet.add(i)
-        // }
-        // for (let i of state[1]) {
-        //   addedToStoreSet.add(i)
-        // }
-        // const convertedArrFromSet = [state[0], [...addedToStoreSet]]
-        // setState(convertedArrFromSet)
-
-        let filteredArr = res?.data?.data
-
-        for (let i of state[1]) {
-          filteredArr = filteredArr.filter((d) => d?._id !== i?._id)
+        let newArr = []
+        for (let i = 0; i < storeData?.ads?.length; i++) {
+          newArr.push(storeData?.ads[i]?.ad_id)
         }
 
-        setState([filteredArr, state[1]])
+        let filteredArr = res?.data?.data
+        for (const i of newArr) {
+          filteredArr = filteredArr.filter((f) => f?._id !== i?._id)
+
+          setState([filteredArr, newArr])
+        }
+        if (storeData?.ads.length === 0) {
+          setState([res?.data?.data, []])
+        }
         setAdSpinner(false)
       } else throw new Error(res?.data?.msg)
     } catch (error) {
@@ -128,26 +126,19 @@ const AddStoreAd = ({ show, handleClose, storeData, loadStoreData }) => {
 
   const handleSubmit = async () => {
     if (state[1].length === 0) {
+      Toast('err', 'At least one Ad need to be added')
       return
     }
     setSpinner(true)
 
     let newAddData = []
     state[1].map((d) => newAddData.push({ ad_id: d?._id }))
-    let data = {
-      ...storeData,
-      id: storeData._id,
-      footer: storeData?.footer ? storeData?.footer : '',
-    }
-    delete data?._id
-    delete data?.short_id
-    delete data?.password
 
     try {
       const res = await axios.put(
         StoreEdit,
         {
-          ...data,
+          id: storeData._id,
           ads: newAddData,
         },
         {
@@ -188,23 +179,6 @@ const AddStoreAd = ({ show, handleClose, storeData, loadStoreData }) => {
       </Modal.Header>
       <Modal.Body style={{ overflowY: 'scroll', height: '80vh' }}>
         <div>
-          {/* <button
-            type='button'
-            onClick={() => {
-              setState([...state, []])
-            }}
-          >
-            Add new group
-          </button> */}
-          {/* <button
-            type='button'
-            onClick={() => {
-              setState([...state, getItems(1)])
-            }}
-          >
-            Add new item
-          </button> */}
-
           <div className='plain-input my-3'>
             <label for=''>Search </label>
             <br />
@@ -251,14 +225,7 @@ const AddStoreAd = ({ show, handleClose, storeData, loadStoreData }) => {
                                 provided.draggableProps.style
                               )}
                             >
-                              <div
-                                // style={{
-                                //   display: 'flex',
-                                //   justifyContent: 'space-between',
-                                //   alignItems: 'center',
-                                // }}
-                                className='row justify-content-between align-items-center '
-                              >
+                              <div className='row justify-content-between align-items-center '>
                                 <div className='col-5 d-flex'>
                                   <h5>
                                     {index + 1}. {'  '}
@@ -281,13 +248,6 @@ const AddStoreAd = ({ show, handleClose, storeData, loadStoreData }) => {
                                   width='100px'
                                 />
                                 {ind !== 0 && (
-                                  // <button
-                                  //   type='button'
-                                  //   className='danger-btn-light'
-
-                                  // >
-                                  //   Remove
-                                  // </button>
                                   <div className='col-1 mx-2 text-center'>
                                     <MdDeleteForever
                                       style={{

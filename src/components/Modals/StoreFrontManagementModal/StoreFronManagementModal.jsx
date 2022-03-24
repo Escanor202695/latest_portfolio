@@ -148,7 +148,6 @@ export default function StoreFronManagementModal({
   }
 
   const handleKeyDown = (event) => {
-    console.log(event.target.value)
     if (event.key === 'Enter') {
       if (storeData?.tag.includes(event.target.value) === false) {
         setStoreData({

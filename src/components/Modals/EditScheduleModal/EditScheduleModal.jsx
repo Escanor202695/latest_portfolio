@@ -23,24 +23,16 @@ const EditScheduleModal = ({ show, hide, loadStoreData, storeData }) => {
       return
     }
     setSpinner(true)
-    let data = {
-      ...storeData,
-      id: storeData?._id,
-      ad_timing: {
-        duration: duration,
-        interval: interval,
-      },
-    }
 
-    delete data?._id
-    delete data?.short_id
-    delete data?.password
-    delete data?.__v
     try {
       const res = await axios.put(
         StoreEdit,
         {
-          ...data,
+          id: storeData?._id,
+          ad_timing: {
+            duration: duration,
+            interval: interval,
+          },
         },
         {
           headers: {

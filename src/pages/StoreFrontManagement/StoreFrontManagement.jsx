@@ -1,17 +1,15 @@
-import React, { useState } from 'react'
-import DashBoard from '../../components/DashBoard/DashBoard'
-import plus from '../../assets/icons/plus.svg'
-import './StoreFrontManagement.scss'
-import { Dropdown, Modal, Pagination, Spinner, Table } from 'react-bootstrap'
-import threedot from '../../assets/icons/threedot.svg'
-import demoImg from '../../assets/images/demoLogoImg.png'
-import uploadBtn from '../../assets/icons/upload.svg'
-import { useHistory } from 'react-router-dom'
-import { useEffect } from 'react'
-import { GetAllStoreAPI, GetAllTagUrl } from '../../constants/api.constants'
 import axios from 'axios'
-import Toast from '../../utils/Toast/Toast'
+import React, { useEffect, useState } from 'react'
+import { Pagination, Spinner, Table } from 'react-bootstrap'
+import { useHistory } from 'react-router-dom'
+import plus from '../../assets/icons/plus.svg'
+import uploadBtn from '../../assets/icons/upload.svg'
+import demoImg from '../../assets/images/demoLogoImg.png'
+import DashBoard from '../../components/DashBoard/DashBoard'
 import StoreFronManagementModal from '../../components/Modals/StoreFrontManagementModal/StoreFronManagementModal'
+import { GetAllStoreAPI, GetAllTagUrl } from '../../constants/api.constants'
+import Toast from '../../utils/Toast/Toast'
+import './StoreFrontManagement.scss'
 
 const StoreFrontManagement = () => {
   const [show, setShow] = useState(false)
@@ -59,7 +57,7 @@ const StoreFrontManagement = () => {
 
       if (response.status === 200) {
         setAllStore(response.data.data)
-        console.log(response)
+
         setTotalDoc(response?.data?.total_document)
         setSpin(false)
       } else

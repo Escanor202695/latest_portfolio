@@ -1,20 +1,19 @@
-import React, { useEffect, useState } from 'react'
-import DashBoard from '../../components/DashBoard/DashBoard'
-import plus from '../../assets/icons/plus.svg'
-import './AdManagement.scss'
-import { AdCards } from '../../components/AdCards'
-import { AddNewAdModal } from '../../components/Modals/AddNewAdModal'
 import axios from 'axios'
-import { AdGetEnd, GetAllFoldersEnd } from '../../constants/api.constants'
-import Toast from '../../utils/Toast/Toast'
+import React, { useEffect, useState } from 'react'
+import { Dropdown, Spinner } from 'react-bootstrap'
 import { AiFillFolder, AiFillFolderAdd } from 'react-icons/ai'
 import { FaArrowLeft } from 'react-icons/fa'
-import { Dropdown, Spinner } from 'react-bootstrap'
-import AddNewFolderModal from '../../components/Modals/AddNewFolderModal/AddNewFolderModal'
+import plus from '../../assets/icons/plus.svg'
 import threedot from '../../assets/icons/threedot.svg'
-import EditFolderModal from '../../components/Modals/EditFolderModal/EditFolderModal'
+import { AdCards } from '../../components/AdCards'
+import DashBoard from '../../components/DashBoard/DashBoard'
+import { AddNewAdModal } from '../../components/Modals/AddNewAdModal'
+import AddNewFolderModal from '../../components/Modals/AddNewFolderModal/AddNewFolderModal'
 import DeleteFolderModal from '../../components/Modals/DeleteFolderModal/DeleteFolderModal'
-import Breadcrumb from 'react-bootstrap/Breadcrumb'
+import EditFolderModal from '../../components/Modals/EditFolderModal/EditFolderModal'
+import { AdGetEnd, GetAllFoldersEnd } from '../../constants/api.constants'
+import Toast from '../../utils/Toast/Toast'
+import './AdManagement.scss'
 
 const AdManagement = () => {
   const [show, setShow] = useState(false)
@@ -132,8 +131,6 @@ const AdManagement = () => {
     setDeleteFolderDetails(folder)
     setDeleteFolder(true)
   }
-
-  console.log(ad)
 
   return (
     <div className='row py-3'>
