@@ -1,17 +1,10 @@
-import React, { useEffect, useState } from 'react'
-import { Form, Modal, Spinner } from 'react-bootstrap'
-import demoImg from '../../../assets/images/demoLogoImg.png'
 import axios from 'axios'
-import {
-  AdCreateEnd,
-  AdGetEnd,
-  FileUploadEnd,
-  FolderCreateEnd,
-  StoreEdit,
-} from '../../../constants/api.constants'
-import Toast from '../../../utils/Toast/Toast'
-import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
+import React, { useEffect, useState } from 'react'
+import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd'
+import { Modal, Spinner } from 'react-bootstrap'
 import { MdDeleteForever } from 'react-icons/md'
+import { AdGetEnd, StoreEdit } from '../../../constants/api.constants'
+import Toast from '../../../utils/Toast/Toast'
 
 const reorder = (list, startIndex, endIndex) => {
   const result = Array.from(list)
@@ -149,7 +142,6 @@ const AddStoreAd = ({ show, handleClose, storeData, loadStoreData }) => {
     delete data?._id
     delete data?.short_id
     delete data?.password
-    delete data?.__v
 
     try {
       const res = await axios.put(

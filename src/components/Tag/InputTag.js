@@ -1,6 +1,6 @@
 import React from 'react';
 import { WithContext as ReactTags } from 'react-tag-input';
-import './InputTag.scss';
+// import './InputTag.scss';
 
 
 export default function InputTag({ tags, handleDelete, handleAddition, handleDrag, handleTagClick }) {

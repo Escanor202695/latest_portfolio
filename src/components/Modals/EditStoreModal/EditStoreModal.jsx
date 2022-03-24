@@ -1,213 +1,145 @@
-import React, { useState, useEffect } from 'react'
-import { Form, Modal, Spinner } from 'react-bootstrap'
-import demoImg from '../../../assets/images/demoLogoImg.png'
-import uploadBtn from '../../../assets/icons/upload.svg'
 import axios from 'axios'
-import {
-  DeleteStoreEnd,
-  FileUploadEnd,
-  StoreEdit,
-} from '../../../constants/api.constants'
-import { InputTag } from '../../Tag'
+import React, { useEffect, useState } from 'react'
+import { Form, Modal, Spinner } from 'react-bootstrap'
+import { TiDelete } from 'react-icons/ti'
+import demoImg from '../../../assets/images/demoLogoImg.png'
+import { FileUploadEnd, StoreEdit } from '../../../constants/api.constants'
 import Toast from '../../../utils/Toast/Toast'
-import { useHistory } from 'react-router-dom'
 
 const EditStoreModal = ({ show, handleClose, data, loadStoreData }) => {
   const [editSpinner, setEditSpinner] = useState(false)
-  const [photoSpinner, setPhotoSpinner] = useState(false)
-  const [confirmModalShow, setConfirmModalShow] = useState(false)
-  const [deleteSpinner, setDeleteSpinner] = useState(false)
   const [storeData, setStoreData] = useState({
-    id: '',
     name: '',
     manager: '',
     phone: '',
     email: '',
     address: '',
+    footer: '',
     link: '',
     social_link: '',
-    footer: '',
     icon: '',
+    tag: [],
+    type: '',
+    api_key: '2d108b5e-ec42-45cb-a0cf-c5f432ea637a',
   })
-  const [types, setTypes] = useState('')
-  console.log(data)
+  const [photoSpinner, setPhotoSpinner] = useState(false)
+  const [tag, setTag] = useState('')
+
   useEffect(() => {
     setStoreData({
-      id: data?._id,
       name: data?.name,
       manager: data?.manager,
       phone: data?.phone,
       email: data?.email,
-      address: data?.address,
-      link: data?.link,
-      social_link: data?.social_link,
-      footer: data?.footer,
-      icon: data?.icon,
+      address: data?.address || '',
+      footer: data?.footer || '',
+      link: data?.link || '',
+      social_link: data?.social_link || '',
+      icon: data?.icon || '',
+      tag: data?.tag,
+      type: data?.type,
+      api_key: '2d108b5e-ec42-45cb-a0cf-c5f432ea637a',
     })
-    setTypes(data?.type)
   }, [data])
 
   function handleInput(e) {
-    if (e.target.name === 'types') {
-      setTypes(e.target.value)
-    } else {
-      setStoreData({
-        ...storeData,
-        [e.target.name]: e.target.value,
-      })
-    }
+    setStoreData({
+      ...storeData,
+      [e.target.name]: e.target.value,
+    })
   }
-
-  const [tags, setTags] = useState([])
-
-  const handleDelete = (i) => {
-    setTags(tags.filter((tag, index) => index !== i))
-  }
-
-  const handleAddition = (tag) => {
-    setTags([...tags, tag])
-  }
-
-  const handleDrag = (tag, currPos, newPos) => {
-    const newTags = tags.slice()
-
-    newTags.splice(currPos, 1)
-    newTags.splice(newPos, 0, tag)
-
-    // re-render
-    setTags(newTags)
-  }
-
-  const handleTagClick = (index) => {}
 
   async function postStoreData() {
     setEditSpinner(true)
 
     if (storeData.name === '') {
-      Toast('err', 'Name cant be empty')
+      Toast('err', 'Please enter store name')
       setEditSpinner(false)
+
       return
     }
     if (storeData.manager === '') {
-      Toast('err', 'Manager name cant be empty')
+      Toast('err', 'Please enter manager')
       setEditSpinner(false)
+
       return
     }
     if (storeData.phone === '') {
-      Toast('err', 'Phone cant be empty')
+      Toast('err', 'Please enter your phone')
       setEditSpinner(false)
       return
     }
     if (storeData.email === '') {
-      Toast('err', 'Email cant be empty')
+      Toast('err', 'Please enter email')
       setEditSpinner(false)
       return
     }
     if (storeData.address === '') {
-      Toast('err', 'Address cant be empty')
+      Toast('err', 'Please enter address')
       setEditSpinner(false)
       return
     }
-
-    if (storeData.types === '') {
-      Toast('err', 'Types cant be empty')
+    if (storeData.tag === 0) {
+      Toast('err', 'Please enter at least 1 tag')
+      setEditSpinner(false)
+      return
+    }
+    if (storeData.type.length === 0) {
+      Toast('err', 'Please enter store type')
+      setEditSpinner(false)
+      return
+    }
+    if (storeData.api_key === '') {
+      Toast('err', 'APi key must be provided')
       setEditSpinner(false)
       return
     }
     if (storeData.link === '') {
-      Toast('err', 'Link must be provided')
+      Toast('err', 'Please enter link')
       setEditSpinner(false)
       return
     }
 
-    const tagArray = [...data?.tag]
-    tags.map((tag) => {
-      return tagArray.push(tag.text)
-    })
-
-    const dataObj = {
-      id: storeData.id,
-      name: storeData.name,
-      manager: storeData.manager,
-      phone: storeData.phone,
-      email: storeData.email,
-      address: storeData.address,
-      tag: tagArray,
-      type: types,
-      icon: storeData?.icon,
-    }
     try {
       await axios
-        .put(StoreEdit, dataObj, {
-          headers: {
-            menuboard: localStorage.getItem('menu_token'),
-          },
-        })
+        .put(
+          StoreEdit,
+          { ...storeData, id: data?._id },
+          {
+            headers: {
+              menuboard: localStorage.getItem('menu_token'),
+            },
+          }
+        )
         .then((response) => {
           if (response.status === 200) {
-            Toast('success', 'Successfully Updated!')
             setEditSpinner(false)
-
+            Toast('success', 'Store updated!')
             handleClose()
             loadStoreData()
             setStoreData({
-              id: '',
               name: '',
               manager: '',
               phone: '',
               email: '',
               address: '',
+              footer: '',
+              link: '',
+              social_link: '',
+              icon: '',
+              tag: [],
+              type: '',
+              api_key: '2d108b5e-ec42-45cb-a0cf-c5f432ea637a',
             })
-            setTags([])
-            setTypes('Category')
           } else throw new Error(response?.data?.msg)
         })
     } catch (error) {
-      setStoreData({
-        id: '',
-        name: '',
-        manager: '',
-        phone: '',
-        email: '',
-        address: '',
-      })
-      setTags([])
-      setTypes('Category')
-      handleClose()
-      Toast(
-        'err',
-        error.response?.data?.msg || 'Something went wrong! Try again later.'
-      )
       setEditSpinner(false)
-    }
-  }
 
-  const history = useHistory()
-
-  const handleStoreDelete = async () => {
-    setDeleteSpinner(true)
-    try {
-      const response = await axios.delete(
-        DeleteStoreEnd + `?_id=${storeData.id}`,
-        {
-          headers: {
-            menuboard: localStorage.getItem('menu_token'),
-          },
-        }
-      )
-      if (response.status === 200) {
-        Toast('success', 'Successfully Deleted!')
-        handleClose()
-        history.push('/storefront-management')
-        setDeleteSpinner(false)
-      } else throw new Error(response?.data?.msg)
-    } catch (error) {
-      setDeleteSpinner(false)
       Toast(
         'err',
         error.response?.data?.msg || 'Something went wrong! Try again later.'
       )
-      handleClose()
     }
   }
 
@@ -236,17 +168,32 @@ const EditStoreModal = ({ show, handleClose, data, loadStoreData }) => {
     }
   }
 
+  const handleKeyDown = (event) => {
+    if (event.key === 'Enter') {
+      if (storeData?.tag.includes(event.target.value) === false) {
+        setStoreData({
+          ...storeData,
+          tag: [...storeData.tag, event.target.value],
+        })
+        setTag('')
+      }
+    }
+  }
+
+  const handleDeleteTag = (tag) => {
+    let newArr = storeData?.tag.filter((t) => tag !== t)
+
+    setStoreData({ ...storeData, tag: newArr })
+  }
+
   return (
     <>
       <Modal show={show} onHide={handleClose} size='lg'>
         <Modal.Header closeButton style={{ border: 'none' }}>
-          <Modal.Title style={{ fontSize: '22px' }}>
-            Edit {storeData?.name}
-          </Modal.Title>
+          <Modal.Title style={{ fontSize: '22px' }}>Edit Store</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          {/* <form onSubmit={handleSubmit}> */}
-          <h6>Store Brand Icon / Logo*</h6>
+          <h6>Store Brand Icon / Logo</h6>
           <div className='d-flex justify-content-start align-items-end'>
             <img
               src={storeData?.icon || demoImg}
@@ -270,140 +217,167 @@ const EditStoreModal = ({ show, handleClose, data, loadStoreData }) => {
               />
             </Form.Group>
           </div>
-          <div className='my-3'>
-            <div className='plain-input my-3'>
-              <label for=''>Store Name*</label>
-              <br />
-              <input
-                type='text'
-                placeholder='Please input store name'
-                value={storeData.name}
-                onChange={handleInput}
-                name='name'
-              />
-            </div>
-            <div className='plain-input my-3'>
-              <label for=''>Store Manager / POC*</label>
-              <br />
-              <input
-                type='text'
-                placeholder='Name of manager '
-                value={storeData.manager}
-                onChange={handleInput}
-                name='manager'
-              />
-            </div>
-            <div className='plain-input my-3'>
-              <label for=''>Store Phone*</label>
-              <br />
-              <input
-                type='text'
-                placeholder='Please input phone'
-                value={storeData.phone}
-                onChange={handleInput}
-                name='phone'
-              />
-            </div>
-            <div className='plain-input my-3'>
-              <label for=''>Store Email*</label>
-              <br />
-              <input
-                type='text'
-                placeholder='Please input email'
-                value={storeData.email}
-                onChange={handleInput}
-                name='email'
-              />
-            </div>
-            <div className='plain-input my-3'>
-              <label for=''>Address / Location*</label>
-              <br />
-              <input
-                type='text'
-                placeholder='Please input address'
-                value={storeData.address}
-                onChange={handleInput}
-                name='address'
-              />
-            </div>
-            <div className='plain-textarea my-3'>
-              <label for=''>Tags*</label>
-              <br />
-              <InputTag
-                tags={tags}
-                handleDelete={handleDelete}
-                handleAddition={handleAddition}
-                handleDrag={handleDrag}
-                handleTagClick={handleTagClick}
-              />
-            </div>
-            <div className='plain-input my-3'>
-              <label for=''>Type*</label>
-              <br />
-              <input
-                type='text'
-                placeholder='Please input store type'
-                value={types}
-                onChange={(e) => setTypes(e.target.value)}
-                name='address'
-              />
-            </div>
-            <div className='plain-input my-3'>
-              <label for=''>Footer Text</label>
-              <br />
-              <input
-                type='text'
-                placeholder='Please input your address'
-                value={storeData.footer}
-                onChange={(e) =>
-                  setStoreData({ ...storeData, footer: e.target.value })
-                }
-                name='footer'
-              />
-            </div>
+          <div className='plain-input my-3'>
+            <label for=''>Store Name*</label>
+            <br />
+            <input
+              type='text'
+              placeholder='Please input store name'
+              value={storeData.name}
+              onChange={handleInput}
+              name='name'
+            />
+          </div>
+          <div className='plain-input my-3'>
+            <label for=''>Store Manager / POC*</label>
+            <br />
+            <input
+              type='text'
+              placeholder='Name of manager'
+              value={storeData.manager}
+              onChange={handleInput}
+              name='manager'
+            />
+          </div>
+          <div className='plain-input my-3'>
+            <label for=''>Store Phone*</label>
+            <br />
+            <input
+              type='text'
+              placeholder='Please input your phone'
+              value={storeData.phone}
+              onChange={handleInput}
+              name='phone'
+            />
+          </div>
+          <div className='plain-input my-3'>
+            <label for=''>Store Email*</label>
+            <br />
+            <input
+              type='text'
+              placeholder='Please input your email'
+              value={storeData.email}
+              onChange={handleInput}
+              name='email'
+            />
+          </div>
+          <div className='plain-input my-3'>
+            <label for=''>Address / Location*</label>
+            <br />
+            <input
+              type='text'
+              placeholder='Please input your address'
+              value={storeData.address}
+              onChange={handleInput}
+              name='address'
+            />
+          </div>
 
-            <div className='plain-input my-3'>
-              <label for=''>QR Link</label>
-              <br />
-              <input
-                type='text'
-                placeholder='Please input your address'
-                value={storeData.social_link}
-                onChange={(e) =>
-                  setStoreData({ ...storeData, social_link: e.target.value })
-                }
-                name='social_link'
-              />
-            </div>
+          <div className='plain-input my-3'>
+            <label for=''>Tags*</label>
+            <br />
+            <input
+              type='text'
+              placeholder='Please input your tag'
+              value={tag}
+              onChange={(e) => setTag(e.target.value)}
+              onKeyDown={(e) => handleKeyDown(e)}
+            />
+          </div>
+          <div className='d-flex justify-content-start align-items-center flex-wrap'>
+            {storeData?.tag?.map((tag, idx) => (
+              <span
+                key={idx}
+                className=' p-2  me-2 mb-2'
+                style={{
+                  color: 'black',
+                  backgroundColor: '#e0e0e0',
+                  borderRadius: '4px',
+                }}
+              >
+                {tag}
+                <TiDelete
+                  style={{
+                    marginLeft: '5px',
+                    height: '20px',
+                    width: '20px',
+                    cursor: 'pointer',
+                  }}
+                  onClick={() => handleDeleteTag(tag)}
+                />
+              </span>
+            ))}
+          </div>
 
-            <div className='plain-input my-3'>
-              <label for=''>API Link*</label>
-              <br />
-              <input
-                type='text'
-                placeholder='Please input your address'
-                value={storeData.link}
-                onChange={(e) =>
-                  setStoreData({ ...storeData, link: e.target.value })
-                }
-                name='social_link'
-              />
-            </div>
+          <div className='plain-input my-3'>
+            <label for=''>Type*</label>
+            <br />
+            <input
+              type='text'
+              placeholder='Please input store type'
+              value={storeData.type}
+              onChange={(e) =>
+                setStoreData({ ...storeData, type: e.target.value })
+              }
+              name='address'
+            />
+          </div>
+
+          <div className='plain-input my-3'>
+            <label for=''>Footer Text</label>
+            <br />
+            <input
+              type='text'
+              placeholder='Please input your address'
+              value={storeData.footer}
+              onChange={(e) =>
+                setStoreData({ ...storeData, footer: e.target.value })
+              }
+              name='footer'
+            />
+          </div>
+
+          <div className='plain-input my-3'>
+            <label for=''>QR Link</label>
+            <br />
+            <input
+              type='text'
+              placeholder='Please input your address'
+              value={storeData.social_link}
+              onChange={(e) =>
+                setStoreData({ ...storeData, social_link: e.target.value })
+              }
+              name='social_link'
+            />
+          </div>
+          <div className='plain-input my-3'>
+            <label for=''>API Key*</label>
+            <br />
+            <input
+              type='text'
+              placeholder='Please input your api key'
+              value={storeData?.api_key}
+              onChange={handleInput}
+            />
+          </div>
+
+          <div className='plain-input my-3'>
+            <label for=''>API Link*</label>
+            <br />
+            <input
+              type='text'
+              placeholder='Please input your address'
+              value={storeData.link}
+              onChange={(e) =>
+                setStoreData({ ...storeData, link: e.target.value })
+              }
+              name='social_link'
+            />
           </div>
 
           {/* </form> */}
         </Modal.Body>
         <Modal.Footer>
-          {' '}
-          <button
-            className='danger-btn-light d-flex justify-content-center align-items-center'
-            onClick={() => {
-              handleClose()
-              setConfirmModalShow(true)
-            }}
-          >
-            Delete{' '}
-          </button>
           <button className='primary-btn-light' onClick={handleClose}>
             Close
           </button>
@@ -416,26 +390,6 @@ const EditStoreModal = ({ show, handleClose, data, loadStoreData }) => {
             {editSpinner && (
               <Spinner className='ms-2' animation='border' size='sm' />
             )}
-          </button>
-        </Modal.Footer>
-      </Modal>
-
-      <Modal show={confirmModalShow} onHide={() => setConfirmModalShow(false)}>
-        <Modal.Header style={{ border: 'none' }}>
-          <Modal.Title className='text-danger '>Caution!</Modal.Title>
-        </Modal.Header>
-        <Modal.Body className='text-secondary'>
-          Are you sure you want to Delete Theme? This can't be undone.
-        </Modal.Body>
-        <Modal.Footer style={{ border: 'none' }}>
-          <button
-            className='primary-btn-light '
-            onClick={() => setConfirmModalShow(false)}
-          >
-            No
-          </button>
-          <button className='primary-btn ' onClick={handleStoreDelete}>
-            Yes {deleteSpinner && <Spinner animation='border' size='sm' />}
           </button>
         </Modal.Footer>
       </Modal>

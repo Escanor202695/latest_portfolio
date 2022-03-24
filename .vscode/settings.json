@@ -6,5 +6,8 @@
   "prettier.semi": false,
   "prettier.singleQuote": true,
   "prettier.jsxSingleQuote": true,
-  "cSpell.words": ["ADMINMANAGEMENT", "ROUTENAME"]
+  "cSpell.words": ["ADMINMANAGEMENT", "ROUTENAME"],
+  "editor.codeActionsOnSave": {
+    "source.organizeImports": true
+  }
 }

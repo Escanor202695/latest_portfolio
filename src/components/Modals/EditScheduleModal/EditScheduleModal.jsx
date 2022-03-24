@@ -1,6 +1,5 @@
 import axios from 'axios'
-import React, { useState } from 'react'
-import { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Form, Modal, Spinner } from 'react-bootstrap'
 import { StoreEdit } from '../../../constants/api.constants'
 import Toast from '../../../utils/Toast/Toast'

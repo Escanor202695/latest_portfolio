@@ -1,21 +1,20 @@
-import React, { useContext, useEffect, useState } from 'react'
-import DashBoard from '../../components/DashBoard/DashBoard'
-import './StoreFront.scss'
-import plus from '../../assets/icons/plus.svg'
-import Screens from '../../components/Screens/Screens'
-import { Breadcrumb, Modal, Spinner } from 'react-bootstrap'
-import { EditScheduleModal } from '../../components/Modals/EditScheduleModal'
+import axios from 'axios'
+import React, { useEffect, useState } from 'react'
+import { Breadcrumb, Spinner } from 'react-bootstrap'
+import 'react-input-range/lib/css/index.css'
 // import { StoreProvider } from '../../Providers'
 import { useHistory, useParams } from 'react-router-dom'
-import { EditStoreModal } from '../../components/Modals/EditStoreModal'
-import 'react-input-range/lib/css/index.css'
+import plus from '../../assets/icons/plus.svg'
 import AdCard from '../../components/AdCard/AdCard'
-import { AddNewAdModal } from '../../components/Modals/AddNewAdModal'
-import axios from 'axios'
+import DashBoard from '../../components/DashBoard/DashBoard'
+import AddStoreAd from '../../components/Modals/AddStoreAd/AddStoreAd'
+import { CreateNewScreen } from '../../components/Modals/CreateNewScreen'
+import { EditScheduleModal } from '../../components/Modals/EditScheduleModal'
+import { EditStoreModal } from '../../components/Modals/EditStoreModal'
+import Screens from '../../components/Screens/Screens'
 import { GetScreenEnd, StoreAPI } from '../../constants/api.constants'
 import Toast from '../../utils/Toast/Toast'
-import { CreateNewScreen } from '../../components/Modals/CreateNewScreen'
-import AddStoreAd from '../../components/Modals/AddStoreAd/AddStoreAd'
+import './StoreFront.scss'
 
 const StoreFront = () => {
   const [showCreateScreen, setShowCreateScreen] = React.useState(false)
@@ -119,7 +118,7 @@ const StoreFront = () => {
             <div className='me-5 custom-header'>
               <h6>Store name</h6>
               <h6>Store Type</h6>
-              <h6>Store Manager / POC*</h6>
+              <h6>Store Manager / POC</h6>
               <h6>Store Phone</h6>
               <h6>Store Email</h6>
               <h6>Store Address</h6>
