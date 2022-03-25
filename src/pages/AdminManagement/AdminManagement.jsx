@@ -207,6 +207,8 @@ const AdminManagement = () => {
   }
   // pagination end
 
+  console.log(allAdmins)
+
   return (
     <div className='row py-3'>
       <div className='col-3'>
@@ -304,7 +306,12 @@ const AdminManagement = () => {
                     }}
                     style={{ cursor: 'pointer' }}
                   >
-                    {admin.role.map((r, idx) => (idx !== 0 ? ', ' + r : r))}
+                    {/* {admin.role.map((r, idx) => (idx !== 0 ? ', ' + r : r))} */}
+                    {admin?.effective_role === 'super_admin'
+                      ? 'Super Admin'
+                      : admin?.effective_role === 'admin'
+                      ? 'Admin'
+                      : 'Manager'}
                   </td>
                   {/* <td className=''>
                     <HideShowToggle password={admin.password} />

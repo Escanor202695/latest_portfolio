@@ -78,7 +78,7 @@ export default function StoreFronManagementModal({
       return
     }
     if (storeData.link === '') {
-      Toast('err', 'Please enter link')
+      Toast('err', 'Please enter Social Link(QR Link) ')
       setEditSpinner(false)
       return
     }
@@ -319,7 +319,7 @@ export default function StoreFronManagementModal({
           </div>
 
           <div className='plain-input my-3'>
-            <label for=''>QR Link</label>
+            <label for=''>Social Link(QR Link)</label>
             <br />
             <input
               type='text'

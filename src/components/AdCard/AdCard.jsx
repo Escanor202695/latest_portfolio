@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { Modal } from 'react-bootstrap'
 import ReactPlayer from 'react-player'
 import Frame from '../../assets/images/Frame.png'
+import ScrnImg from '../../assets/images/screen-img.png'
 import '../AdCards/AdCards.scss'
 
 const AdCard = ({ ad, index }) => {
@@ -13,12 +14,17 @@ const AdCard = ({ ad, index }) => {
 
   const [adEdit, setAdEdit] = useState(false)
 
+  console.log(ad)
+
   return (
     <div className='my-3  ad-card mx-1'>
       <div className=' d-flex justify-content-start align-items-center '>
         <h4 className='me-2'>{index}</h4>
         {ad?.ad_id?.type === 'photo' ? (
-          <div className='mx-3  preview-bg '>
+          <div
+            className='mx-3  preview-bg '
+            style={{ backgroundImage: ` url(${ad?.ad_id?.link || ScrnImg})` }}
+          >
             <img
               src={Frame}
               alt=''

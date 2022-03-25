@@ -32,10 +32,8 @@ const EditScreenModal = ({
   const [photoUrl, setPhotoUrl] = useState('')
   const [photoSpinner, setPhotoSpinner] = useState(false)
 
-  console.log(data)
   useEffect(() => {
-    console.log(data?.screen_name)
-
+    setPhotoUrl(data?.preview)
     if (data?.category?.length) {
       let tempArr = []
       let tempcatInfo = []
@@ -68,8 +66,6 @@ const EditScreenModal = ({
       })
     }
   }, [data])
-
-  console.log(newScreenData)
 
   useEffect(() => {
     getAllTheme()

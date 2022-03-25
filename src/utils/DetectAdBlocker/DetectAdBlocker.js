@@ -1,4 +1,4 @@
-import { toast } from 'react-toastify'
+import Swal from 'sweetalert2'
 
 
 let adBlockEnabled
@@ -14,14 +14,12 @@ async function detectAdBlock() {
     adBlockEnabled = true
   } finally {
     adBlockEnabled &&
-      toast.error(`Please stop Ad Blocker.`, {
-        position: 'top-center',
-        autoClose: 10000,
-        hideProgressBar: false,
-        closeOnClick: false,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
+      Swal.fire({
+        icon: 'error',
+        title: ' Ad Blocker! ',
+        text: 'Please stop Ad Blocker and reload page otherwise some functionalities may not work',
+        showConfirmButton: false,
+        allowOutsideClick: true,
       })
   }
 }

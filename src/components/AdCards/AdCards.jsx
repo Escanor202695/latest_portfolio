@@ -4,6 +4,7 @@ import ReactPlayer from 'react-player'
 import threedot from '../../assets/icons/threedot.svg'
 import Frame from '../../assets/images/Frame.png'
 import Menues from '../../assets/images/menus.png'
+import ScrnImg from '../../assets/images/screen-img.png'
 import { EditAdModal } from '../../components/Modals/EditAdModal'
 import DeleteAdModal from '../Modals/DeleteAdModal/DeleteAdModal'
 import './AdCards.scss'
@@ -34,6 +35,8 @@ const AdCards = ({ ad, index, loadAllFolders }) => {
 
   const handleClose = () => setShow(false)
   const handleShow = () => setShow(true)
+
+  console.log(adDetails)
   return (
     <div className='my-3 row ad-card mx-1'>
       <div
@@ -42,7 +45,10 @@ const AdCards = ({ ad, index, loadAllFolders }) => {
       >
         <h4 className='me-2'>{index}</h4>
         {adDetails?.type === 'photo' ? (
-          <div className='mx-3  preview-bg '>
+          <div
+            className='mx-3  preview-bg '
+            style={{ backgroundImage: ` url(${adDetails?.link || ScrnImg})` }}
+          >
             {/* <img src={screenImg} alt='' className='me-3' /> */}
             <img
               src={Frame}

@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
 import { Dropdown, Modal } from 'react-bootstrap'
 import threedot from '../../assets/icons/threedot.svg'
-import BoardView from '../../assets/images/BoardView.png'
 import Frame from '../../assets/images/Frame.png'
+import ScrnImg from '../../assets/images/screen-img.png'
 import { DeleteScreenModal } from '../Modals/DeleteScreenModal'
 import { EditScreenModal } from '../Modals/EditScreenModal'
 import './Screens.scss'
@@ -27,7 +27,12 @@ const Screens = ({ screen, loadStoreScreen }) => {
   return (
     <div className='my-3 d-flex justify-content-between align-items-start screen-section'>
       <div className=' d-flex justify-content-between align-items-start '>
-        <div className='preview-bg '>
+        <div
+          className='preview-bg '
+          style={{
+            backgroundImage: `url${ScrnImg || screen?.preview}`,
+          }}
+        >
           {/* <img src={screenImg} alt='' className='me-3' /> */}
           <img
             src={Frame}
@@ -38,7 +43,7 @@ const Screens = ({ screen, loadStoreScreen }) => {
               // top: '.2rem',
               cursor: 'pointer',
             }}
-            // onClick={() => handleShow(true)}
+            onClick={() => handleShow(true)}
           />
         </div>
         <div className='ms-3 screen-right'>
@@ -83,7 +88,7 @@ const Screens = ({ screen, loadStoreScreen }) => {
         /> */}
       </div>
       <Modal show={show} onHide={handleClose} size='xl' centered>
-        <img src={BoardView} alt='' />
+        <img src={screen?.preview} alt='' />
       </Modal>
       <EditScreenModal
         show={editScreen}

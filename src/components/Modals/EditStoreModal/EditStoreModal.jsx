@@ -338,7 +338,7 @@ const EditStoreModal = ({ show, handleClose, data, loadStoreData }) => {
           </div>
 
           <div className='plain-input my-3'>
-            <label for=''>QR Link</label>
+            <label for=''>Social Link(QR Link)</label>
             <br />
             <input
               type='text'

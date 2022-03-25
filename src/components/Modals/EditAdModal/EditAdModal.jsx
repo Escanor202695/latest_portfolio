@@ -1,13 +1,10 @@
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
-import { Form, Modal, Spinner } from 'react-bootstrap'
-import ReactPlayer from 'react-player'
-import demoImg from '../../../assets/images/demoLogoImg.png'
-import { AdEditEnd, FileUploadEnd } from '../../../constants/api.constants'
+import { Modal, Spinner } from 'react-bootstrap'
+import { AdEditEnd } from '../../../constants/api.constants'
 import Toast from '../../../utils/Toast/Toast'
 
 const EditAdModal = ({ show, handleClose, ad, loadAllFolders, folderID }) => {
-  const [photoSpinner, setPhotoSpinner] = useState(false)
   const [spinner, setSpinner] = useState(false)
 
   const [data, setData] = useState({
@@ -23,32 +20,9 @@ const EditAdModal = ({ show, handleClose, ad, loadAllFolders, folderID }) => {
       folder_id: ad?.folder_id || '',
       name: ad?.name,
       description: ad?.description,
-      link: ad?.link,
       type: ad?.type,
     })
   }, [ad])
-  const handleImageUpload = async (e) => {
-    setPhotoSpinner(true)
-    const file = e.target.files[0]
-
-    const formData = new FormData()
-    formData.append('files', file)
-
-    try {
-      const res = await axios.post(FileUploadEnd, formData, {
-        headers: {
-          menuboard: localStorage.getItem('menu_token'),
-        },
-      })
-      if (res.status === 200) {
-        setData({ ...data, link: res.data?.files[0]?.path })
-        setPhotoSpinner(false)
-        Toast('success', 'File uploaded successfully')
-      }
-    } catch (error) {
-      setPhotoSpinner(false)
-    }
-  }
 
   const handleEditAd = async () => {
     setSpinner(true)
@@ -57,11 +31,7 @@ const EditAdModal = ({ show, handleClose, ad, loadAllFolders, folderID }) => {
       setSpinner(false)
       return
     }
-    if (!data?.link) {
-      Toast('err', 'Media file must be provided')
-      setSpinner(false)
-      return
-    }
+
     if (!data?.type) {
       Toast('err', 'Type must be provided')
       setSpinner(false)
@@ -104,36 +74,6 @@ const EditAdModal = ({ show, handleClose, ad, loadAllFolders, folderID }) => {
         <Modal.Title style={{ fontSize: '22px' }}>Edit AD</Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <div className='d-flex justify-content-start align-items-end'>
-          {data?.type === 'photo' ? (
-            <img
-              src={data?.link || demoImg}
-              alt=''
-              height='100'
-              width='200'
-              className='me-4'
-            />
-          ) : (
-            <div className='mx-3'>
-              <ReactPlayer
-                url={data?.link || demoImg}
-                width='200px'
-                height='100px'
-                controls={true}
-              />
-            </div>
-          )}
-
-          <Form.Group className='' controlId='formBasicEmail'>
-            <Form.Label>
-              {data?.type}*
-              {photoSpinner && (
-                <Spinner className='ms-1' animation='border' size='sm' />
-              )}
-            </Form.Label>
-            <Form.Control type='file' onChange={(e) => handleImageUpload(e)} />
-          </Form.Group>
-        </div>
         <div className='my-3'>
           <div className='plain-input my-3'>
             <label for=''>Ad Name* </label>
