@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react'
-import screenImg from '../../assets/images/screen-img.png'
-import threedot from '../../assets/icons/threedot.svg'
-import './AdCards.scss'
-import Frame from '../../assets/images/Frame.png'
 import { Dropdown, Modal } from 'react-bootstrap'
+import ReactPlayer from 'react-player'
+import threedot from '../../assets/icons/threedot.svg'
+import Frame from '../../assets/images/Frame.png'
 import Menues from '../../assets/images/menus.png'
 import { EditAdModal } from '../../components/Modals/EditAdModal'
 import DeleteAdModal from '../Modals/DeleteAdModal/DeleteAdModal'
+import './AdCards.scss'
 
 const AdCards = ({ ad, index, loadAllFolders }) => {
   const [show, setShow] = useState(false)
@@ -28,6 +28,7 @@ const AdCards = ({ ad, index, loadAllFolders }) => {
       link: ad?.link,
       name: ad?.name,
       _id: ad?._id,
+      type: ad?.type,
     })
   }, [ad])
 
@@ -40,22 +41,31 @@ const AdCards = ({ ad, index, loadAllFolders }) => {
         style={{ borderRight: '2px solid #CCCCCC' }}
       >
         <h4 className='me-2'>{index}</h4>
-        <div className='mx-3  preview-bg '>
-          {/* <img src={screenImg} alt='' className='me-3' /> */}
-          <img
-            src={Frame}
-            alt=''
-            className=''
-            onClick={() => handleShow(true)}
-            style={{ cursor: 'pointer' }}
-          />
-        </div>
+        {adDetails?.type === 'photo' ? (
+          <div className='mx-3  preview-bg '>
+            {/* <img src={screenImg} alt='' className='me-3' /> */}
+            <img
+              src={Frame}
+              alt=''
+              className=''
+              onClick={() => handleShow(true)}
+              style={{ cursor: 'pointer' }}
+            />
+          </div>
+        ) : (
+          <div className='mx-3'>
+            <ReactPlayer
+              url={adDetails?.link}
+              width='200px'
+              height='100px'
+              controls={true}
+            />
+          </div>
+        )}
         <div className='pe-5'>
           <h6 className='fw-bold'> {adDetails.name} </h6>
           <h6 style={{ fontWeight: 'normal' }}>{adDetails.description}</h6>
-          <h6 style={{ fontWeight: 'normal' }}>
-            Filetype: Image, Ad Type: Lorem
-          </h6>
+          <h6 style={{ fontWeight: 'normal' }}>Ad Type: {adDetails?.type}</h6>
         </div>
       </div>
       <div className='col-6 d-flex justify-content-between align-items-center'>
@@ -72,7 +82,6 @@ const AdCards = ({ ad, index, loadAllFolders }) => {
           <p>Ad Revenue</p>
         </div>
         <div style={{ height: '100%' }}>
-          {/* <img src={threedot} alt='' /> */}
           <Dropdown drop='start' style={{ cursor: 'pointer' }}>
             <Dropdown.Toggle variant='transparent' id='dropdown-basic'>
               <img src={threedot} alt='' className='' />

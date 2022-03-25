@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react'
 import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd'
 import { Modal, Spinner } from 'react-bootstrap'
 import { MdDeleteForever } from 'react-icons/md'
+import ReactPlayer from 'react-player'
 import { AdGetEnd, StoreEdit } from '../../../constants/api.constants'
 import Toast from '../../../utils/Toast/Toast'
 
@@ -240,13 +241,23 @@ const AddStoreAd = ({ show, handleClose, storeData, loadStoreData }) => {
                                   </div>
                                 </div>
 
-                                <img
-                                  className='col-4'
-                                  src={item?.link}
-                                  alt=''
-                                  height='80px'
-                                  width='100px'
-                                />
+                                {item?.type === 'photo' ? (
+                                  <img
+                                    className='col-4'
+                                    src={item?.link}
+                                    alt=''
+                                    height='80px'
+                                    width='100px'
+                                  />
+                                ) : (
+                                  <ReactPlayer
+                                    className='col-4'
+                                    url={item?.link}
+                                    width='200px'
+                                    height='80px'
+                                    controls={true}
+                                  />
+                                )}
                                 {ind !== 0 && (
                                   <div className='col-1 mx-2 text-center'>
                                     <MdDeleteForever

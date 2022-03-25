@@ -12,6 +12,7 @@ import AddNewFolderModal from '../../components/Modals/AddNewFolderModal/AddNewF
 import DeleteFolderModal from '../../components/Modals/DeleteFolderModal/DeleteFolderModal'
 import EditFolderModal from '../../components/Modals/EditFolderModal/EditFolderModal'
 import { AdGetEnd, GetAllFoldersEnd } from '../../constants/api.constants'
+import detectAdBlock from '../../utils/DetectAdBlocker/DetectAdBlocker'
 import Toast from '../../utils/Toast/Toast'
 import './AdManagement.scss'
 
@@ -31,6 +32,8 @@ const AdManagement = () => {
   const [deleteFolderDetails, setDeleteFolderDetails] = useState({})
 
   useEffect(() => {
+    detectAdBlock()
+
     if (view === 'grid') {
       loadAllFolders(folderSearchId)
     } else {

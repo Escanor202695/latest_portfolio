@@ -8,6 +8,7 @@ import demoImg from '../../assets/images/demoLogoImg.png'
 import DashBoard from '../../components/DashBoard/DashBoard'
 import StoreFronManagementModal from '../../components/Modals/StoreFrontManagementModal/StoreFronManagementModal'
 import { GetAllStoreAPI, GetAllTagUrl } from '../../constants/api.constants'
+import detectAdBlock from '../../utils/DetectAdBlocker/DetectAdBlocker'
 import Toast from '../../utils/Toast/Toast'
 import './StoreFrontManagement.scss'
 
@@ -30,6 +31,8 @@ const StoreFrontManagement = () => {
   const [searchTag, setSearchTag] = useState('')
   const [sort, setSort] = useState('')
   useEffect(() => {
+    detectAdBlock()
+
     loadAllTags()
   }, [])
   useEffect(() => {

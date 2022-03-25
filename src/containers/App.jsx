@@ -1,58 +1,35 @@
-import React, { createContext } from 'react'
-import { ROUTENAME } from '../constants'
+import React, { createContext, useEffect } from 'react'
 import {
   BrowserRouter as Router,
-  Switch,
-  Route,
   Redirect,
+  Route,
+  Switch,
 } from 'react-router-dom'
 import NavigationBar from '../components/NavigationBar/NavigationBar'
-import Home from '../pages/Home/Home'
-import { AdminManagement } from '../pages/AdminManagement'
+import { ROUTENAME } from '../constants'
 import AdManagement from '../pages/AdManagement/AdManagement'
-import StoreFrontManagement from '../pages/StoreFrontManagement/StoreFrontManagement'
-import { StoreFront } from '../pages/StoreFront'
-import { GlobalSettings } from '../pages/GlobalSettings'
-import { NotFound } from '../pages/NotFound'
+import { AdminManagement } from '../pages/AdminManagement'
 import Login from '../pages/Authentication/Login'
-import Profile from '../pages/Profile/Profile'
 import PrivateRoute from '../pages/Authentication/PrivateRoute'
-import { useAuth } from '../Providers/AuthProvider'
-import { useEffect } from 'react'
-import axios from 'axios'
-import { GetThemeEnd } from '../constants/api.constants'
 import { ForgotPassReset } from '../pages/ForgotPassReset'
-import ThemeManagement from '../pages/ThemeManagement/ThemeManagement'
+import Home from '../pages/Home/Home'
 import StoreHome from '../pages/Home/StoreHome'
+import { NotFound } from '../pages/NotFound'
+import Profile from '../pages/Profile/Profile'
+import { StoreFront } from '../pages/StoreFront'
+import StoreFrontManagement from '../pages/StoreFrontManagement/StoreFrontManagement'
+import ThemeManagement from '../pages/ThemeManagement/ThemeManagement'
+import { useAuth } from '../Providers/AuthProvider'
+import detectAdBlock from '../utils/DetectAdBlocker/DetectAdBlocker'
+
 export const UserContext = createContext()
 
 function App() {
   const { user } = useAuth()
-  const token = localStorage.getItem('menu_token')
 
-  // useEffect(() => {
-  //   if (token) {
-  //     getTheme(token)
-  //   }
-  // }, [token])
-
-  // const getTheme = async (token) => {
-  //   try {
-  //     const response = await axios.get(GetThemeEnd, {
-  //       headers: {
-  //         menuboard: token,
-  //       },
-  //     })
-  //     if (response.status === 200) {
-  //       Object.keys(response.data.data[0]).map((key) => {
-  //         const value = response.data.data[0][key]
-  //         document.documentElement.style.setProperty(`--${key}`, value)
-  //       })
-  //     } else throw new Error(response?.data?.msg)
-  //   } catch (error) {
-  //     // Toast('err', error.response?.data?.msg)
-  //   }
-  // }
+  useEffect(() => {
+    detectAdBlock()
+  }, [])
 
   return (
     <Router>

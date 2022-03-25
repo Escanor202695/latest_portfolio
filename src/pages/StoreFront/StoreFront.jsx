@@ -91,6 +91,8 @@ const StoreFront = () => {
     }
   }
 
+  console.log(storeData)
+
   return (
     <div className='row py-3'>
       <div className='col-3'>
@@ -123,10 +125,11 @@ const StoreFront = () => {
               <h6>Store Email</h6>
               <h6>Store Address</h6>
               <h6>Store Id</h6>
+              <h6>Api Key</h6>
 
               <h6>Footer Text</h6>
               <h6>API Link</h6>
-              <h6>QR Link</h6>
+              <h6>Social Link(QR Link)</h6>
               <h6>Tags</h6>
             </div>
             <div className='ms-5'>
@@ -137,6 +140,7 @@ const StoreFront = () => {
               <h6>{storeData?.email}</h6>
               <h6>{storeData?.address}</h6>
               <h6>{storeData?.short_id}</h6>
+              <h6>{storeData?.api_key}</h6>
 
               <h6>{storeData?.footer || '_'}</h6>
               <a
