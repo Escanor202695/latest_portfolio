@@ -1,12 +1,34 @@
-import React from 'react'
-import { NavLink, useHistory } from 'react-router-dom'
+import axios from 'axios'
+import React, { useEffect, useState } from 'react'
+import { useHistory } from 'react-router-dom'
 import AdCard from '../../components/AdCard/AdCard'
 import '../../components/CommonLayout/SideBar.scss'
+import { GetInfoForOwner } from '../../constants/api.constants'
+import Toast from '../../utils/Toast/Toast'
 
 const StoreHome = () => {
   const storeData = JSON.parse(localStorage.getItem('store_info'))
 
   let history = useHistory()
+  const [allInfo, setAllInfo] = useState({})
+
+  useEffect(() => {
+    loadAllInfo()
+  }, [])
+
+  const loadAllInfo = async () => {
+    try {
+      const res = await axios.get(GetInfoForOwner, {
+        headers: { menuboard: localStorage.getItem('store_token') },
+      })
+      console.log(res)
+      if (res.status === 200) {
+        setAllInfo(res?.data?.data[0])
+      } else throw new Error(res?.data?.msg)
+    } catch (error) {
+      Toast('err', error.response?.data?.msg || 'Something went wrong! ')
+    }
+  }
 
   const handleStoreLogOut = () => {
     localStorage.removeItem('store_info')
@@ -15,89 +37,77 @@ const StoreHome = () => {
   }
 
   return (
-    <div className='row py-3'>
-      <div className='col-3'>
-        <div className=''>
-          <ul className='list-group sticky-top  '>
-            <NavLink as='li' className='list-group-item' to='/store' exact>
-              <Vector />
-              <span className='ps-3'>Store DashBoard</span>
-            </NavLink>
-          </ul>
-        </div>
+    <div className=' my-3 ' style={{ maxWidth: '1440px' }}>
+      <div className='d-flex justify-content-between align-items-center mb-4'>
+        <h3 className='fw-bold '>Store Details</h3>
+        <button
+          className='danger-btn-light'
+          onClick={() => handleStoreLogOut()}
+        >
+          Log Out
+        </button>
       </div>
 
-      <div className='col-9'>
-        <div className='d-flex justify-content-between align-items-center mb-4'>
-          <h3 className='fw-bold '>Store Details</h3>
-          <button
-            className='danger-btn-light'
-            onClick={() => handleStoreLogOut()}
-          >
-            Log Out
-          </button>
-        </div>
-
-        <section className='store-details d-flex justify-content-between align-items-start'>
-          <div className='d-flex justify-content-between align-items-center'>
-            <div className='me-5 custom-header'>
-              <h6>Store name</h6>
-              <h6>Store Type</h6>
-              <h6>Store Manager / POC*</h6>
-              <h6>Store Phone</h6>
-              <h6>Store Email</h6>
-              <h6>Address</h6>
-              <h6>Store Id</h6>
-              <h6>Footer Text</h6>
-              <h6>API Link</h6>
-              <h6>QR Link</h6>
-              <h6>Tags</h6>
-            </div>
-            <div className='ms-5'>
-              <h6>{storeData?.name}</h6>
-              <h6>{storeData?.type}</h6>
-              <h6>{storeData?.manager}</h6>
-              <h6>{storeData?.phone}</h6>
-              <h6>{storeData?.email}</h6>
-              <h6>{storeData?.address}</h6>
-              <h6>{storeData?.short_id}</h6>
-              <h6>{storeData?.footer || '_'}</h6>
-              <a
-                href={storeData?.link || '_'}
-                className='d-block'
-                target='_blank'
-              >
-                <h6> Go to link</h6>
-              </a>
-              <a
-                href={storeData?.social_link || '_'}
-                className='d-block'
-                target='_blank'
-              >
-                <h6>Go to social link</h6>
-              </a>
-              <h6>
-                {storeData?.tag?.length > 0
-                  ? storeData?.tag.map((dt, idx) => (
-                      <span
-                        key={idx}
-                        style={{
-                          color: 'black',
-                          backgroundColor: '#e0e0e0',
-                          padding: ' .3rem 1rem',
-                          marginRight: '.7rem',
-                          borderRadius: '4px',
-                        }}
-                      >
-                        {dt}
-                      </span>
-                    ))
-                  : 'N/A'}
-              </h6>
-            </div>
+      <section className='store-details d-flex justify-content-between align-items-start'>
+        <div className='d-flex justify-content-between align-items-center'>
+          <div className='me-5 custom-header'>
+            <h6>Store name</h6>
+            <h6>Store Type</h6>
+            <h6>Store Manager / POC</h6>
+            <h6>Store Phone</h6>
+            <h6>Store Email</h6>
+            <h6>Address</h6>
+            <h6>Store Id</h6>
+            <h6>Footer Text</h6>
+            <h6>API Link</h6>
+            <h6>Social Link(QR Link)</h6>
+            <h6>Tags</h6>
           </div>
-        </section>
-        {/* <section className='my-5' style={{ minHeight: '10rem' }}>
+          <div className='ms-5'>
+            <h6>{storeData?.name}</h6>
+            <h6>{storeData?.type}</h6>
+            <h6>{storeData?.manager}</h6>
+            <h6>{storeData?.phone}</h6>
+            <h6>{storeData?.email}</h6>
+            <h6>{storeData?.address}</h6>
+            <h6>{storeData?.short_id}</h6>
+            <h6>{storeData?.footer || '_'}</h6>
+            <a
+              href={storeData?.link || '_'}
+              className='d-block'
+              target='_blank'
+            >
+              <h6> Go to link</h6>
+            </a>
+            <a
+              href={storeData?.social_link || '_'}
+              className='d-block'
+              target='_blank'
+            >
+              <h6>Go to social link</h6>
+            </a>
+            <h6>
+              {storeData?.tag?.length > 0
+                ? storeData?.tag.map((dt, idx) => (
+                    <span
+                      key={idx}
+                      style={{
+                        color: 'black',
+                        backgroundColor: '#e0e0e0',
+                        padding: ' .3rem 1rem',
+                        marginRight: '.7rem',
+                        borderRadius: '4px',
+                      }}
+                    >
+                      {dt}
+                    </span>
+                  ))
+                : 'N/A'}
+            </h6>
+          </div>
+        </div>
+      </section>
+      {/* <section className='my-5' style={{ minHeight: '10rem' }}>
           <div className='d-flex justify-content-between align-items-center'>
             <h5 className='fw-bold'>Screens </h5>
           </div>
@@ -119,30 +129,29 @@ const StoreHome = () => {
           }
         </section> */}
 
-        <section className='my-5'>
-          <div className='d-flex justify-content-between align-items-start'>
-            <div>
-              <h5 className='fw-bold'>Advertisements</h5>
-              <p>
-                Ads are shown on all the screens after every certain “interval”
-                & for a “duration”.
-              </p>
-            </div>
-          </div>
+      <section className='my-5'>
+        <div className='d-flex justify-content-between align-items-start'>
           <div>
-            <div className='d-flex justify-content-between align-items-center edit-schedule'>
-              <h5>
-                Ads will play every{' '}
-                <span>{storeData?.ad_timing?.interval} sec</span> for{' '}
-                <span>{storeData?.ad_timing?.duration} sec</span>
-              </h5>
-            </div>
-            {storeData?.ads?.map((ad, idx) => (
-              <AdCard key={idx} ad={ad} index={idx + 1} />
-            ))}
+            <h5 className='fw-bold'>Advertisements</h5>
+            <p>
+              Ads are shown on all the screens after every certain “interval” &
+              for a “duration”.
+            </p>
           </div>
-        </section>
-      </div>
+        </div>
+        <div>
+          <div className='d-flex justify-content-between align-items-center edit-schedule'>
+            <h5>
+              Ads will play every{' '}
+              <span>{storeData?.ad_timing?.interval} sec</span> for{' '}
+              <span>{storeData?.ad_timing?.duration} sec</span>
+            </h5>
+          </div>
+          {allInfo?.ads?.map((ad, idx) => (
+            <AdCard key={idx} ad={ad} index={idx + 1} />
+          ))}
+        </div>
+      </section>
     </div>
   )
 }

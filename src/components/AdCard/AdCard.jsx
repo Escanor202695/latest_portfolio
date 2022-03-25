@@ -12,7 +12,6 @@ const AdCard = ({ ad, index }) => {
   const handleShow = () => setShow(true)
 
   const [adEdit, setAdEdit] = useState(false)
-  console.log(ad)
 
   return (
     <div className='my-3  ad-card mx-1'>

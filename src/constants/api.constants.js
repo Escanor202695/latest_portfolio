@@ -23,6 +23,7 @@ export const StoreEdit = BaseUrl + '/store/edit'
 export const DeleteStoreEnd = BaseUrl + '/store/delete'
 export const StoreLogInUrl = BaseUrl + '/store/login'
 export const GetAllTagUrl = BaseUrl + '/store/get_all_tags'
+export const GetInfoForOwner = BaseUrl + '/store/get_for_store_owner'
 
 
 
