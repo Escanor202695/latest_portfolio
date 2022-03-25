@@ -65,9 +65,9 @@ const StoreFront = () => {
 
   const loadStoreScreen = async () => {
     setScreenSpinner(true)
-    let url = GetScreenEnd
+    let url = GetScreenEnd + `?store_id=${id}`
     if (screenSearchKey) {
-      url += `?filter=${screenSearchKey}`
+      url += `&filter=${screenSearchKey}`
     }
     try {
       const response = await axios.get(url, {

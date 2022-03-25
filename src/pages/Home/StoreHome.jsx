@@ -21,7 +21,7 @@ const StoreHome = () => {
       const res = await axios.get(GetInfoForOwner, {
         headers: { menuboard: localStorage.getItem('store_token') },
       })
-      console.log(res)
+
       if (res.status === 200) {
         setAllInfo(res?.data?.data[0])
       } else throw new Error(res?.data?.msg)

@@ -1,12 +1,11 @@
 import React, { useState } from 'react'
-import screenImg from '../../assets/images/screen-img.png'
-import threedot from '../../assets/icons/threedot.svg'
-import Frame from '../../assets/images/Frame.png'
-import './Screens.scss'
-import BoardView from '../../assets/images/BoardView.png'
 import { Dropdown, Modal } from 'react-bootstrap'
-import { EditScreenModal } from '../Modals/EditScreenModal'
+import threedot from '../../assets/icons/threedot.svg'
+import BoardView from '../../assets/images/BoardView.png'
+import Frame from '../../assets/images/Frame.png'
 import { DeleteScreenModal } from '../Modals/DeleteScreenModal'
+import { EditScreenModal } from '../Modals/EditScreenModal'
+import './Screens.scss'
 
 const Screens = ({ screen, loadStoreScreen }) => {
   const [show, setShow] = useState(false)
@@ -22,6 +21,8 @@ const Screens = ({ screen, loadStoreScreen }) => {
   const goToScreen = () => {
     setEditScreen(true)
   }
+
+  console.log(screen)
 
   return (
     <div className='my-3 d-flex justify-content-between align-items-start screen-section'>
@@ -44,8 +45,12 @@ const Screens = ({ screen, loadStoreScreen }) => {
           <h6 className='fw-bold'>{screen?.screen_name}</h6>
           <h6>
             Categories:{' '}
-            {screen?.category_names?.map((c, idx) =>
-              idx !== 0 ? ', ' + c : c
+            {screen?.category?.map((c, idx) =>
+              idx !== 0
+                ? ', ' +
+                  c?.name +
+                  `(${c?.product_count_end - c?.product_count_start})`
+                : c?.name + `(${c?.product_count_end - c?.product_count_start})`
             )}
           </h6>
           <h6>Theme: {screen?.theme_id?.name}</h6>

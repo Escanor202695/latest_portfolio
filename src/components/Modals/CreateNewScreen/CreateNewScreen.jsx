@@ -1,20 +1,19 @@
 import axios from 'axios'
-import React, { useEffect } from 'react'
-import { useState } from 'react'
-import { Modal, Spinner } from 'react-bootstrap'
+import React, { useEffect, useState } from 'react'
+import { Form, Modal, Spinner } from 'react-bootstrap'
+import { GiCancel } from 'react-icons/gi'
 import InputRange from 'react-input-range'
+import demoImg from '../../../assets/images/demoLogoImg.png'
 import {
   CreateScreenEnd,
+  FileUploadEnd,
   GetAllCateEnd,
   GetThemeEnd,
 } from '../../../constants/api.constants'
 import Toast from '../../../utils/Toast/Toast'
-import { GiCancel } from 'react-icons/gi'
 
 const CreateNewScreen = ({ show, handleClose, store, loadStoreScreen }) => {
-  const [rangeValue, setRangeValue] = useState({
-    value: { min: 0, max: 0 },
-  })
+  const [catInfo, setCatInfo] = useState([])
   const [themes, setThemes] = useState({})
   const [newScreenData, setNewScreenData] = useState({
     theme_id: '',
@@ -24,6 +23,8 @@ const CreateNewScreen = ({ show, handleClose, store, loadStoreScreen }) => {
   })
   const [spinner, setSpinner] = useState(false)
   const [allCate, setAllCate] = useState([])
+  const [photoUrl, setPhotoUrl] = useState('')
+  const [photoSpinner, setPhotoSpinner] = useState(false)
 
   useEffect(() => {
     getAllTheme()
@@ -60,17 +61,34 @@ const CreateNewScreen = ({ show, handleClose, store, loadStoreScreen }) => {
 
   const handleCreate = async () => {
     setSpinner(true)
-    const mergedData = {
-      ...newScreenData,
+    let mergedData = {
+      screen_name: newScreenData.screen_name,
+      screen_type: newScreenData.screen_type,
+      theme_id: newScreenData.theme_id,
       store_id: store?._id,
-      product_count: rangeValue?.value?.max - rangeValue?.value?.min,
     }
+
+    let mergedCat = []
+    for (const i of catInfo) {
+      mergedCat.push({
+        name: i?.cat_name,
+        product_count_start: i?.value?.min,
+        product_count_end: i?.value?.max,
+      })
+    }
+
+    mergedData = {
+      ...mergedData,
+      category: mergedCat,
+      preview: photoUrl,
+    }
+
     if (!mergedData?.screen_name) {
       Toast('err', 'Screen name is required')
       setSpinner(false)
       return
     }
-    if (mergedData?.category_names.length === 0) {
+    if (mergedData?.category.length === 0) {
       Toast('err', 'Category is required')
       setSpinner(false)
       return
@@ -80,11 +98,7 @@ const CreateNewScreen = ({ show, handleClose, store, loadStoreScreen }) => {
       setSpinner(false)
       return
     }
-    if (mergedData?.product_count < 1) {
-      Toast('err', 'Product count can not be 0')
-      setSpinner(false)
-      return
-    }
+
     try {
       const res = await axios.post(
         CreateScreenEnd,
@@ -107,24 +121,12 @@ const CreateNewScreen = ({ show, handleClose, store, loadStoreScreen }) => {
           screen_name: '',
           screen_type: 'category-screen',
         })
-        setRangeValue({
-          value: { min: 0, max: 0 },
-        })
+        setPhotoUrl('')
+        setCatInfo([])
       } else throw new Error(res?.data?.msg || 'Try again later!')
     } catch (error) {
       setSpinner(false)
       Toast('err', error.response?.data?.msg || 'Try again later!')
-    }
-  }
-
-  const handleKeyDown = (event) => {
-    if (event.key === 'Enter') {
-      const newCate = newScreenData?.category_names
-      newCate.push(event.target.value)
-      setNewScreenData({
-        ...newScreenData,
-        category_names: newCate,
-      })
     }
   }
 
@@ -134,6 +136,8 @@ const CreateNewScreen = ({ show, handleClose, store, loadStoreScreen }) => {
       ...newScreenData,
       category_names: newCate,
     })
+    const filteredCatInfo = catInfo?.filter((f) => f?.cat_name !== item)
+    setCatInfo(filteredCatInfo)
   }
 
   const handleCate = (newCate) => {
@@ -144,6 +148,46 @@ const CreateNewScreen = ({ show, handleClose, store, loadStoreScreen }) => {
         ...newScreenData,
         category_names: newArr,
       })
+      setCatInfo([...catInfo, { cat_name: newCate, value: { max: 0, min: 0 } }])
+    }
+  }
+
+  const handleProductCount = (value, c) => {
+    let newArr = []
+    let len = catInfo.length
+    for (let i = 0; i < len; i++) {
+      if (catInfo[i]?.cat_name !== c) newArr.push(catInfo[i])
+      else {
+        newArr.push({ cat_name: catInfo[i]?.cat_name, value: value })
+      }
+
+      if (i === len - 1) {
+        setCatInfo(newArr)
+      }
+    }
+  }
+
+  const handleImageUpload = async (e) => {
+    setPhotoSpinner(true)
+    const file = e.target.files[0]
+
+    const formData = new FormData()
+    formData.append('files', file)
+
+    try {
+      const res = await axios.post(FileUploadEnd, formData, {
+        headers: {
+          menuboard: localStorage.getItem('menu_token'),
+        },
+      })
+      if (res.status === 200) {
+        setPhotoUrl(res.data?.files[0]?.path)
+        setPhotoSpinner(false)
+        Toast('success', 'File uploaded successfully')
+      }
+    } catch (error) {
+      setPhotoSpinner(false)
+      setPhotoUrl(null)
     }
   }
 
@@ -156,12 +200,35 @@ const CreateNewScreen = ({ show, handleClose, store, loadStoreScreen }) => {
       </Modal.Header>
       <Modal.Body>
         <div className='my-3'>
+          <div className='d-flex justify-content-start align-items-end'>
+            <img
+              src={photoUrl || demoImg}
+              alt=''
+              height='100'
+              width='200'
+              className='me-4'
+            />
+
+            <Form.Group className='' controlId='formBasicEmail'>
+              <Form.Label>
+                Image
+                {photoSpinner && (
+                  <Spinner className='ms-1' animation='border' size='sm' />
+                )}
+              </Form.Label>
+              <Form.Control
+                type='file'
+                onChange={(e) => handleImageUpload(e)}
+              />
+            </Form.Group>
+          </div>
           <div className='plain-input my-3'>
             <label for=''> Screen Name*</label>
             <br />
             <input
               type='text'
               placeholder='Screen Name'
+              value={newScreenData?.screen_name}
               onChange={(e) =>
                 setNewScreenData({
                   ...newScreenData,
@@ -203,7 +270,7 @@ const CreateNewScreen = ({ show, handleClose, store, loadStoreScreen }) => {
               Click-n-Collect
             </button>
           </div>
-          <div className='plain-dropdown my-3'>
+          {/* <div className='plain-dropdown my-3'>
             <label for=''>Product Count*</label>
             <InputRange
               maxValue={2000}
@@ -212,7 +279,7 @@ const CreateNewScreen = ({ show, handleClose, store, loadStoreScreen }) => {
               onChange={(value) => setRangeValue({ value })}
               style={{ padding: '0px 10px' }}
             />
-          </div>
+          </div> */}
           {/* <div className='plain-input my-3'>
             <label for=''> Category*</label>
             <br />
@@ -239,20 +306,32 @@ const CreateNewScreen = ({ show, handleClose, store, loadStoreScreen }) => {
             </select>
           </div>
 
-          <div className='mt-3 d-flex justify-content-start align-items-center flex-wrap'>
+          <div className='mt-3'>
             {newScreenData?.category_names?.map((c, idx) => (
-              <span
-                key={idx}
-                style={{ backgroundColor: '#e1e1e1', borderRadius: '4px' }}
-                className=' py-2 px-3  me-2 mt-2 '
-              >
-                {c}{' '}
-                <GiCancel
-                  className='ms-2'
-                  onClick={() => removeCate(c)}
-                  style={{ cursor: 'pointer' }}
-                />
-              </span>
+              <div key={idx}>
+                <div
+                  style={{ backgroundColor: '#e1e1e1', borderRadius: '4px' }}
+                  className=' py-2 px-3  me-2 mt-2 d-flex justify-content-between align-items-center'
+                >
+                  {c}{' '}
+                  <GiCancel
+                    className='ms-2'
+                    onClick={() => removeCate(c)}
+                    style={{ cursor: 'pointer' }}
+                  />
+                </div>
+                <div className='plain-dropdown my-3'>
+                  <label for=''>Product Count For {c}*</label>
+                  <InputRange
+                    maxValue={2000}
+                    minValue={0}
+                    value={catInfo?.find((f) => f?.cat_name === c)?.value}
+                    // value={rangeValue?.value}
+                    onChange={(value) => handleProductCount(value, c)}
+                    style={{ padding: '0px 10px' }}
+                  />
+                </div>
+              </div>
             ))}
           </div>
 
