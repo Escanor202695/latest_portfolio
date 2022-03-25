@@ -214,6 +214,7 @@ const StoreFront = () => {
                     screen={s}
                     key={idx}
                     loadStoreScreen={loadStoreScreen}
+                    editEnable={true}
                   />
                 ))
               ) : (

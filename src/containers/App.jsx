@@ -1,3 +1,4 @@
+import 'antd/dist/antd.css'
 import React, { createContext, useEffect } from 'react'
 import {
   BrowserRouter as Router,
@@ -21,7 +22,6 @@ import StoreFrontManagement from '../pages/StoreFrontManagement/StoreFrontManage
 import ThemeManagement from '../pages/ThemeManagement/ThemeManagement'
 import { useAuth } from '../Providers/AuthProvider'
 import detectAdBlock from '../utils/DetectAdBlocker/DetectAdBlocker'
-
 export const UserContext = createContext()
 
 function App() {

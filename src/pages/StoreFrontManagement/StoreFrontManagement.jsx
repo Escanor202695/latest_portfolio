@@ -1,3 +1,4 @@
+import { Select } from 'antd'
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import { Pagination, Spinner, Table } from 'react-bootstrap'
@@ -7,10 +8,16 @@ import uploadBtn from '../../assets/icons/upload.svg'
 import demoImg from '../../assets/images/demoLogoImg.png'
 import DashBoard from '../../components/DashBoard/DashBoard'
 import StoreFronManagementModal from '../../components/Modals/StoreFrontManagementModal/StoreFronManagementModal'
-import { GetAllStoreAPI, GetAllTagUrl } from '../../constants/api.constants'
+import {
+  GetAllStoreAPI,
+  GetAllTagUrl,
+  GetAllTypesUrl,
+} from '../../constants/api.constants'
 import detectAdBlock from '../../utils/DetectAdBlocker/DetectAdBlocker'
 import Toast from '../../utils/Toast/Toast'
 import './StoreFrontManagement.scss'
+
+const { Option } = Select
 
 const StoreFrontManagement = () => {
   const [show, setShow] = useState(false)
@@ -29,15 +36,25 @@ const StoreFrontManagement = () => {
   const [page, setPage] = useState(1)
   const [search, setSearch] = useState('')
   const [searchTag, setSearchTag] = useState('')
+  const [selectedTag, setSelectedTag] = useState('')
+  const [searchType, setSearchType] = useState('')
+  const [selectedType, setSelectedType] = useState('')
+  const [allTypes, setAllTypes] = useState([])
   const [sort, setSort] = useState('')
   useEffect(() => {
     detectAdBlock()
-
-    loadAllTags()
   }, [])
+
+  useEffect(() => {
+    loadAllTags()
+  }, [searchTag])
+  useEffect(() => {
+    loadAllTypes()
+  }, [searchType])
+
   useEffect(() => {
     loadStoreData()
-  }, [page, search, searchTag, sort])
+  }, [page, search, selectedTag, selectedType, sort])
 
   const loadStoreData = async () => {
     setSpin(true)
@@ -46,8 +63,12 @@ const StoreFrontManagement = () => {
       url += `&filter=${search}`
       setPage(1)
     }
-    if (searchTag.length > 0) {
-      url += `&tag=${searchTag}`
+    if (selectedTag.length > 0) {
+      url += `&tag=${selectedTag}`
+      setPage(1)
+    }
+    if (selectedType.length > 0) {
+      url += `&type=${selectedType}`
       setPage(1)
     }
     if (sort.length > 0) {
@@ -80,9 +101,12 @@ const StoreFrontManagement = () => {
 
   const loadAllTags = async () => {
     setSpin(true)
-
+    let url = GetAllTagUrl
+    if (searchTag.length > 0) {
+      url += `?filter=${searchTag}`
+    }
     try {
-      const response = await axios.get(GetAllTagUrl, {
+      const response = await axios.get(url, {
         headers: {
           menuboard: localStorage.getItem('menu_token'),
         },
@@ -94,13 +118,45 @@ const StoreFrontManagement = () => {
         throw new Error(
           response?.data?.msg || ' Something went wrong! Try again later.'
         )
+      setSpin(false)
     } catch (error) {
+      setSpin(false)
       Toast(
         'err',
         error.response?.data?.msg || 'Something went wrong! Try again later.'
       )
     }
   }
+
+  const loadAllTypes = async () => {
+    setSpin(true)
+    let url = GetAllTypesUrl
+    if (searchType.length > 0) {
+      url += `?filter=${searchType}`
+    }
+    try {
+      const response = await axios.get(url, {
+        headers: {
+          menuboard: localStorage.getItem('menu_token'),
+        },
+      })
+
+      if (response.status === 200) {
+        setAllTypes(response.data?.data)
+      } else
+        throw new Error(
+          response?.data?.msg || ' Something went wrong! Try again later.'
+        )
+      setSpin(false)
+    } catch (error) {
+      setSpin(false)
+      Toast(
+        'err',
+        error.response?.data?.msg || 'Something went wrong! Try again later.'
+      )
+    }
+  }
+
   let items = []
   let totalPage = 0
   if (totalDoc < 10) totalPage = 1
@@ -112,6 +168,8 @@ const StoreFrontManagement = () => {
       </Pagination.Item>
     )
   }
+
+  console.log(allTags)
   return (
     <div className='row py-3'>
       <div className='col-3'>
@@ -149,7 +207,29 @@ const StoreFrontManagement = () => {
               <option value='time_descending'>Time(old to new)</option>
             </select>
           </div>
-          <div className='custom-dropdown ms-2'>
+          <div className='ms-2 custom-dropdown'>
+            <label style={{ marginBottom: '0.7rem' }}>Types</label>
+            <br />
+
+            <Select
+              className=''
+              suffixIcon=''
+              style={{ minWidth: '100%' }}
+              showSearch
+              autoFocus={false}
+              optionFilterProp='children'
+              onChange={(s) => setSelectedType(s)}
+              onSearch={(s) => setSearchType(s)}
+              filterOption={false}
+            >
+              {allTypes?.map((t, idx) => (
+                <option key={idx} value={t?._id?.type}>
+                  {t?._id?.type}
+                </option>
+              ))}
+            </Select>
+          </div>
+          {/* <div className='custom-dropdown ms-2'>
             <label for=''>Type</label>
             <select>
               <option value='1' style={{ border: 'none' }}>
@@ -158,7 +238,7 @@ const StoreFrontManagement = () => {
               </option>
               <option value='2'> Type B</option>
             </select>
-          </div>
+          </div> */}
           {/* <div className='custom-dropdown ms-2'>
             <label for=''>Time</label>
             <select>
@@ -166,7 +246,29 @@ const StoreFrontManagement = () => {
               <option value='3'> Time (old to new)</option>
             </select>
           </div> */}
-          <div className='custom-dropdown ms-2'>
+          <div className='ms-2 custom-dropdown'>
+            <label style={{ marginBottom: '0.7rem' }}>Tags</label>
+            <br />
+
+            <Select
+              className=''
+              suffixIcon=''
+              style={{ minWidth: '100%' }}
+              showSearch
+              autoFocus={false}
+              optionFilterProp='children'
+              onChange={(s) => setSelectedTag(s)}
+              onSearch={(s) => setSearchTag(s)}
+              filterOption={false}
+            >
+              {allTags?.map((t, idx) => (
+                <option key={idx} value={t?._id?.tag}>
+                  {t?._id?.tag}
+                </option>
+              ))}
+            </Select>
+          </div>
+          {/* <div className='custom-dropdown ms-2'>
             <label for=''>Tags</label>
             <select onChange={(e) => setSearchTag(e.target.value)}>
               <option value='' hidden>
@@ -176,17 +278,6 @@ const StoreFrontManagement = () => {
               {allTags?.map((t, idx) => (
                 <option value={t?._id?.tag}>{t?._id?.tag}</option>
               ))}
-            </select>
-          </div>
-          {/* <div className='custom-dropdown ms-2'>
-            <label for=''>Location</label>
-            <select>
-              <option value='1' style={{ border: 'none' }}>
-                {' '}
-                Dhaka
-              </option>
-              <option value='2'> Chattagram</option>
-              <option value='3'> Sylet</option>
             </select>
           </div> */}
         </div>

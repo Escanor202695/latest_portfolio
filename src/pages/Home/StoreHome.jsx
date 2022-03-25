@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react'
 import { useHistory } from 'react-router-dom'
 import AdCard from '../../components/AdCard/AdCard'
 import '../../components/CommonLayout/SideBar.scss'
+import Screens from '../../components/Screens/Screens.jsx'
 import { GetInfoForOwner } from '../../constants/api.constants'
 import Toast from '../../utils/Toast/Toast'
 
@@ -35,6 +36,8 @@ const StoreHome = () => {
     localStorage.removeItem('store_token')
     history.push('/')
   }
+
+  console.log(allInfo)
 
   return (
     <div className=' my-3 ' style={{ maxWidth: '1440px' }}>
@@ -107,27 +110,28 @@ const StoreHome = () => {
           </div>
         </div>
       </section>
-      {/* <section className='my-5' style={{ minHeight: '10rem' }}>
-          <div className='d-flex justify-content-between align-items-center'>
-            <h5 className='fw-bold'>Screens </h5>
-          </div>
+      <section className='my-5' style={{ minHeight: '10rem' }}>
+        <div className='d-flex justify-content-between align-items-center'>
+          <h5 className='fw-bold'>Screens </h5>
+        </div>
 
-          {
-            <div>
-              {screens.length > 0 ? (
-                screens.map((s, idx) => (
-                  <Screens
-                    screen={s}
-                    key={idx}
-                    loadStoreScreen={loadStoreScreen}
-                  />
-                ))
-              ) : (
-                <h3 className='text-center text-muted my-5 py-5'>No screens</h3>
-              )}
-            </div>
-          }
-        </section> */}
+        {
+          <div>
+            {allInfo?.screens?.length > 0 ? (
+              allInfo?.screens.map((s, idx) => (
+                <Screens
+                  screen={s}
+                  key={idx}
+                  loadStoreScreen={() => {}}
+                  editEnable={false}
+                />
+              ))
+            ) : (
+              <h3 className='text-center text-muted my-5 py-5'>No screens</h3>
+            )}
+          </div>
+        }
+      </section>
 
       <section className='my-5'>
         <div className='d-flex justify-content-between align-items-start'>

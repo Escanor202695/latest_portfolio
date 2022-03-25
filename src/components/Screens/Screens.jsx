@@ -7,7 +7,7 @@ import { DeleteScreenModal } from '../Modals/DeleteScreenModal'
 import { EditScreenModal } from '../Modals/EditScreenModal'
 import './Screens.scss'
 
-const Screens = ({ screen, loadStoreScreen }) => {
+const Screens = ({ screen, loadStoreScreen, editEnable }) => {
   const [show, setShow] = useState(false)
 
   const handleClose = () => setShow(false)
@@ -62,31 +62,27 @@ const Screens = ({ screen, loadStoreScreen }) => {
           <h6> Unique Id: {screen?.unique_id}</h6>
         </div>
       </div>
-      <div>
-        <Dropdown drop='start' style={{ cursor: 'pointer' }}>
-          <Dropdown.Toggle variant='transparent' id='dropdown-basic'>
-            <img src={threedot} alt='' className='' />
-          </Dropdown.Toggle>
+      {editEnable && (
+        <div>
+          <Dropdown drop='start' style={{ cursor: 'pointer' }}>
+            <Dropdown.Toggle variant='transparent' id='dropdown-basic'>
+              <img src={threedot} alt='' className='' />
+            </Dropdown.Toggle>
 
-          <Dropdown.Menu className='mt-4'>
-            <Dropdown.Item className='fw-bold ' onClick={() => goToScreen()}>
-              Edit Screen
-            </Dropdown.Item>
-            <Dropdown.Item
-              className='fw-bold text-danger'
-              onClick={() => setShowDeleteModal(true)}
-            >
-              Delete
-            </Dropdown.Item>
-          </Dropdown.Menu>
-        </Dropdown>
-        {/* <img
-          src={threedot}
-          alt=''
-          onClick={() => setEditScreen(true)}
-          style={{ cursor: 'pointer' }}
-        /> */}
-      </div>
+            <Dropdown.Menu className='mt-4'>
+              <Dropdown.Item className='fw-bold ' onClick={() => goToScreen()}>
+                Edit Screen
+              </Dropdown.Item>
+              <Dropdown.Item
+                className='fw-bold text-danger'
+                onClick={() => setShowDeleteModal(true)}
+              >
+                Delete
+              </Dropdown.Item>
+            </Dropdown.Menu>
+          </Dropdown>
+        </div>
+      )}
       <Modal show={show} onHide={handleClose} size='xl' centered>
         <img src={screen?.preview} alt='' />
       </Modal>
