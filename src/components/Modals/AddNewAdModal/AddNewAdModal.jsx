@@ -1,12 +1,9 @@
-import React, { useEffect, useState } from 'react'
-import { Form, Modal, Spinner } from 'react-bootstrap'
-import demoImg from '../../../assets/images/demoLogoImg.png'
 import axios from 'axios'
-import {
-  AdCreateEnd,
-  FileUploadEnd,
-  FolderCreateEnd,
-} from '../../../constants/api.constants'
+import React, { useState } from 'react'
+import { Form, Modal, Spinner } from 'react-bootstrap'
+import ReactPlayer from 'react-player'
+import demoImg from '../../../assets/images/demoLogoImg.png'
+import { AdCreateEnd, FileUploadEnd } from '../../../constants/api.constants'
 import Toast from '../../../utils/Toast/Toast'
 
 const AddNewAdModal = ({ show, handleClose, folderId, loadAllFolders }) => {
@@ -37,7 +34,7 @@ const AddNewAdModal = ({ show, handleClose, folderId, loadAllFolders }) => {
       if (res.status === 200) {
         setPhotoUrl(res.data?.files[0]?.path)
         setPhotoSpinner(false)
-        Toast('success', 'Photo uploaded successfully')
+        Toast('success', 'File uploaded successfully')
       }
     } catch (error) {
       setPhotoSpinner(false)
@@ -53,7 +50,7 @@ const AddNewAdModal = ({ show, handleClose, folderId, loadAllFolders }) => {
       return
     }
     if (!photoUrl) {
-      Toast('err', 'Photo must be provided')
+      Toast('err', 'Medial file must be provided')
       setSpinner(false)
       return
     }
@@ -90,15 +87,8 @@ const AddNewAdModal = ({ show, handleClose, folderId, loadAllFolders }) => {
       } else throw new Error(response.data?.msg || 'Try again later')
     } catch (error) {
       setSpinner(false)
-      // setPhotoUrl(null)
-      // setData({
-      //   folder_id: '',
-      //   name: '',
-      //   description: '',
-      //   link: '',
-      // })
+
       Toast('err', error.response?.data?.msg)
-      // handleClose()
     }
   }
 
@@ -109,13 +99,24 @@ const AddNewAdModal = ({ show, handleClose, folderId, loadAllFolders }) => {
       </Modal.Header>
       <Modal.Body>
         <div className='d-flex justify-content-start align-items-end'>
-          <img
-            src={photoUrl || demoImg}
-            alt=''
-            height='100'
-            width='100'
-            className='me-4'
-          />
+          {data?.type === 'photo' ? (
+            <img
+              src={photoUrl || demoImg}
+              alt=''
+              height='100'
+              width='200'
+              className='me-4'
+            />
+          ) : (
+            <div className='mx-3'>
+              <ReactPlayer
+                url={photoUrl || demoImg}
+                width='200px'
+                height='100px'
+                controls={true}
+              />
+            </div>
+          )}
 
           <Form.Group className='' controlId='formBasicEmail'>
             <Form.Label>
@@ -150,7 +151,7 @@ const AddNewAdModal = ({ show, handleClose, folderId, loadAllFolders }) => {
           </div>
 
           <div className='plain-dropdown my-3'>
-            <label for=''>File Type</label>
+            <label for=''>File Type*</label>
             <br />
             <select
               className=''
