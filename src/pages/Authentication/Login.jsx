@@ -1,17 +1,16 @@
 import axios from 'axios'
-import React, { useContext, useEffect, useState } from 'react'
-import { Link, useLocation } from 'react-router-dom'
+import React, { useState } from 'react'
+import { Spinner } from 'react-bootstrap'
+import { useHistory, useLocation } from 'react-router-dom'
+import ForgotPassGetOTPModal from '../../components/Modals/ForgotPass/ForgotPassGetOTPModal'
 import {
   GetAdminProfileUrl,
   LogInUrl,
   StoreLogInUrl,
 } from '../../constants/api.constants'
-import './Login.scss'
-import Toast from '../../utils/Toast/Toast'
-import { Spinner } from 'react-bootstrap'
-import { useHistory } from 'react-router-dom'
 import { useAuth } from '../../Providers/AuthProvider'
-import ForgotPassGetOTPModal from '../../components/Modals/ForgotPass/ForgotPassGetOTPModal'
+import Toast from '../../utils/Toast/Toast'
+import './Login.scss'
 
 const Login = () => {
   let location = useLocation()
@@ -100,8 +99,10 @@ const Login = () => {
 
   return (
     <div className='login-card  '>
-      <h2 className='text-center fw-bold'>Login</h2>
-      <div className='d-flex justify-content-between align-items-center'>
+      <h2 className='text-center fw-bold'>
+        Login {loginAs === 'admin' ? 'As Admin' : 'In Store'}
+      </h2>
+      {/* <div className='d-flex justify-content-between align-items-center'>
         <button
           className={
             loginAs === 'admin'
@@ -122,7 +123,7 @@ const Login = () => {
         >
           Login in Store
         </button>
-      </div>
+      </div> */}
 
       <form onSubmit={handleSubmit}>
         <div className='plain-input mt-3 '>
@@ -166,13 +167,30 @@ const Login = () => {
       </form>
 
       <p
-        className=' text-center mt-2'
-        style={{ color: 'var(--primary_color)', cursor: 'pointer' }}
-        onClick={() => setForgotPassModal(true)}
+        className=' text-center mt-2 '
+        style={{
+          color: 'var(--primary_color)',
+          cursor: 'pointer',
+          textDecoration: 'underline',
+        }}
+        onClick={() => setLoginAs(loginAs === 'admin' ? 'manager' : 'admin')}
       >
-        Forgot password?
+        Login {loginAs === 'admin' ? 'In Store' : 'As Admin'}
       </p>
 
+      {loginAs === 'admin' && (
+        <p
+          className=' text-center mt-2'
+          style={{
+            color: 'var(--primary_color)',
+            cursor: 'pointer',
+            textDecoration: 'underline',
+          }}
+          onClick={() => setForgotPassModal(true)}
+        >
+          Forgot password?
+        </p>
+      )}
       <ForgotPassGetOTPModal
         show={forgotPassModal}
         handleClose={() => setForgotPassModal()}

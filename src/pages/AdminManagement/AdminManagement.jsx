@@ -1,25 +1,22 @@
+import axios from 'axios'
 import React, { useEffect, useState } from 'react'
-import DashBoard from '../../components/DashBoard/DashBoard'
-import plus from '../../assets/icons/plus.svg'
-import './AdminManagement.scss'
 import { Dropdown, Modal, Spinner, Table } from 'react-bootstrap'
-import threedot from '../../assets/icons/threedot.svg'
-import HideShowToggle from '../../components/HideShowToggle/HideShowToggle'
-import { NewAdminModal } from '../../components/Modals/NewAdminModal'
-import { AdminDetailsModal } from '../../components/Modals/AdminDetailsModal'
+import Pagination from 'react-bootstrap/Pagination'
 import { useHistory } from 'react-router-dom'
+import plus from '../../assets/icons/plus.svg'
+import threedot from '../../assets/icons/threedot.svg'
+import DashBoard from '../../components/DashBoard/DashBoard'
+import { AdminDetailsModal } from '../../components/Modals/AdminDetailsModal'
+import { NewAdminModal } from '../../components/Modals/NewAdminModal'
+import { ResetOtherPassModal } from '../../components/Modals/ResetOtherPassModal'
 import {
   AdminEdit,
   ChangeRole,
   GetAdminApi,
   UserDeleteEnd,
 } from '../../constants/api.constants'
-import axios from 'axios'
 import Toast from '../../utils/Toast/Toast'
-import Pagination from 'react-bootstrap/Pagination'
-import EditOthersProfileModal from '../../components/Modals/EditOthersProfileModal/EditOthersProfileModal'
-import ResetPassword from '../../components/Modals/ResetPassword/ResetPassword'
-import { ResetOtherPassModal } from '../../components/Modals/ResetOtherPassModal'
+import './AdminManagement.scss'
 
 const AdminManagement = () => {
   const [show, setShow] = useState(false)
@@ -45,9 +42,11 @@ const AdminManagement = () => {
     let url = GetAdminApi + `?page=${page}`
     if (searchKey.length > 0) {
       url += `&filter=${searchKey}`
+      setPage(1)
     }
     if (role.length > 0) {
       url += `&role=${role}`
+      setPage(1)
     }
     try {
       const response = await axios.get(url, {
@@ -236,10 +235,10 @@ const AdminManagement = () => {
           <div className='custom-dropdown ms-2'>
             <label for=''>Show</label>
             <select onChange={(e) => setRole(e.target.value)}>
-              <option value=''>not selected</option>
-              <option value='manager'>manager</option>
-              <option value='admin'>admin </option>
-              <option value='super_admin'>super admin </option>
+              <option value=''>All Roles</option>
+              <option value='manager'>Manager</option>
+              <option value='admin'>Admin </option>
+              <option value='super_admin'>Super Admin </option>
             </select>
           </div>
         </div>

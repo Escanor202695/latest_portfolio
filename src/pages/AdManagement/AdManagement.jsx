@@ -307,7 +307,7 @@ const AdManagement = () => {
         {view === 'grid' && (
           <button
             className='primary-btn '
-            style={{ position: 'absolute', bottom: '2rem', right: '2rem' }}
+            style={{ position: 'fixed', bottom: '2rem', right: '2rem' }}
             disabled={folderSearchId ? false : true}
             onClick={() =>
               setFolderSearchId(

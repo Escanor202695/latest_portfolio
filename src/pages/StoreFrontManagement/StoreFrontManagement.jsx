@@ -44,9 +44,11 @@ const StoreFrontManagement = () => {
     let url = GetAllStoreAPI + `?page=${page}`
     if (search.length > 0) {
       url += `&filter=${search}`
+      setPage(1)
     }
     if (searchTag.length > 0) {
       url += `&tag=${searchTag}`
+      setPage(1)
     }
     if (sort.length > 0) {
       url += `&sort=${sort}`

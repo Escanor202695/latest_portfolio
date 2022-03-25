@@ -1,13 +1,12 @@
 import axios from 'axios'
-import React, { useEffect } from 'react'
-import { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Pagination, Spinner } from 'react-bootstrap'
+import plus from '../../assets/icons/plus.svg'
 import DashBoard from '../../components/DashBoard/DashBoard'
+import { CreateThemeModal } from '../../components/Modals/CreateThemeModal'
 import ThemeCard from '../../components/ThemeCard/ThemeCard'
 import { GetThemeEnd } from '../../constants/api.constants'
 import Toast from '../../utils/Toast/Toast'
-import plus from '../../assets/icons/plus.svg'
-import { CreateThemeModal } from '../../components/Modals/CreateThemeModal'
 
 const ThemeManagement = () => {
   const [allThemes, setAllThemes] = useState([])
@@ -26,7 +25,7 @@ const ThemeManagement = () => {
     setSpinner(true)
     let url = GetThemeEnd + `?page=${page}`
     if (search.length > 0) {
-      url += `&name=${search}`
+      url = GetThemeEnd + `?page=1` + `&name=${search}`
     }
     try {
       const res = await axios.get(url, {

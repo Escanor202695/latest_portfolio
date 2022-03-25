@@ -155,7 +155,7 @@ const AddStoreAd = ({ show, handleClose, storeData, loadStoreData }) => {
         loadStoreData()
         setAllAds([])
         setState([[], []])
-
+        setSearchKey('')
         loadAllAds()
         handleClose()
       } else
