@@ -2,11 +2,21 @@ import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import { Form, Modal, Spinner } from 'react-bootstrap'
 import { TiDelete } from 'react-icons/ti'
+import { useHistory } from 'react-router-dom'
 import demoImg from '../../../assets/images/demoLogoImg.png'
-import { FileUploadEnd, StoreEdit } from '../../../constants/api.constants'
+import {
+  DeleteStoreEnd,
+  FileUploadEnd,
+  StoreEdit,
+} from '../../../constants/api.constants'
 import Toast from '../../../utils/Toast/Toast'
 
 const EditStoreModal = ({ show, handleClose, data, loadStoreData }) => {
+  const history = useHistory()
+
+  const [deleteModal, setDeleteModal] = useState(false)
+  const [deleteSpinner, setDeleteSpinner] = useState(false)
+
   const [editSpinner, setEditSpinner] = useState(false)
   const [storeData, setStoreData] = useState({
     name: '',
@@ -184,6 +194,27 @@ const EditStoreModal = ({ show, handleClose, data, loadStoreData }) => {
     let newArr = storeData?.tag.filter((t) => tag !== t)
 
     setStoreData({ ...storeData, tag: newArr })
+  }
+
+  const handleDelete = async () => {
+    setDeleteSpinner(true)
+    try {
+      const res = await axios.delete(DeleteStoreEnd + `?_id=${data?._id}`, {
+        headers: {
+          menuboard: localStorage.getItem('menu_token'),
+        },
+      })
+      if (res.status === 200) {
+        Toast('success', 'Store has been deleted successfully')
+        setDeleteModal(false)
+        setDeleteSpinner(false)
+        history.push('/storefront-management')
+      } else throw new Error(res?.data?.msg)
+    } catch (error) {
+      Toast('err', error.response?.data?.msg)
+      setDeleteModal(false)
+      setDeleteSpinner(false)
+    }
   }
 
   return (
@@ -378,6 +409,16 @@ const EditStoreModal = ({ show, handleClose, data, loadStoreData }) => {
           {/* </form> */}
         </Modal.Body>
         <Modal.Footer>
+          <button
+            className='danger-btn-light'
+            onClick={() => {
+              handleClose()
+
+              setDeleteModal(true)
+            }}
+          >
+            Delete
+          </button>
           <button className='primary-btn-light' onClick={handleClose}>
             Close
           </button>
@@ -388,6 +429,31 @@ const EditStoreModal = ({ show, handleClose, data, loadStoreData }) => {
           >
             Save Changes{' '}
             {editSpinner && (
+              <Spinner className='ms-2' animation='border' size='sm' />
+            )}
+          </button>
+        </Modal.Footer>
+      </Modal>
+
+      <Modal show={deleteModal} onHide={() => setDeleteModal(false)}>
+        <Modal.Body>
+          <h4 className='fw-bold text-danger'>Caution!</h4>
+          <h5>You are going to delete this store which is irreversible.</h5>
+        </Modal.Body>
+        <Modal.Footer style={{ border: 'none' }}>
+          <button
+            className='primary-btn-light'
+            onClick={() => setDeleteModal(false)}
+          >
+            Cancel
+          </button>
+          <button
+            className='primary-btn d-flex justify-content-center align-items-center '
+            onClick={() => handleDelete()}
+            type='submit'
+          >
+            Delete{' '}
+            {deleteSpinner && (
               <Spinner className='ms-2' animation='border' size='sm' />
             )}
           </button>
