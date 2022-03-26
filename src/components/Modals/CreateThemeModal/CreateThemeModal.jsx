@@ -1,8 +1,8 @@
+import { Tooltip } from 'antd'
 import axios from 'axios'
-import React from 'react'
-import { useEffect } from 'react'
-import { useState } from 'react'
+import React, { useState } from 'react'
 import { Form, Modal, Spinner } from 'react-bootstrap'
+import { BsFillQuestionCircleFill } from 'react-icons/bs'
 import demoImg from '../../../assets/images/demoLogoImg.png'
 import { CreateThemeEnd, FileUploadEnd } from '../../../constants/api.constants'
 import Toast from '../../../utils/Toast/Toast'
@@ -131,7 +131,7 @@ const CreateThemeModal = ({ show, handleClose, getAllTheme }) => {
             className='me-4'
           />
 
-          <Form.Group className='' controlId='formBasicEmail'>
+          <Form.Group controlId='formBasicEmail'>
             <Form.Label>
               BackGround Image*(Content Aspect Ratio recommended 16:9)
               {photoSpinner && (
@@ -163,8 +163,13 @@ const CreateThemeModal = ({ show, handleClose, getAllTheme }) => {
               gridGap: '10px',
             }}
           >
-            <div className=''>
-              <Form.Label>primary color</Form.Label>
+            <div>
+              <Form.Label className='d-flex justify-content-start align-items-center'>
+                Primary color
+                <Tooltip title='primary color'>
+                  <BsFillQuestionCircleFill className='ms-1' />
+                </Tooltip>
+              </Form.Label>
               <Form.Control
                 type='color'
                 id='primary_color'
@@ -176,7 +181,12 @@ const CreateThemeModal = ({ show, handleClose, getAllTheme }) => {
               />
             </div>
             <div>
-              <Form.Label>primary light color</Form.Label>
+              <Form.Label className='d-flex justify-content-start align-items-center'>
+                Primary light color{' '}
+                <Tooltip title='primary light color'>
+                  <BsFillQuestionCircleFill className='ms-1' />
+                </Tooltip>
+              </Form.Label>
               <Form.Control
                 type='color'
                 id='primary_light_color'
@@ -191,7 +201,12 @@ const CreateThemeModal = ({ show, handleClose, getAllTheme }) => {
               />
             </div>
             <div>
-              <Form.Label>secondary color</Form.Label>
+              <Form.Label className='d-flex justify-content-start align-items-center'>
+                Secondary color{' '}
+                <Tooltip title='secondary color'>
+                  <BsFillQuestionCircleFill className='ms-1' />
+                </Tooltip>
+              </Form.Label>
               <Form.Control
                 type='color'
                 id='secondary_color'
@@ -206,7 +221,12 @@ const CreateThemeModal = ({ show, handleClose, getAllTheme }) => {
               />
             </div>
             <div>
-              <Form.Label>secondary light color</Form.Label>
+              <Form.Label className='d-flex justify-content-start align-items-center'>
+                Secondary light color{' '}
+                <Tooltip title='secondary light color'>
+                  <BsFillQuestionCircleFill className='ms-1' />
+                </Tooltip>
+              </Form.Label>
               <Form.Control
                 type='color'
                 id='secondary_light_color'
@@ -221,7 +241,12 @@ const CreateThemeModal = ({ show, handleClose, getAllTheme }) => {
               />
             </div>
             <div>
-              <Form.Label>text color</Form.Label>
+              <Form.Label className='d-flex justify-content-start align-items-center'>
+                Text color{' '}
+                <Tooltip title='text color'>
+                  <BsFillQuestionCircleFill className='ms-1' />
+                </Tooltip>
+              </Form.Label>
               <Form.Control
                 type='color'
                 id='text_color'
@@ -233,7 +258,12 @@ const CreateThemeModal = ({ show, handleClose, getAllTheme }) => {
               />
             </div>
             <div>
-              <Form.Label>text light color</Form.Label>
+              <Form.Label className='d-flex justify-content-start align-items-center'>
+                Text light color{' '}
+                <Tooltip title='text light color'>
+                  <BsFillQuestionCircleFill className='ms-1' />
+                </Tooltip>
+              </Form.Label>
               <Form.Control
                 type='color'
                 id='text_light_color'
@@ -248,7 +278,12 @@ const CreateThemeModal = ({ show, handleClose, getAllTheme }) => {
               />
             </div>
             <div>
-              <Form.Label>gray one color</Form.Label>
+              <Form.Label className='d-flex justify-content-start align-items-center'>
+                Gray one color{' '}
+                <Tooltip title=' gray one color'>
+                  <BsFillQuestionCircleFill className='ms-1' />
+                </Tooltip>
+              </Form.Label>
               <Form.Control
                 type='color'
                 id='gray_one_color'
@@ -260,7 +295,12 @@ const CreateThemeModal = ({ show, handleClose, getAllTheme }) => {
               />
             </div>
             <div>
-              <Form.Label>gray two color</Form.Label>
+              <Form.Label className='d-flex justify-content-start align-items-center'>
+                Gray two color{' '}
+                <Tooltip title=' gray two color'>
+                  <BsFillQuestionCircleFill className='ms-1' />
+                </Tooltip>
+              </Form.Label>
               <Form.Control
                 type='color'
                 id='gray_two_color'
@@ -272,7 +312,12 @@ const CreateThemeModal = ({ show, handleClose, getAllTheme }) => {
               />
             </div>
             <div>
-              <Form.Label>gray three color</Form.Label>
+              <Form.Label className='d-flex justify-content-start align-items-center'>
+                Gray three color{' '}
+                <Tooltip title=' gray three color'>
+                  <BsFillQuestionCircleFill className='ms-1' />
+                </Tooltip>
+              </Form.Label>
               <Form.Control
                 type='color'
                 id='gray_three_color'
@@ -287,7 +332,12 @@ const CreateThemeModal = ({ show, handleClose, getAllTheme }) => {
               />
             </div>
             <div>
-              <Form.Label>sativa color </Form.Label>
+              <Form.Label className='d-flex justify-content-start align-items-center'>
+                Sativa color{' '}
+                <Tooltip title='sativa color'>
+                  <BsFillQuestionCircleFill className='ms-1' />
+                </Tooltip>
+              </Form.Label>
               <Form.Control
                 type='color'
                 id='sativa_color'
@@ -299,7 +349,12 @@ const CreateThemeModal = ({ show, handleClose, getAllTheme }) => {
               />
             </div>
             <div>
-              <Form.Label>indica color</Form.Label>
+              <Form.Label className='d-flex justify-content-start align-items-center'>
+                Indica color{' '}
+                <Tooltip title='indica color'>
+                  <BsFillQuestionCircleFill className='ms-1' />
+                </Tooltip>
+              </Form.Label>
               <Form.Control
                 type='color'
                 id='indica_color'
@@ -311,7 +366,12 @@ const CreateThemeModal = ({ show, handleClose, getAllTheme }) => {
               />
             </div>{' '}
             <div>
-              <Form.Label>blend color</Form.Label>
+              <Form.Label className='d-flex justify-content-start align-items-center'>
+                Blend color{' '}
+                <Tooltip title='blend color'>
+                  <BsFillQuestionCircleFill className='ms-1' />
+                </Tooltip>
+              </Form.Label>
               <Form.Control
                 type='color'
                 id='blend_color'
@@ -323,7 +383,12 @@ const CreateThemeModal = ({ show, handleClose, getAllTheme }) => {
               />
             </div>
             <div>
-              <Form.Label>hybrid color</Form.Label>
+              <Form.Label className='d-flex justify-content-start align-items-center'>
+                Hybrid color{' '}
+                <Tooltip title='hybrid color'>
+                  <BsFillQuestionCircleFill className='ms-1' />
+                </Tooltip>
+              </Form.Label>
               <Form.Control
                 type='color'
                 id='hybrid_color'
@@ -335,7 +400,12 @@ const CreateThemeModal = ({ show, handleClose, getAllTheme }) => {
               />
             </div>
             <div>
-              <Form.Label>thc color </Form.Label>
+              <Form.Label className='d-flex justify-content-start align-items-center'>
+                Thc color{' '}
+                <Tooltip title='thc color'>
+                  <BsFillQuestionCircleFill className='ms-1' />
+                </Tooltip>
+              </Form.Label>
               <Form.Control
                 type='color'
                 id='thc_color'
@@ -347,7 +417,12 @@ const CreateThemeModal = ({ show, handleClose, getAllTheme }) => {
               />
             </div>
             <div>
-              <Form.Label>cbd color</Form.Label>
+              <Form.Label className='d-flex justify-content-start align-items-center'>
+                Cbd color
+                <Tooltip title='cbd color'>
+                  <BsFillQuestionCircleFill className='ms-1' />
+                </Tooltip>
+              </Form.Label>
               <Form.Control
                 type='color'
                 id='cbd_color'

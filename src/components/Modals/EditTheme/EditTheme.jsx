@@ -1,8 +1,8 @@
+import { Tooltip } from 'antd'
 import axios from 'axios'
-import React from 'react'
-import { useEffect } from 'react'
-import { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Form, Modal, Spinner } from 'react-bootstrap'
+import { BsFillQuestionCircleFill } from 'react-icons/bs'
 import demoImg from '../../../assets/images/demoLogoImg.png'
 import { EditThemeEnd, FileUploadEnd } from '../../../constants/api.constants'
 import Toast from '../../../utils/Toast/Toast'
@@ -106,21 +106,21 @@ const EditTheme = ({ show, handleClose, getAllTheme, data }) => {
         setSpinner(false)
         setThemeData({
           name: '',
-          primary_color: '',
-          primary_light_color: '',
-          secondary_color: '',
-          secondary_light_color: '',
-          text_color: '',
-          text_light_color: '',
-          gray_one_color: '',
-          gray_two_color: '',
-          gray_three_color: '',
-          sativa_color: '',
-          indica_color: '',
-          blend_color: '',
-          hybrid_color: '',
-          thc_color: '',
-          cbd_color: '',
+          primary_color: '#558f55',
+          primary_light_color: '#dfecdf',
+          secondary_color: '#f4f4f4',
+          secondary_light_color: '#f4f4f4',
+          text_color: '#202020',
+          text_light_color: '#696969',
+          gray_one_color: '#333333',
+          gray_two_color: '#666666',
+          gray_three_color: '#999999',
+          sativa_color: '#77ca59',
+          indica_color: '#ca8259',
+          blend_color: '#ba59ca',
+          hybrid_color: '#59afca',
+          thc_color: '#59afca',
+          cbd_color: '#59afca',
           background_image: '',
         })
         handleClose()
@@ -186,11 +186,17 @@ const EditTheme = ({ show, handleClose, getAllTheme, data }) => {
             }}
           >
             <div className=''>
-              <Form.Label>primary color</Form.Label>
+              <Form.Label className='d-flex justify-content-start align-items-center'>
+                Primary color
+                <Tooltip title='primary color'>
+                  <BsFillQuestionCircleFill className='ms-1' />
+                </Tooltip>
+              </Form.Label>{' '}
               <Form.Control
                 type='color'
                 id='primary_color'
                 defaultValue='#558f55'
+                value={themeData?.primary_color}
                 title='Choose your color'
                 onChange={(e) =>
                   setThemeData({ ...themeData, primary_color: e.target.value })
@@ -198,11 +204,17 @@ const EditTheme = ({ show, handleClose, getAllTheme, data }) => {
               />
             </div>
             <div>
-              <Form.Label>primary light color</Form.Label>
+              <Form.Label className='d-flex justify-content-start align-items-center'>
+                Primary light color{' '}
+                <Tooltip title='primary light color'>
+                  <BsFillQuestionCircleFill className='ms-1' />
+                </Tooltip>
+              </Form.Label>{' '}
               <Form.Control
                 type='color'
                 id='primary_light_color'
                 defaultValue='#dfecdf'
+                value={themeData?.primary_light_color}
                 title='Choose your color'
                 onChange={(e) =>
                   setThemeData({
@@ -213,10 +225,16 @@ const EditTheme = ({ show, handleClose, getAllTheme, data }) => {
               />
             </div>
             <div>
-              <Form.Label>secondary color</Form.Label>
+              <Form.Label className='d-flex justify-content-start align-items-center'>
+                Secondary color{' '}
+                <Tooltip title='secondary color'>
+                  <BsFillQuestionCircleFill className='ms-1' />
+                </Tooltip>
+              </Form.Label>{' '}
               <Form.Control
                 type='color'
                 id='secondary_color'
+                value={themeData?.secondary_color}
                 defaultValue='#f4f4f4'
                 title='Choose your color'
                 onChange={(e) =>
@@ -228,9 +246,15 @@ const EditTheme = ({ show, handleClose, getAllTheme, data }) => {
               />
             </div>
             <div>
-              <Form.Label>secondary light color</Form.Label>
+              <Form.Label className='d-flex justify-content-start align-items-center'>
+                Secondary light color{' '}
+                <Tooltip title='secondary light color'>
+                  <BsFillQuestionCircleFill className='ms-1' />
+                </Tooltip>
+              </Form.Label>{' '}
               <Form.Control
                 type='color'
+                value={themeData?.secondary_light_color}
                 id='secondary_light_color'
                 defaultValue='#f4f4f4'
                 title='Choose your color'
@@ -243,11 +267,17 @@ const EditTheme = ({ show, handleClose, getAllTheme, data }) => {
               />
             </div>
             <div>
-              <Form.Label>text color</Form.Label>
+              <Form.Label className='d-flex justify-content-start align-items-center'>
+                Text color{' '}
+                <Tooltip title='text color'>
+                  <BsFillQuestionCircleFill className='ms-1' />
+                </Tooltip>
+              </Form.Label>{' '}
               <Form.Control
                 type='color'
                 id='text_color'
                 defaultValue='#563d7c'
+                value={themeData?.text_color}
                 title='Choose your color'
                 onChange={(e) =>
                   setThemeData({ ...themeData, text_color: e.target.value })
@@ -255,11 +285,17 @@ const EditTheme = ({ show, handleClose, getAllTheme, data }) => {
               />
             </div>
             <div>
-              <Form.Label>text light color</Form.Label>
+              <Form.Label className='d-flex justify-content-start align-items-center'>
+                Text light color{' '}
+                <Tooltip title='text light color'>
+                  <BsFillQuestionCircleFill className='ms-1' />
+                </Tooltip>
+              </Form.Label>{' '}
               <Form.Control
                 type='color'
                 id='text_light_color'
                 defaultValue='#696969'
+                value={themeData?.text_light_color}
                 title='Choose your color'
                 onChange={(e) =>
                   setThemeData({
@@ -270,11 +306,17 @@ const EditTheme = ({ show, handleClose, getAllTheme, data }) => {
               />
             </div>
             <div>
-              <Form.Label>gray one color</Form.Label>
+              <Form.Label className='d-flex justify-content-start align-items-center'>
+                Gray one color{' '}
+                <Tooltip title=' gray one color'>
+                  <BsFillQuestionCircleFill className='ms-1' />
+                </Tooltip>
+              </Form.Label>{' '}
               <Form.Control
                 type='color'
                 id='gray_one_color'
                 defaultValue='#333333'
+                value={themeData?.gray_one_color}
                 title='Choose your color'
                 onChange={(e) =>
                   setThemeData({ ...themeData, gray_one_color: e.target.value })
@@ -282,11 +324,17 @@ const EditTheme = ({ show, handleClose, getAllTheme, data }) => {
               />
             </div>
             <div>
-              <Form.Label>gray two color</Form.Label>
+              <Form.Label className='d-flex justify-content-start align-items-center'>
+                Gray two color{' '}
+                <Tooltip title=' gray two color'>
+                  <BsFillQuestionCircleFill className='ms-1' />
+                </Tooltip>
+              </Form.Label>{' '}
               <Form.Control
                 type='color'
                 id='gray_two_color'
                 defaultValue='#666666'
+                value={themeData?.gray_two_color}
                 title='Choose your color'
                 onChange={(e) =>
                   setThemeData({ ...themeData, gray_two_color: e.target.value })
@@ -294,11 +342,17 @@ const EditTheme = ({ show, handleClose, getAllTheme, data }) => {
               />
             </div>
             <div>
-              <Form.Label>gray three color</Form.Label>
+              <Form.Label className='d-flex justify-content-start align-items-center'>
+                Gray three color{' '}
+                <Tooltip title=' gray three color'>
+                  <BsFillQuestionCircleFill className='ms-1' />
+                </Tooltip>
+              </Form.Label>{' '}
               <Form.Control
                 type='color'
                 id='gray_three_color'
                 defaultValue='#999999'
+                value={themeData?.gray_three_color}
                 title='Choose your color'
                 onChange={(e) =>
                   setThemeData({
@@ -309,11 +363,17 @@ const EditTheme = ({ show, handleClose, getAllTheme, data }) => {
               />
             </div>
             <div>
-              <Form.Label>sativa color </Form.Label>
+              <Form.Label className='d-flex justify-content-start align-items-center'>
+                Sativa color{' '}
+                <Tooltip title='sativa color'>
+                  <BsFillQuestionCircleFill className='ms-1' />
+                </Tooltip>
+              </Form.Label>{' '}
               <Form.Control
                 type='color'
                 id='sativa_color'
                 defaultValue='#77ca59'
+                value={themeData?.sativa_color}
                 title='Choose your color'
                 onChange={(e) =>
                   setThemeData({ ...themeData, sativa_color: e.target.value })
@@ -321,11 +381,17 @@ const EditTheme = ({ show, handleClose, getAllTheme, data }) => {
               />
             </div>
             <div>
-              <Form.Label>indica color</Form.Label>
+              <Form.Label className='d-flex justify-content-start align-items-center'>
+                Indica color{' '}
+                <Tooltip title='indica color'>
+                  <BsFillQuestionCircleFill className='ms-1' />
+                </Tooltip>
+              </Form.Label>{' '}
               <Form.Control
                 type='color'
                 id='indica_color'
                 defaultValue='#ca8259'
+                value={themeData?.indica_color}
                 title='Choose your color'
                 onChange={(e) =>
                   setThemeData({ ...themeData, indica_color: e.target.value })
@@ -333,11 +399,17 @@ const EditTheme = ({ show, handleClose, getAllTheme, data }) => {
               />
             </div>{' '}
             <div>
-              <Form.Label>blend color</Form.Label>
+              <Form.Label className='d-flex justify-content-start align-items-center'>
+                Blend color{' '}
+                <Tooltip title='blend color'>
+                  <BsFillQuestionCircleFill className='ms-1' />
+                </Tooltip>
+              </Form.Label>{' '}
               <Form.Control
                 type='color'
                 id='blend_color'
                 defaultValue='#ba59ca'
+                value={themeData?.blend_color}
                 title='Choose your color'
                 onChange={(e) =>
                   setThemeData({ ...themeData, blend_color: e.target.value })
@@ -345,11 +417,17 @@ const EditTheme = ({ show, handleClose, getAllTheme, data }) => {
               />
             </div>
             <div>
-              <Form.Label>hybrid color</Form.Label>
+              <Form.Label className='d-flex justify-content-start align-items-center'>
+                Hybrid color{' '}
+                <Tooltip title='hybrid color'>
+                  <BsFillQuestionCircleFill className='ms-1' />
+                </Tooltip>
+              </Form.Label>{' '}
               <Form.Control
                 type='color'
                 id='hybrid_color'
                 defaultValue='#59afca'
+                value={themeData?.hybrid_color}
                 title='Choose your color'
                 onChange={(e) =>
                   setThemeData({ ...themeData, hybrid_color: e.target.value })
@@ -357,11 +435,17 @@ const EditTheme = ({ show, handleClose, getAllTheme, data }) => {
               />
             </div>
             <div>
-              <Form.Label>thc color </Form.Label>
+              <Form.Label className='d-flex justify-content-start align-items-center'>
+                Thc color{' '}
+                <Tooltip title='thc color'>
+                  <BsFillQuestionCircleFill className='ms-1' />
+                </Tooltip>
+              </Form.Label>{' '}
               <Form.Control
                 type='color'
                 id='thc_color'
                 defaultValue='#59afca'
+                value={themeData?.thc_color}
                 title='Choose your color'
                 onChange={(e) =>
                   setThemeData({ ...themeData, thc_color: e.target.value })
@@ -369,158 +453,17 @@ const EditTheme = ({ show, handleClose, getAllTheme, data }) => {
               />
             </div>
             <div>
-              <Form.Label>cbd color</Form.Label>
+              <Form.Label className='d-flex justify-content-start align-items-center'>
+                Cbd color
+                <Tooltip title='cbd color'>
+                  <BsFillQuestionCircleFill className='ms-1' />
+                </Tooltip>
+              </Form.Label>{' '}
               <Form.Control
                 type='color'
                 id='cbd_color'
                 defaultValue='#59afca'
-                title='Choose your color'
-                onChange={(e) =>
-                  setThemeData({ ...themeData, cbd_color: e.target.value })
-                }
-              />
-            </div>
-          </div>
-
-          <div className='row'>
-            <div className='col-3 mb-2 p-2'>
-              <Form.Label>text color</Form.Label>
-              <Form.Control
-                type='color'
-                id='text_color'
-                defaultValue={themeData?.text_color || '#FFFFFF'}
-                title='Choose your color'
-                onChange={(e) =>
-                  setThemeData({ ...themeData, text_color: e.target.value })
-                }
-              />
-            </div>
-
-            <div className='col-3 mb-2 p-2'>
-              <Form.Label>text light color</Form.Label>
-              <Form.Control
-                type='color'
-                id='text_light_color'
-                defaultValue={themeData?.text_light_color || '#FFFFFF'}
-                title='Choose your color'
-                onChange={(e) =>
-                  setThemeData({
-                    ...themeData,
-                    text_light_color: e.target.value,
-                  })
-                }
-              />
-            </div>
-            <div className='col-3 mb-2 p-2'>
-              <Form.Label>gray one color</Form.Label>
-              <Form.Control
-                type='color'
-                id='gray_one_color'
-                defaultValue={themeData?.gray_one_color || '#FFFFFF'}
-                title='Choose your color'
-                onChange={(e) =>
-                  setThemeData({ ...themeData, gray_one_color: e.target.value })
-                }
-              />
-            </div>
-            <div className='col-3 mb-2 p-2'>
-              <Form.Label>gray two color</Form.Label>
-              <Form.Control
-                type='color'
-                id='gray_two_color'
-                defaultValue={themeData?.gray_two_color || '#FFFFFF'}
-                title='Choose your color'
-                onChange={(e) =>
-                  setThemeData({ ...themeData, gray_two_color: e.target.value })
-                }
-              />
-            </div>
-          </div>
-          <div className='row'>
-            <div className='col-3 mb-2 p-2'>
-              <Form.Label>gray three color</Form.Label>
-              <Form.Control
-                type='color'
-                id='gray_three_color'
-                defaultValue={themeData?.gray_three_color || '#FFFFFF'}
-                title='Choose your color'
-                onChange={(e) =>
-                  setThemeData({
-                    ...themeData,
-                    gray_three_color: e.target.value,
-                  })
-                }
-              />
-            </div>
-            <div className='col-3 mb-2 p-2'>
-              <Form.Label>sativa color </Form.Label>
-              <Form.Control
-                type='color'
-                id='sativa_color'
-                defaultValue={themeData?.sativa_color || '#FFFFFF'}
-                title='Choose your color'
-                onChange={(e) =>
-                  setThemeData({ ...themeData, sativa_color: e.target.value })
-                }
-              />
-            </div>
-            <div className='col-3 mb-2 p-2'>
-              <Form.Label>indica color</Form.Label>
-              <Form.Control
-                type='color'
-                id='indica_color'
-                defaultValue={themeData?.indica_color || '#FFFFFF'}
-                title='Choose your color'
-                onChange={(e) =>
-                  setThemeData({ ...themeData, indica_color: e.target.value })
-                }
-              />
-            </div>{' '}
-            <div className='col-3 mb-2 p-2'>
-              <Form.Label>blend color</Form.Label>
-              <Form.Control
-                type='color'
-                id='blend_color'
-                defaultValue={themeData?.blend_color || '#FFFFFF'}
-                title='Choose your color'
-                onChange={(e) =>
-                  setThemeData({ ...themeData, blend_color: e.target.value })
-                }
-              />
-            </div>
-          </div>
-
-          <div className='row'>
-            <div className='col-3 mb-2 p-2'>
-              <Form.Label>hybrid color</Form.Label>
-              <Form.Control
-                type='color'
-                id='hybrid_color'
-                defaultValue={themeData?.hybrid_color || '#FFFFFF'}
-                title='Choose your color'
-                onChange={(e) =>
-                  setThemeData({ ...themeData, hybrid_color: e.target.value })
-                }
-              />
-            </div>
-            <div className='col-3 mb-2 p-2'>
-              <Form.Label>thc color </Form.Label>
-              <Form.Control
-                type='color'
-                id='thc_color'
-                defaultValue={themeData?.thc_color || '#FFFFFF'}
-                title='Choose your color'
-                onChange={(e) =>
-                  setThemeData({ ...themeData, thc_color: e.target.value })
-                }
-              />
-            </div>
-            <div className='col-3 mb-2 p-2'>
-              <Form.Label>cbd color</Form.Label>
-              <Form.Control
-                type='color'
-                id='cbd_color'
-                defaultValue={themeData?.cbd_color || '#FFFFFF'}
+                value={themeData?.cbd_color}
                 title='Choose your color'
                 onChange={(e) =>
                   setThemeData({ ...themeData, cbd_color: e.target.value })
