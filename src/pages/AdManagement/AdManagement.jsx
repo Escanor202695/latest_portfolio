@@ -100,9 +100,9 @@ const AdManagement = () => {
   const loadAllAds = async () => {
     setSpinner(true)
     try {
-      let adGetUrl = AdGetEnd
+      let adGetUrl = AdGetEnd + `?all_ads=true`
       if (adSearchKey) {
-        adGetUrl += `?name=${adSearchKey}`
+        adGetUrl += `&name=${adSearchKey}`
         setView('list')
       }
 

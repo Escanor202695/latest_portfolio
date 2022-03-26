@@ -30,21 +30,24 @@ const Screens = ({ screen, loadStoreScreen, editEnable }) => {
         <div
           className='preview-bg '
           style={{
-            backgroundImage: `url${ScrnImg || screen?.preview}`,
+            backgroundImage: `url(${screen?.preview || ScrnImg})`,
           }}
         >
-          {/* <img src={screenImg} alt='' className='me-3' /> */}
-          <img
-            src={Frame}
-            alt=''
-            style={{
-              // position: 'relative',
-              // right: '10rem',
-              // top: '.2rem',
-              cursor: 'pointer',
-            }}
-            onClick={() => handleShow(true)}
-          />
+          {screen?.preview ? (
+            <img
+              src={Frame}
+              alt=''
+              style={{
+                // position: 'relative',
+                // right: '10rem',
+                // top: '.2rem',
+                cursor: 'pointer',
+              }}
+              onClick={() => handleShow(true)}
+            />
+          ) : (
+            <h6 className='fw-bold text-white'>No Preview</h6>
+          )}
         </div>
         <div className='ms-3 screen-right'>
           <h6 className='fw-bold'>{screen?.screen_name}</h6>

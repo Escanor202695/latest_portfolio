@@ -203,7 +203,9 @@ const StoreFrontManagement = () => {
               <option hidden>no selected</option>
               <option value='name_ascending'>Name (a to z)</option>
               <option value='name_descending'> Name (z to a)</option>
-              <option value='time_ascending'>Time (new to old)</option>
+              <option value='time_ascending' selected>
+                Time (new to old)
+              </option>
               <option value='time_descending'>Time(old to new)</option>
             </select>
           </div>
@@ -222,6 +224,8 @@ const StoreFrontManagement = () => {
               onSearch={(s) => setSearchType(s)}
               filterOption={false}
             >
+              {' '}
+              <option value=''>See all</option>
               {allTypes?.map((t, idx) => (
                 <option key={idx} value={t?._id?.type}>
                   {t?._id?.type}
@@ -261,6 +265,7 @@ const StoreFrontManagement = () => {
               onSearch={(s) => setSearchTag(s)}
               filterOption={false}
             >
+              <option value=''>See all</option>
               {allTags?.map((t, idx) => (
                 <option key={idx} value={t?._id?.tag}>
                   {t?._id?.tag}
