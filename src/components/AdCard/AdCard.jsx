@@ -14,8 +14,6 @@ const AdCard = ({ ad, index }) => {
 
   const [adEdit, setAdEdit] = useState(false)
 
-  console.log(ad)
-
   return (
     <div className='my-3  ad-card mx-1'>
       <div className=' d-flex justify-content-start align-items-center '>

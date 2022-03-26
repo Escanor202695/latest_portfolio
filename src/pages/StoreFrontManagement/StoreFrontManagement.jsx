@@ -169,7 +169,6 @@ const StoreFrontManagement = () => {
     )
   }
 
-  console.log(allTags)
   return (
     <div className='row py-3'>
       <div className='col-3'>

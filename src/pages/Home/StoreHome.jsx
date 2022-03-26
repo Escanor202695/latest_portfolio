@@ -37,8 +37,6 @@ const StoreHome = () => {
     history.push('/')
   }
 
-  console.log(allInfo)
-
   return (
     <div className=' my-3 ' style={{ maxWidth: '1440px' }}>
       <div className='d-flex justify-content-between align-items-center mb-4'>

@@ -22,8 +22,6 @@ const Screens = ({ screen, loadStoreScreen, editEnable }) => {
     setEditScreen(true)
   }
 
-  console.log(screen)
-
   return (
     <div className='my-3 d-flex justify-content-between align-items-start screen-section'>
       <div className=' d-flex justify-content-between align-items-start '>

@@ -36,7 +36,6 @@ const AdCards = ({ ad, index, loadAllFolders }) => {
   const handleClose = () => setShow(false)
   const handleShow = () => setShow(true)
 
-  console.log(adDetails)
   return (
     <div className='my-3 row ad-card mx-1'>
       <div

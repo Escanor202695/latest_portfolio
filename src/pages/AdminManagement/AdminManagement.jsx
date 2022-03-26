@@ -207,8 +207,6 @@ const AdminManagement = () => {
   }
   // pagination end
 
-  console.log(allAdmins)
-
   return (
     <div className='row py-3'>
       <div className='col-3'>
