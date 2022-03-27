@@ -14,8 +14,6 @@ const AdCard = ({ ad, index }) => {
 
   const [adEdit, setAdEdit] = useState(false)
 
-  console.log(ad?.ad_id?.link)
-
   return (
     <div className='my-3  ad-card mx-1'>
       <div className=' d-flex justify-content-start align-items-center '>
@@ -23,7 +21,7 @@ const AdCard = ({ ad, index }) => {
         {ad?.ad_id?.type === 'photo' ? (
           <div
             className='mx-3  preview-bg '
-            style={{ backgroundImage: ` url(${ad?.ad_id?.link || ScrnImg})` }}
+            style={{ backgroundImage: ` url("${ad?.ad_id?.link || ScrnImg}")` }}
           >
             <img
               src={Frame}

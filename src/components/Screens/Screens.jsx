@@ -28,7 +28,7 @@ const Screens = ({ screen, loadStoreScreen, editEnable }) => {
         <div
           className='preview-bg '
           style={{
-            backgroundImage: `url(${screen?.preview || ScrnImg})`,
+            backgroundImage: `url('${screen?.preview || ScrnImg}')`,
           }}
         >
           {screen?.preview ? (

@@ -33,7 +33,7 @@ const AdManagement = () => {
   const [deleteFolderDetails, setDeleteFolderDetails] = useState({})
 
   const auth = useAuth()
-  console.log(auth)
+
   useEffect(() => {
     if (auth?.adFolderPreviousId?.length > 0) {
       setPreviousSearchId('')

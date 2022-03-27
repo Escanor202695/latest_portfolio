@@ -46,7 +46,7 @@ const AdCards = ({ ad, index, loadAllFolders }) => {
         {adDetails?.type === 'photo' ? (
           <div
             className='mx-3  preview-bg '
-            style={{ backgroundImage: ` url(${adDetails?.link || ScrnImg})` }}
+            style={{ backgroundImage: ` url("${adDetails?.link || ScrnImg}")` }}
           >
             {/* <img src={screenImg} alt='' className='me-3' /> */}
             <img

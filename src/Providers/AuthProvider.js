@@ -27,7 +27,7 @@ const AuthProvider = ({ children }) => {
     }
   }, [])
 
-  console.log(adFolderPreviousId);
+
 
   return (
     <AuthContext.Provider value={{ user, setUser: login, setAdFolderPreviousId: setFolderPreviousId, adFolderPreviousId }} >

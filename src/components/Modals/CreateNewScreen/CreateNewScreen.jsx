@@ -195,7 +195,7 @@ const CreateNewScreen = ({ show, handleClose, store, loadStoreScreen }) => {
       setPhotoUrl(null)
     }
   }
-  console.log(themes)
+
   return (
     <Modal show={show} onHide={handleClose} size='lg'>
       <Modal.Header closeButton style={{ border: 'none' }}>
