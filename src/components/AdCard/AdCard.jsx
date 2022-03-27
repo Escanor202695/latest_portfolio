@@ -14,6 +14,8 @@ const AdCard = ({ ad, index }) => {
 
   const [adEdit, setAdEdit] = useState(false)
 
+  console.log(ad?.ad_id?.link)
+
   return (
     <div className='my-3  ad-card mx-1'>
       <div className=' d-flex justify-content-start align-items-center '>
@@ -53,7 +55,7 @@ const AdCard = ({ ad, index }) => {
         size='xl'
         centered
       >
-        <img src={ad?.ad_id?.ink} alt='' />
+        <img src={ad?.ad_id?.link || ScrnImg} alt='' />
       </Modal>
     </div>
 
