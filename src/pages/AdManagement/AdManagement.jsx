@@ -12,6 +12,7 @@ import AddNewFolderModal from '../../components/Modals/AddNewFolderModal/AddNewF
 import DeleteFolderModal from '../../components/Modals/DeleteFolderModal/DeleteFolderModal'
 import EditFolderModal from '../../components/Modals/EditFolderModal/EditFolderModal'
 import { AdGetEnd, GetAllFoldersEnd } from '../../constants/api.constants'
+import { useAuth } from '../../Providers/AuthProvider'
 import detectAdBlock from '../../utils/DetectAdBlocker/DetectAdBlocker'
 import Toast from '../../utils/Toast/Toast'
 import './AdManagement.scss'
@@ -30,6 +31,15 @@ const AdManagement = () => {
   const [editFolderDetails, setEditFolderDetails] = useState({})
   const [deleteFolder, setDeleteFolder] = useState(false)
   const [deleteFolderDetails, setDeleteFolderDetails] = useState({})
+
+  const auth = useAuth()
+  console.log(auth)
+  useEffect(() => {
+    if (auth?.adFolderPreviousId?.length > 0) {
+      setPreviousSearchId('')
+      setFolderSearchId('')
+    }
+  }, [auth?.adFolderPreviousId])
 
   useEffect(() => {
     detectAdBlock()
@@ -195,6 +205,7 @@ const AdManagement = () => {
                       onClick={() => {
                         setPreviousSearchId(folderSearchId)
                         setFolderSearchId(folder?._id)
+                        auth.setAdFolderPreviousId(folderSearchId || 'qwerty')
                       }}
                     >
                       <AiFillFolder

@@ -2,13 +2,20 @@ import React, { createContext, useContext, useState } from "react";
 const AuthContext = createContext({
   user: {},
   setUser: () => { },
+  adFolderPreviousId: '',
+  setAdFolderPreviousId: () => { },
 })
 
 const AuthProvider = ({ children }) => {
   const [user, setUser] = useState({})
+  const [adFolderPreviousId, setAdFolderPreviousId] = useState('')
 
   const login = React.useCallback((u) => {
     setUser(u)
+  }, []);
+
+  const setFolderPreviousId = React.useCallback((u) => {
+    setAdFolderPreviousId(u)
   }, []);
 
   React.useEffect(() => {
@@ -20,8 +27,10 @@ const AuthProvider = ({ children }) => {
     }
   }, [])
 
+  console.log(adFolderPreviousId);
+
   return (
-    <AuthContext.Provider value={{ user, setUser: login }} >
+    <AuthContext.Provider value={{ user, setUser: login, setAdFolderPreviousId: setFolderPreviousId, adFolderPreviousId }} >
       {children}
     </AuthContext.Provider >
   )

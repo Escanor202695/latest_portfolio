@@ -309,7 +309,7 @@ const AdminManagement = () => {
                       ? 'Super Admin'
                       : admin?.effective_role === 'admin'
                       ? 'Admin'
-                      : 'Manager'}
+                      : 'Ad Manager'}
                   </td>
                   {/* <td className=''>
                     <HideShowToggle password={admin.password} />

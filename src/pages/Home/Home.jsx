@@ -8,7 +8,7 @@ const Home = () => {
         <DashBoard />
       </div>
       <div className='col-9'>
-        <h3>DashBoard</h3>
+        <h3>Dashboard</h3>
         <div className='d-flex'>
           <div
             style={{
@@ -24,7 +24,7 @@ const Home = () => {
               className='px-4 pt-4 pb-3 '
               style={{ color: '#333333', borderBottom: '1px solid #CCCCCC' }}
             >
-              TITLE
+              Overview
             </h4>
             <div className='d-flex justify-content-between align-start px-4 pt-2 row'>
               <div className='col-9'>

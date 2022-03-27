@@ -221,7 +221,7 @@ export default function StoreFronManagementModal({
             />
           </div>
           <div className='plain-input my-3'>
-            <label for=''>Store Phone*</label>
+            <label for=''>Store Manager Phone*</label>
             <br />
             <input
               type='text'
@@ -232,7 +232,7 @@ export default function StoreFronManagementModal({
             />
           </div>
           <div className='plain-input my-3'>
-            <label for=''>Store Email*</label>
+            <label for=''>Store Manager Email*</label>
             <br />
             <input
               type='text'

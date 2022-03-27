@@ -25,11 +25,16 @@ const CreateNewScreen = ({ show, handleClose, store, loadStoreScreen }) => {
   const [allCate, setAllCate] = useState([])
   const [photoUrl, setPhotoUrl] = useState('')
   const [photoSpinner, setPhotoSpinner] = useState(false)
+  const [searchTheme, setSearchTheme] = useState('')
+  const [selectedTheme, setSelectedTheme] = useState('')
+
+  useEffect(() => {
+    getAllCate()
+  }, [])
 
   useEffect(() => {
     getAllTheme()
-    getAllCate()
-  }, [])
+  }, [searchTheme])
 
   const getAllCate = async () => {
     try {
@@ -190,7 +195,7 @@ const CreateNewScreen = ({ show, handleClose, store, loadStoreScreen }) => {
       setPhotoUrl(null)
     }
   }
-
+  console.log(themes)
   return (
     <Modal show={show} onHide={handleClose} size='lg'>
       <Modal.Header closeButton style={{ border: 'none' }}>
@@ -334,7 +339,38 @@ const CreateNewScreen = ({ show, handleClose, store, loadStoreScreen }) => {
               </div>
             ))}
           </div>
+          {/* <div>
+            <label style={{ marginBottom: '0.7rem', fontWeight: 'bold' }}>
+              Select Theme*
+            </label>
+            <br />
 
+            <Select
+              className=''
+              suffixIcon=''
+              style={{ minWidth: '100%' }}
+              showSearch
+              autoFocus={false}
+              optionFilterProp='children'
+              onChange={(t) =>
+                setNewScreenData({
+                  ...newScreenData,
+                  theme_id: t,
+                })
+              }
+              onSearch={(s) => {
+                setSearchTheme(s)
+              }}
+              filterOption={false}
+            >
+              {' '}
+              {themes?.map((t, idx) => (
+                <option key={idx} value={t?._id}>
+                  {t?.name}
+                </option>
+              ))}
+            </Select>
+          </div> */}
           <div className='plain-dropdown mt-4'>
             <label for=''>Layout Theme*</label>
             <select
