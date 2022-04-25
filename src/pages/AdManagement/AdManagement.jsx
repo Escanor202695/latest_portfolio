@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react'
 import { Dropdown, Spinner } from 'react-bootstrap'
 import { AiFillFolder, AiFillFolderAdd } from 'react-icons/ai'
 import { FaArrowLeft } from 'react-icons/fa'
+import { useHistory, useParams } from 'react-router-dom'
 import plus from '../../assets/icons/plus.svg'
 import threedot from '../../assets/icons/threedot.svg'
 import { AdCards } from '../../components/AdCards'
@@ -12,12 +13,12 @@ import AddNewFolderModal from '../../components/Modals/AddNewFolderModal/AddNewF
 import DeleteFolderModal from '../../components/Modals/DeleteFolderModal/DeleteFolderModal'
 import EditFolderModal from '../../components/Modals/EditFolderModal/EditFolderModal'
 import { AdGetEnd, GetAllFoldersEnd } from '../../constants/api.constants'
-import { useAuth } from '../../Providers/AuthProvider'
 import detectAdBlock from '../../utils/DetectAdBlocker/DetectAdBlocker'
 import Toast from '../../utils/Toast/Toast'
 import './AdManagement.scss'
 
 const AdManagement = () => {
+  let history = useHistory()
   const [show, setShow] = useState(false)
   const [allFolders, setAllFolders] = useState([])
   const [folderSearchId, setFolderSearchId] = useState('')
@@ -32,14 +33,15 @@ const AdManagement = () => {
   const [deleteFolder, setDeleteFolder] = useState(false)
   const [deleteFolderDetails, setDeleteFolderDetails] = useState({})
 
-  const auth = useAuth()
+  const params = useParams()
+  console.log(params)
 
   useEffect(() => {
-    if (auth?.adFolderPreviousId?.length > 0) {
+    if (!params?.folderId) {
       setPreviousSearchId('')
       setFolderSearchId('')
     }
-  }, [auth?.adFolderPreviousId])
+  }, [params?.folderId])
 
   useEffect(() => {
     detectAdBlock()
@@ -52,7 +54,6 @@ const AdManagement = () => {
   }, [folderSearchId, view])
 
   useEffect(() => {
-    // setFolderSearchId(null)
     loadAllAds()
   }, [adSearchKey])
 
@@ -203,9 +204,10 @@ const AdManagement = () => {
                   >
                     <div
                       onClick={() => {
+                        console.log(folder)
                         setPreviousSearchId(folderSearchId)
                         setFolderSearchId(folder?._id)
-                        auth.setAdFolderPreviousId(folderSearchId || 'qwerty')
+                        history.push(`/ad-management/${folder?._id || ''}`)
                       }}
                     >
                       <AiFillFolder

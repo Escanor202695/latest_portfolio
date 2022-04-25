@@ -166,7 +166,7 @@ const CreateThemeModal = ({ show, handleClose, getAllTheme }) => {
             <div>
               <Form.Label className='d-flex justify-content-start align-items-center'>
                 Primary color
-                <Tooltip title='primary color'>
+                <Tooltip title='primary_color - Table cell text colors  - title, price, unit, thc, cbd '>
                   <BsFillQuestionCircleFill className='ms-1' />
                 </Tooltip>
               </Form.Label>
@@ -183,7 +183,7 @@ const CreateThemeModal = ({ show, handleClose, getAllTheme }) => {
             <div>
               <Form.Label className='d-flex justify-content-start align-items-center'>
                 Primary light color{' '}
-                <Tooltip title='primary light color'>
+                <Tooltip title='primary_light_color - Table header row background color'>
                   <BsFillQuestionCircleFill className='ms-1' />
                 </Tooltip>
               </Form.Label>
@@ -243,7 +243,7 @@ const CreateThemeModal = ({ show, handleClose, getAllTheme }) => {
             <div>
               <Form.Label className='d-flex justify-content-start align-items-center'>
                 Text color{' '}
-                <Tooltip title='text color'>
+                <Tooltip title='text_color - Text Color for Store Name, Tag line '>
                   <BsFillQuestionCircleFill className='ms-1' />
                 </Tooltip>
               </Form.Label>
@@ -260,7 +260,7 @@ const CreateThemeModal = ({ show, handleClose, getAllTheme }) => {
             <div>
               <Form.Label className='d-flex justify-content-start align-items-center'>
                 Text light color{' '}
-                <Tooltip title='text light color'>
+                <Tooltip title='text_light_color - Text color for Footer and qr text'>
                   <BsFillQuestionCircleFill className='ms-1' />
                 </Tooltip>
               </Form.Label>
@@ -334,7 +334,7 @@ const CreateThemeModal = ({ show, handleClose, getAllTheme }) => {
             <div>
               <Form.Label className='d-flex justify-content-start align-items-center'>
                 Sativa color{' '}
-                <Tooltip title='sativa color'>
+                <Tooltip title='sativa_color -  Background color of Sativa Label'>
                   <BsFillQuestionCircleFill className='ms-1' />
                 </Tooltip>
               </Form.Label>
@@ -351,7 +351,7 @@ const CreateThemeModal = ({ show, handleClose, getAllTheme }) => {
             <div>
               <Form.Label className='d-flex justify-content-start align-items-center'>
                 Indica color{' '}
-                <Tooltip title='indica color'>
+                <Tooltip title='indica_color - Background color of Indica Label'>
                   <BsFillQuestionCircleFill className='ms-1' />
                 </Tooltip>
               </Form.Label>
@@ -368,7 +368,7 @@ const CreateThemeModal = ({ show, handleClose, getAllTheme }) => {
             <div>
               <Form.Label className='d-flex justify-content-start align-items-center'>
                 Blend color{' '}
-                <Tooltip title='blend color'>
+                <Tooltip title='blend_color - Background color of Hybrid Label'>
                   <BsFillQuestionCircleFill className='ms-1' />
                 </Tooltip>
               </Form.Label>
@@ -385,7 +385,7 @@ const CreateThemeModal = ({ show, handleClose, getAllTheme }) => {
             <div>
               <Form.Label className='d-flex justify-content-start align-items-center'>
                 Hybrid color{' '}
-                <Tooltip title='hybrid color'>
+                <Tooltip title='hybrid_color - Background color of Blend Label'>
                   <BsFillQuestionCircleFill className='ms-1' />
                 </Tooltip>
               </Form.Label>

@@ -3,7 +3,7 @@ const ROUTENAME = {
     HOME: '/',
     ADMINMANAGEMENT: '/admin-management',
     STOREFRONTMANAGEMENT: '/storefront-management',
-    ADDMANAGEMENT: '/ad-management',
+    ADDMANAGEMENT: '/ad-management/:folderId?',
     STOREFRONT: '/storefront/:id',
     GLOBALSETTINGS: '/global-settings',
     LOGIN: '/login',

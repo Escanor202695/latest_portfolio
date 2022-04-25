@@ -202,10 +202,10 @@ const StoreFrontManagement = () => {
               <option hidden>no selected</option>
               <option value='name_ascending'>Name (a to z)</option>
               <option value='name_descending'> Name (z to a)</option>
-              <option value='time_ascending' selected>
-                Time (new to old)
+              <option value='time_ascending'>Time (new to old)</option>
+              <option value='time_descending' selected>
+                Time(old to new)
               </option>
-              <option value='time_descending'>Time(old to new)</option>
             </select>
           </div>
           <div className='ms-2 custom-dropdown'>

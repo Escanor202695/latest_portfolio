@@ -64,6 +64,8 @@ const CreateNewScreen = ({ show, handleClose, store, loadStoreScreen }) => {
     } catch (error) {}
   }
 
+  console.log(themes)
+
   const handleCreate = async () => {
     setSpinner(true)
     let mergedData = {
@@ -195,6 +197,8 @@ const CreateNewScreen = ({ show, handleClose, store, loadStoreScreen }) => {
       setPhotoUrl(null)
     }
   }
+
+  console.log(themes)
 
   return (
     <Modal show={show} onHide={handleClose} size='lg'>
@@ -339,19 +343,22 @@ const CreateNewScreen = ({ show, handleClose, store, loadStoreScreen }) => {
               </div>
             ))}
           </div>
-          {/* <div>
-            <label style={{ marginBottom: '0.7rem', fontWeight: 'bold' }}>
+          <div>
+            <label
+              style={{
+                marginBottom: '0.7rem',
+                fontWeight: 'bold',
+              }}
+            >
               Select Theme*
             </label>
             <br />
 
-            <Select
-              className=''
+            {/* <Select
+              className='w-100'
               suffixIcon=''
-              style={{ minWidth: '100%' }}
               showSearch
               autoFocus={false}
-              optionFilterProp='children'
               onChange={(t) =>
                 setNewScreenData({
                   ...newScreenData,
@@ -363,15 +370,21 @@ const CreateNewScreen = ({ show, handleClose, store, loadStoreScreen }) => {
               }}
               filterOption={false}
             >
-              {' '}
+              <option value=''>asdasd</option>
               {themes?.map((t, idx) => (
-                <option key={idx} value={t?._id}>
+                <option
+                  key={idx}
+                  value={t?._id}
+                  style={{
+                    zIndex: '99999900000000 ',
+                  }}
+                >
                   {t?.name}
                 </option>
               ))}
-            </Select>
-          </div> */}
-          <div className='plain-dropdown mt-4'>
+            </Select> */}
+          </div>
+          {/* <div className='plain-dropdown mt-4'>
             <label for=''>Layout Theme*</label>
             <select
               onChange={(e) =>
@@ -389,7 +402,7 @@ const CreateNewScreen = ({ show, handleClose, store, loadStoreScreen }) => {
                   </option>
                 ))}
             </select>
-          </div>
+          </div> */}
 
           <div className='plain-input my-3'>
             <label for=''>Screen Password*</label>

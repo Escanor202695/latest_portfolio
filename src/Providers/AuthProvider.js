@@ -8,15 +8,12 @@ const AuthContext = createContext({
 
 const AuthProvider = ({ children }) => {
   const [user, setUser] = useState({})
-  const [adFolderPreviousId, setAdFolderPreviousId] = useState('')
 
   const login = React.useCallback((u) => {
     setUser(u)
   }, []);
 
-  const setFolderPreviousId = React.useCallback((u) => {
-    setAdFolderPreviousId(u)
-  }, []);
+
 
   React.useEffect(() => {
     const token = localStorage.getItem('menu_token')
@@ -30,7 +27,7 @@ const AuthProvider = ({ children }) => {
 
 
   return (
-    <AuthContext.Provider value={{ user, setUser: login, setAdFolderPreviousId: setFolderPreviousId, adFolderPreviousId }} >
+    <AuthContext.Provider value={{ user, setUser: login }} >
       {children}
     </AuthContext.Provider >
   )

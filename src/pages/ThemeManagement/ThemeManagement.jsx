@@ -77,7 +77,7 @@ const ThemeManagement = () => {
           </button>
         </div>
         <div className='custom-input w-100 me-2'>
-          <label for=''>Search Admin</label>
+          <label for=''>Search Theme</label>
           <br />
           <input
             type='text'
