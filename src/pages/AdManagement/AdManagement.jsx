@@ -34,7 +34,6 @@ const AdManagement = () => {
   const [deleteFolderDetails, setDeleteFolderDetails] = useState({})
 
   const params = useParams()
-  console.log(params)
 
   useEffect(() => {
     if (!params?.folderId) {
@@ -204,7 +203,6 @@ const AdManagement = () => {
                   >
                     <div
                       onClick={() => {
-                        console.log(folder)
                         setPreviousSearchId(folderSearchId)
                         setFolderSearchId(folder?._id)
                         history.push(`/ad-management/${folder?._id || ''}`)

@@ -137,3 +137,15 @@ button,
 span {
   color: var(--text);
 }
+
+.ant-modal-content {
+  border-radius: 8px !important;
+}
+.ant-modal-header {
+  border-radius: 8px !important;
+  border-bottom: 0px !important;
+}
+.ant-modal-title {
+  color: var(--primary_color) !important;
+  font-size: 20px !important;
+}
