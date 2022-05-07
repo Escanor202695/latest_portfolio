@@ -22,16 +22,14 @@ import StoreFrontManagement from '../pages/StoreFrontManagement/StoreFrontManage
 import ThemeManagement from '../pages/ThemeManagement/ThemeManagement'
 import { useAuth } from '../Providers/AuthProvider'
 import detectAdBlock from '../utils/DetectAdBlocker/DetectAdBlocker'
-export const UserContext = createContext();
+export const UserContext = createContext()
 
 function App() {
   const { user } = useAuth()
 
-
   useEffect(() => {
-    detectAdBlock();
+    detectAdBlock()
   }, [])
-
 
   return (
     <Router>
