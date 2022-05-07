@@ -30,6 +30,7 @@ const EditTheme = ({ show, handleClose, getAllTheme, data }) => {
     thc_color: '',
     cbd_color: '',
     background_image: '',
+    category_background_color:''
   })
 
   useEffect(() => {
@@ -52,6 +53,7 @@ const EditTheme = ({ show, handleClose, getAllTheme, data }) => {
       thc_color: data?.thc_color,
       cbd_color: data?.cbd_color,
       background_image: data?.background_image,
+      category_background_color:data?.category_background_color
     })
   }, [data])
 
@@ -122,6 +124,7 @@ const EditTheme = ({ show, handleClose, getAllTheme, data }) => {
           thc_color: '#59afca',
           cbd_color: '#59afca',
           background_image: '',
+          category_background_color:'#558f55',
         })
         handleClose()
       } else
@@ -187,7 +190,7 @@ const EditTheme = ({ show, handleClose, getAllTheme, data }) => {
           >
             <div className=''>
               <Form.Label className='d-flex justify-content-start align-items-center'>
-                Primary color
+                Text Color for Products (Primary color)
                 <Tooltip title='primary_color - Table cell text colors  - title, price, unit, thc, cbd '>
                   <BsFillQuestionCircleFill className='ms-1' />
                 </Tooltip>
@@ -205,7 +208,7 @@ const EditTheme = ({ show, handleClose, getAllTheme, data }) => {
             </div>
             <div>
               <Form.Label className='d-flex justify-content-start align-items-center'>
-                Primary light color{' '}
+                Table Header Background color (Primary light color)
                 <Tooltip title='primary_light_color - Table header row background color'>
                   <BsFillQuestionCircleFill className='ms-1' />
                 </Tooltip>
@@ -226,49 +229,29 @@ const EditTheme = ({ show, handleClose, getAllTheme, data }) => {
             </div>
             <div>
               <Form.Label className='d-flex justify-content-start align-items-center'>
-                Secondary color{' '}
-                <Tooltip title='secondary color'>
+                Category Background Color
+                <Tooltip title='Category Background color'>
                   <BsFillQuestionCircleFill className='ms-1' />
                 </Tooltip>
               </Form.Label>{' '}
               <Form.Control
-                type='color'
-                id='secondary_color'
-                value={themeData?.secondary_color}
-                defaultValue='#f4f4f4'
-                title='Choose your color'
-                onChange={(e) =>
-                  setThemeData({
-                    ...themeData,
-                    secondary_color: e.target.value,
-                  })
-                }
+                  type='color'
+                  id='category_background_color'
+                  defaultValue='#558f55'
+                  value={themeData?.category_background_color}
+                  title='Choose your color'
+                  onChange={(e) =>
+                      setThemeData({
+                        ...themeData,
+                        category_background_color: e.target.value,
+                      })
+                  }
               />
             </div>
+
             <div>
               <Form.Label className='d-flex justify-content-start align-items-center'>
-                Secondary light color{' '}
-                <Tooltip title='secondary light color'>
-                  <BsFillQuestionCircleFill className='ms-1' />
-                </Tooltip>
-              </Form.Label>{' '}
-              <Form.Control
-                type='color'
-                value={themeData?.secondary_light_color}
-                id='secondary_light_color'
-                defaultValue='#f4f4f4'
-                title='Choose your color'
-                onChange={(e) =>
-                  setThemeData({
-                    ...themeData,
-                    secondary_light_color: e.target.value,
-                  })
-                }
-              />
-            </div>
-            <div>
-              <Form.Label className='d-flex justify-content-start align-items-center'>
-                Text color{' '}
+                Store Name/Tag Text color{' '}
                 <Tooltip title='text_color - Text Color for Store Name, Tag line '>
                   <BsFillQuestionCircleFill className='ms-1' />
                 </Tooltip>
@@ -286,7 +269,7 @@ const EditTheme = ({ show, handleClose, getAllTheme, data }) => {
             </div>
             <div>
               <Form.Label className='d-flex justify-content-start align-items-center'>
-                Text light color{' '}
+                Footer Text color (Text light color){' '}
                 <Tooltip title='text_light_color - Text color for Footer and qr text'>
                   <BsFillQuestionCircleFill className='ms-1' />
                 </Tooltip>
@@ -303,6 +286,48 @@ const EditTheme = ({ show, handleClose, getAllTheme, data }) => {
                     text_light_color: e.target.value,
                   })
                 }
+              />
+            </div>
+            <div>
+              <Form.Label className='d-flex justify-content-start align-items-center'>
+                Secondary color{' '}
+                <Tooltip title='secondary color'>
+                  <BsFillQuestionCircleFill className='ms-1' />
+                </Tooltip>
+              </Form.Label>{' '}
+              <Form.Control
+                  type='color'
+                  id='secondary_color'
+                  value={themeData?.secondary_color}
+                  defaultValue='#f4f4f4'
+                  title='Choose your color'
+                  onChange={(e) =>
+                      setThemeData({
+                        ...themeData,
+                        secondary_color: e.target.value,
+                      })
+                  }
+              />
+            </div>
+            <div>
+              <Form.Label className='d-flex justify-content-start align-items-center'>
+                Secondary light color{' '}
+                <Tooltip title='secondary light color'>
+                  <BsFillQuestionCircleFill className='ms-1' />
+                </Tooltip>
+              </Form.Label>{' '}
+              <Form.Control
+                  type='color'
+                  value={themeData?.secondary_light_color}
+                  id='secondary_light_color'
+                  defaultValue='#f4f4f4'
+                  title='Choose your color'
+                  onChange={(e) =>
+                      setThemeData({
+                        ...themeData,
+                        secondary_light_color: e.target.value,
+                      })
+                  }
               />
             </div>
             <div>

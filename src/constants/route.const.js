@@ -9,7 +9,7 @@ const ROUTENAME = {
     LOGIN: '/login',
     PROFILE: '/profile',
     THEMEMANAGEMENT: '/theme-management',
-    FROGOTPASSRESET: '/forgot-pass-reset',
+    FORGOTPASSRESET: '/forgot-pass-reset',
     STOREHOME: '/store',
     NOTFOUND: '*',
 

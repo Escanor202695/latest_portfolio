@@ -59,6 +59,7 @@ const StoreHome = () => {
             <h6>Store Email</h6>
             <h6>Address</h6>
             <h6>Store Id</h6>
+            <h6>Product Slider Interval</h6>
             <h6>Footer Text</h6>
             <h6>API Link</h6>
             <h6>Social Link(QR Link)</h6>
@@ -72,6 +73,7 @@ const StoreHome = () => {
             <h6>{storeData?.email}</h6>
             <h6>{storeData?.address}</h6>
             <h6>{storeData?.short_id}</h6>
+            <h6>{storeData?.product_slider_interval}</h6>
             <h6>{storeData?.footer || '_'}</h6>
             <a
               href={storeData?.link || '_'}

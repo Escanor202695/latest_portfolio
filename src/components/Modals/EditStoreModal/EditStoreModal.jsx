@@ -31,6 +31,7 @@ const EditStoreModal = ({ show, handleClose, data, loadStoreData }) => {
     tag: [],
     type: '',
     api_key: '2d108b5e-ec42-45cb-a0cf-c5f432ea637a',
+    product_slider_interval:30
   })
   const [photoSpinner, setPhotoSpinner] = useState(false)
   const [tag, setTag] = useState('')
@@ -49,6 +50,7 @@ const EditStoreModal = ({ show, handleClose, data, loadStoreData }) => {
       tag: data?.tag,
       type: data?.type,
       api_key: '2d108b5e-ec42-45cb-a0cf-c5f432ea637a',
+      product_slider_interval: data?.product_slider_interval
     })
   }, [data])
 
@@ -110,6 +112,12 @@ const EditStoreModal = ({ show, handleClose, data, loadStoreData }) => {
       return
     }
 
+    if (storeData.product_slider_interval === '') {
+      Toast('err', 'Please enter Product Slider Interval');
+      setEditSpinner(false);
+      return
+    }
+
     try {
       await axios
         .put(
@@ -140,6 +148,7 @@ const EditStoreModal = ({ show, handleClose, data, loadStoreData }) => {
               tag: [],
               type: '',
               api_key: '2d108b5e-ec42-45cb-a0cf-c5f432ea637a',
+              product_slider_interval: 30
             })
           } else throw new Error(response?.data?.msg)
         })
@@ -355,11 +364,25 @@ const EditStoreModal = ({ show, handleClose, data, loadStoreData }) => {
           </div>
 
           <div className='plain-input my-3'>
+            <label htmlFor=''>Product Slider Interval</label>
+            <br/>
+            <input
+                type='number'
+                placeholder='How frequently the product page will change (In Seconds)'
+                value={storeData.product_slider_interval}
+                onChange={(e) =>
+                    setStoreData({...storeData, product_slider_interval: e.target.value})
+                }
+                name='product_slider_interval'
+            />
+          </div>
+
+          <div className='plain-input my-3'>
             <label for=''>Footer Text</label>
             <br />
             <input
               type='text'
-              placeholder='Please input your address'
+              placeholder='You can add your hours here'
               value={storeData.footer}
               onChange={(e) =>
                 setStoreData({ ...storeData, footer: e.target.value })

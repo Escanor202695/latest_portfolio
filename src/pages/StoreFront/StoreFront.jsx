@@ -123,6 +123,7 @@ const StoreFront = () => {
               <h6>Store Email</h6>
               <h6>Store Address</h6>
               <h6>Store Id</h6>
+              <h6>Product Slider Interval</h6>
               <h6>Api Key</h6>
 
               <h6>Footer Text</h6>
@@ -138,6 +139,7 @@ const StoreFront = () => {
               <h6>{storeData?.email}</h6>
               <h6>{storeData?.address}</h6>
               <h6>{storeData?.short_id}</h6>
+              <h6>{storeData?.product_slider_interval}</h6>
               <h6>{storeData?.api_key}</h6>
 
               <h6>{storeData?.footer || '_'}</h6>

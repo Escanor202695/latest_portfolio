@@ -309,7 +309,7 @@ export default function StoreFronManagementModal({
             <br />
             <input
               type='text'
-              placeholder='Please input your address'
+              placeholder='You can add your hours here'
               value={storeData.footer}
               onChange={(e) =>
                 setStoreData({ ...storeData, footer: e.target.value })

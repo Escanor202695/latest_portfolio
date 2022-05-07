@@ -32,8 +32,7 @@ const Home = () => {
                   Total Number of Storefronts{' '}
                 </h5>
                 <p style={{ color: 'rgb(92, 92, 92)' }}>
-                  Field Description Description Which is kind of optional for
-                  some fields. In that case don’t show this line
+
                 </p>
               </div>
               <h1 className='col-3 text-end pe-4' style={{ color: '#333333' }}>
@@ -45,8 +44,7 @@ const Home = () => {
               <div className='col-9'>
                 <h5 style={{ color: '#333333' }}>Total Number of Screens </h5>
                 <p style={{ color: 'rgb(92, 92, 92)' }}>
-                  Field Description Description Which is kind of optional for
-                  some fields. In that case don’t show this line
+
                 </p>
               </div>
               <h1 className='col-3 text-end pe-4' style={{ color: '#333333' }}>
@@ -58,8 +56,7 @@ const Home = () => {
               <div className='col-9'>
                 <h5 style={{ color: '#333333' }}>Total Number of Adverts</h5>
                 <p style={{ color: 'rgb(92, 92, 92)' }}>
-                  Field Description Description Which is kind of optional for
-                  some fields. In that case don’t show this line
+
                 </p>
               </div>
               <h1 className='col-3 text-end pe-4' style={{ color: '#333333' }}>
@@ -73,8 +70,7 @@ const Home = () => {
                   Total Number of System Admins{' '}
                 </h5>
                 <p style={{ color: 'rgb(92, 92, 92)' }}>
-                  Field Description Description Which is kind of optional for
-                  some fields. In that case don’t show this line
+
                 </p>
               </div>
               <h1 className='col-3 text-end pe-4' style={{ color: '#333333' }}>
@@ -87,8 +83,7 @@ const Home = () => {
                   Total Number of System Managers
                 </h5>
                 <p style={{ color: 'rgb(92, 92, 92)' }}>
-                  Field Description Description Which is kind of optional for
-                  some fields. In that case don’t show this line
+
                 </p>
               </div>
               <h1 className='col-3 text-end pe-4' style={{ color: '#333333' }}>
