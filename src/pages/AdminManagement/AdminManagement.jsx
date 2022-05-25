@@ -311,9 +311,7 @@ const AdminManagement = () => {
                       ? 'Admin'
                       : 'Ad Manager'}
                   </td>
-                  {/* <td className=''>
-                    <HideShowToggle password={admin.password} />
-                  </td> */}
+
                   <td className=' text-center'>
                     <Dropdown drop='start' style={{ cursor: 'pointer' }}>
                       <Dropdown.Toggle

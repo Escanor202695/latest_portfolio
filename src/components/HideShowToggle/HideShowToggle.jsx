@@ -1,22 +1,28 @@
-import React, { useState } from 'react'
-import eyeShow from '../../assets/icons/eye-show.png'
+import React from 'react'
 import eyeHide from '../../assets/icons/eye-hide.png'
+import eyeShow from '../../assets/icons/eye-show.png'
 
-const HideShowToggle = ({ password }) => {
-  const [passVisibility, setPassVisibility] = useState(false)
-
+const HideShowToggle = ({ passVisibility, setPassVisibility }) => {
   return (
-    <div className='d-flex justify-content-between align-items-center'>
-      <p className='m-0'>
+    <div
+      className='d-flex justify-content-between align-items-center'
+      style={{
+        position: 'relative',
+        top: '-35px',
+        float: 'right',
+        right: '10px',
+      }}
+    >
+      {/* <p className='m-0'>
         {passVisibility ? password : password.slice(0, 8).replace(/./g, `●`)}
-      </p>
+      </p> */}
       {passVisibility ? (
         <img
           src={eyeShow}
           alt=''
           height='20px'
           width='20px'
-          onClick={() => setPassVisibility(!passVisibility)}
+          onClick={setPassVisibility}
           style={{ cursor: 'pointer' }}
         />
       ) : (
@@ -25,7 +31,7 @@ const HideShowToggle = ({ password }) => {
           alt=''
           height='20px'
           width='20px'
-          onClick={() => setPassVisibility(!passVisibility)}
+          onClick={setPassVisibility}
           style={{ cursor: 'pointer' }}
         />
       )}

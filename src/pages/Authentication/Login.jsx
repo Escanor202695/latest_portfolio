@@ -2,6 +2,7 @@ import axios from 'axios'
 import React, { useState } from 'react'
 import { Spinner } from 'react-bootstrap'
 import { useHistory, useLocation } from 'react-router-dom'
+import HideShowToggle from '../../components/HideShowToggle/HideShowToggle'
 import ForgotPassGetOTPModal from '../../components/Modals/ForgotPass/ForgotPassGetOTPModal'
 import {
   GetAdminProfileUrl,
@@ -13,6 +14,7 @@ import Toast from '../../utils/Toast/Toast'
 import './Login.scss'
 
 const Login = () => {
+  const [passVisibility, setPassVisibility] = useState(false)
   let location = useLocation()
   let { from } = location.state || { from: { pathname: '/' } }
   let history = useHistory()
@@ -102,28 +104,6 @@ const Login = () => {
       <h2 className='text-center fw-bold'>
         Login {loginAs === 'admin' ? 'As Admin' : 'In Store'}
       </h2>
-      {/* <div className='d-flex justify-content-between align-items-center'>
-        <button
-          className={
-            loginAs === 'admin'
-              ? 'primary-btn me-2 w-50'
-              : 'primary-btn-light me-2 w-50'
-          }
-          onClick={() => setLoginAs('admin')}
-        >
-          Login as Admin
-        </button>
-        <button
-          onClick={() => setLoginAs('manager')}
-          className={
-            loginAs === 'admin'
-              ? 'primary-btn-light me-2 w-50'
-              : 'primary-btn me-2 w-50'
-          }
-        >
-          Login in Store
-        </button>
-      </div> */}
 
       <form onSubmit={handleSubmit}>
         <div className='plain-input mt-3 '>
@@ -143,14 +123,20 @@ const Login = () => {
             {loginAs === 'admin' ? 'User' : 'Store'} Password
           </label>
           <br />
-          <input
-            type='password'
-            placeholder='enter your password'
-            onChange={(e) =>
-              setAuthValue({ ...authValue, password: e.target.value })
-            }
-            value={authValue.password}
-          />
+          <div className=''>
+            <input
+              type={passVisibility ? 'text' : 'password'}
+              placeholder='enter your password'
+              onChange={(e) =>
+                setAuthValue({ ...authValue, password: e.target.value })
+              }
+              value={authValue.password}
+            />
+            <HideShowToggle
+              passVisibility={passVisibility}
+              setPassVisibility={() => setPassVisibility(!passVisibility)}
+            />
+          </div>
         </div>
 
         <button
