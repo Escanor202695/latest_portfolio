@@ -70,6 +70,8 @@ const EditScheduleModal = ({ show, hide, loadStoreData, storeData }) => {
           <Form.Range
             value={duration}
             onChange={(e) => setDuration(e.target.value)}
+            max={500}
+
           />
           <div className='plain-input my-3'>
             <input type='number' placeholder=' ' value={duration} />
@@ -89,6 +91,7 @@ const EditScheduleModal = ({ show, hide, loadStoreData, storeData }) => {
             value={interval}
             onChange={(e) => setIntervall(e.target.value)}
             style={{ color: 'black' }}
+            max={1000}
           />
           <div className='plain-input my-3'>
             <input type='number' placeholder='' value={interval} />
