@@ -29,12 +29,14 @@ const EditStoreModal = ({ show, handleClose, data, loadStoreData }) => {
     social_link: '',
     icon: '',
     tag: [],
+    removable_words: [],
     type: '',
     api_key: '2d108b5e-ec42-45cb-a0cf-c5f432ea637a',
-    product_slider_interval:30
+    product_slider_interval: 30,
   })
   const [photoSpinner, setPhotoSpinner] = useState(false)
   const [tag, setTag] = useState('')
+  const [rTag, setrTag] = useState('')
 
   useEffect(() => {
     setStoreData({
@@ -48,9 +50,10 @@ const EditStoreModal = ({ show, handleClose, data, loadStoreData }) => {
       social_link: data?.social_link || '',
       icon: data?.icon || '',
       tag: data?.tag,
+      removable_words: data?.removable_words,
       type: data?.type,
       api_key: '2d108b5e-ec42-45cb-a0cf-c5f432ea637a',
-      product_slider_interval: data?.product_slider_interval
+      product_slider_interval: data?.product_slider_interval,
     })
   }, [data])
 
@@ -113,8 +116,8 @@ const EditStoreModal = ({ show, handleClose, data, loadStoreData }) => {
     }
 
     if (storeData.product_slider_interval === '') {
-      Toast('err', 'Please enter Product Slider Interval');
-      setEditSpinner(false);
+      Toast('err', 'Please enter Product Slider Interval')
+      setEditSpinner(false)
       return
     }
 
@@ -148,7 +151,7 @@ const EditStoreModal = ({ show, handleClose, data, loadStoreData }) => {
               tag: [],
               type: '',
               api_key: '2d108b5e-ec42-45cb-a0cf-c5f432ea637a',
-              product_slider_interval: 30
+              product_slider_interval: 30,
             })
           } else throw new Error(response?.data?.msg)
         })
@@ -199,6 +202,24 @@ const EditStoreModal = ({ show, handleClose, data, loadStoreData }) => {
     }
   }
 
+  const handleKeyDownForRw = (event) => {
+    if (event.key === 'Enter') {
+      if (storeData?.removable_words.includes(event.target.value) === false) {
+        setStoreData({
+          ...storeData,
+          removable_words: [...storeData.removable_words, event.target.value],
+        })
+        setrTag('')
+      }
+    }
+  }
+
+  const handleDeleteTagForRw = (tag) => {
+    let newArr = storeData?.removable_words.filter((t) => tag !== t)
+
+    setStoreData({ ...storeData, removable_words: newArr })
+  }
+
   const handleDeleteTag = (tag) => {
     let newArr = storeData?.tag.filter((t) => tag !== t)
 
@@ -225,6 +246,8 @@ const EditStoreModal = ({ show, handleClose, data, loadStoreData }) => {
       setDeleteSpinner(false)
     }
   }
+
+  console.log(data)
 
   return (
     <>
@@ -365,16 +388,55 @@ const EditStoreModal = ({ show, handleClose, data, loadStoreData }) => {
 
           <div className='plain-input my-3'>
             <label htmlFor=''>Product Slider Interval</label>
-            <br/>
+            <br />
             <input
-                type='number'
-                placeholder='How frequently the product page will change (In Seconds)'
-                value={storeData.product_slider_interval}
-                onChange={(e) =>
-                    setStoreData({...storeData, product_slider_interval: e.target.value})
-                }
-                name='product_slider_interval'
+              type='number'
+              placeholder='How frequently the product page will change (In Seconds)'
+              value={storeData.product_slider_interval}
+              onChange={(e) =>
+                setStoreData({
+                  ...storeData,
+                  product_slider_interval: e.target.value,
+                })
+              }
+              name='product_slider_interval'
             />
+          </div>
+
+          <div className='plain-input my-3'>
+            <label for=''>Removable Words*</label>
+            <br />
+            <input
+              type='text'
+              placeholder='Please input your removable tag'
+              value={rTag}
+              onChange={(e) => setrTag(e.target.value)}
+              onKeyDown={(e) => handleKeyDownForRw(e)}
+            />
+          </div>
+          <div className='d-flex justify-content-start align-items-center flex-wrap'>
+            {storeData?.removable_words?.map((tag, idx) => (
+              <span
+                key={idx}
+                className=' p-2  me-2 mb-2'
+                style={{
+                  color: 'black',
+                  backgroundColor: '#e0e0e0',
+                  borderRadius: '4px',
+                }}
+              >
+                {tag}
+                <TiDelete
+                  style={{
+                    marginLeft: '5px',
+                    height: '20px',
+                    width: '20px',
+                    cursor: 'pointer',
+                  }}
+                  onClick={() => handleDeleteTagForRw(tag)}
+                />
+              </span>
+            ))}
           </div>
 
           <div className='plain-input my-3'>

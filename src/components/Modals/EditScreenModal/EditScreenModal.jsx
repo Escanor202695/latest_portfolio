@@ -27,6 +27,7 @@ const EditScreenModal = ({ show, handleClose, loadStoreScreen, data }) => {
   const [photoUrl, setPhotoUrl] = useState('')
   const [photoSpinner, setPhotoSpinner] = useState(false)
   const [searchTheme, setSearchTheme] = useState('')
+  const [roc, setRoc] = useState(0)
 
   useEffect(() => {
     setPhotoUrl(data?.preview)
@@ -61,6 +62,7 @@ const EditScreenModal = ({ show, handleClose, loadStoreScreen, data }) => {
         theme_id: data?.theme_id?._id,
       })
     }
+    setRoc(data?.rows_per_column)
   }, [data])
 
   useEffect(() => {
@@ -122,6 +124,7 @@ const EditScreenModal = ({ show, handleClose, loadStoreScreen, data }) => {
       id: data?._id,
       category: mergedCat,
       preview: photoUrl,
+      rows_per_column: roc,
     }
 
     if (!mergedData?.screen_name) {
@@ -231,7 +234,6 @@ const EditScreenModal = ({ show, handleClose, loadStoreScreen, data }) => {
       setPhotoUrl(null)
     }
   }
-
   return (
     <Modal
       title={`Create New Screen for ${data?.store_id?.name}`}
@@ -385,6 +387,17 @@ const EditScreenModal = ({ show, handleClose, loadStoreScreen, data }) => {
             ))}
           </Select>
         </div>
+
+        <div className='plain-input my-3'>
+          <label for=''>Rows Per Column*</label>
+          <br />
+          <input
+            type='number'
+            onChange={(e) => setRoc(e.target.value)}
+            value={roc}
+          />
+        </div>
+
         <div className='plain-input my-3'>
           <label for=''>Screen Password*</label>
           <br />
