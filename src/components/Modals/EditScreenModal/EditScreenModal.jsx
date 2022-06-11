@@ -237,8 +237,6 @@ const EditScreenModal = ({ show, handleClose, loadStoreScreen, data }) => {
       setPhotoUrl(null)
     }
   }
-  console.log(data)
-  console.log(productType)
 
   return (
     <Modal
