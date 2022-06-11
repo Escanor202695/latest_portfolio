@@ -33,6 +33,7 @@ const EditStoreModal = ({ show, handleClose, data, loadStoreData }) => {
     type: '',
     api_key: '2d108b5e-ec42-45cb-a0cf-c5f432ea637a',
     product_slider_interval: 30,
+    font: '',
   })
   const [photoSpinner, setPhotoSpinner] = useState(false)
   const [tag, setTag] = useState('')
@@ -51,6 +52,7 @@ const EditStoreModal = ({ show, handleClose, data, loadStoreData }) => {
       icon: data?.icon || '',
       tag: data?.tag,
       removable_words: data?.removable_words,
+      font: data?.font,
       type: data?.type,
       api_key: '2d108b5e-ec42-45cb-a0cf-c5f432ea637a',
       product_slider_interval: data?.product_slider_interval,
@@ -247,8 +249,6 @@ const EditStoreModal = ({ show, handleClose, data, loadStoreData }) => {
     }
   }
 
-  console.log(data)
-
   return (
     <>
       <Modal show={show} onHide={handleClose} size='lg'>
@@ -414,6 +414,7 @@ const EditStoreModal = ({ show, handleClose, data, loadStoreData }) => {
               onKeyDown={(e) => handleKeyDownForRw(e)}
             />
           </div>
+
           <div className='d-flex justify-content-start align-items-center flex-wrap'>
             {storeData?.removable_words?.map((tag, idx) => (
               <span
@@ -437,6 +438,41 @@ const EditStoreModal = ({ show, handleClose, data, loadStoreData }) => {
                 />
               </span>
             ))}
+          </div>
+
+          <div className='plain-dropdown'>
+            <label for=''>Font</label>
+            <select
+              onChange={(e) =>
+                setStoreData({ ...storeData, font: e.target.value })
+              }
+              value={storeData?.font}
+            >
+              <option
+                value='Helvetica'
+                selected={storeData?.font === 'Helvetica' ? true : false}
+              >
+                Helvetica
+              </option>
+              <option
+                value='Arial'
+                selected={storeData?.font === 'Arial' ? true : false}
+              >
+                Arial
+              </option>
+              <option
+                value='Verdana'
+                selected={storeData?.font === 'Verdana' ? true : false}
+              >
+                Verdana{' '}
+              </option>
+              <option
+                value='Open Sans'
+                selected={storeData?.font === 'Open Sans' ? true : false}
+              >
+                Open Sans{' '}
+              </option>
+            </select>
           </div>
 
           <div className='plain-input my-3'>
