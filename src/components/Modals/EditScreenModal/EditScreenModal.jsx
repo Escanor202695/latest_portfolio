@@ -1,6 +1,6 @@
 import { Modal, Select } from 'antd'
 import axios from 'axios'
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Form, Spinner } from 'react-bootstrap'
 import { GiCancel } from 'react-icons/gi'
 import InputRange from 'react-input-range'
@@ -69,7 +69,7 @@ const EditScreenModal = ({ show, handleClose, loadStoreScreen, data }) => {
 
   useEffect(() => {
     getAllCate()
-  }, [])
+  }, [data])
 
   useEffect(() => {
     getAllTheme()
@@ -77,11 +77,14 @@ const EditScreenModal = ({ show, handleClose, loadStoreScreen, data }) => {
 
   const getAllCate = async () => {
     try {
-      const res = await axios.get(GetAllCateEnd, {
-        headers: {
-          menuboard: localStorage.getItem('menu_token'),
-        },
-      })
+      const res = await axios.get(
+        GetAllCateEnd + `?store_id=${data?.store_id?._id}`,
+        {
+          headers: {
+            menuboard: localStorage.getItem('menu_token'),
+          },
+        }
+      )
 
       if (res.status === 200) {
         setAllCate(res?.data?.data)

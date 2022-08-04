@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { Dropdown, Modal } from 'react-bootstrap'
 import threedot from '../../assets/icons/threedot.svg'
 import Frame from '../../assets/images/Frame.png'

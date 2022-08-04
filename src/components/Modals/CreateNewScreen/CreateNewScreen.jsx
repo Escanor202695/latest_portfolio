@@ -1,6 +1,6 @@
 import { Modal, Select } from 'antd'
 import axios from 'axios'
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Form, Spinner } from 'react-bootstrap'
 import { GiCancel } from 'react-icons/gi'
 import InputRange from 'react-input-range'
@@ -29,10 +29,9 @@ const CreateNewScreen = ({ show, handleClose, store, loadStoreScreen }) => {
   const [photoSpinner, setPhotoSpinner] = useState(false)
   const [searchTheme, setSearchTheme] = useState('')
   const [selectedTheme, setSelectedTheme] = useState('')
-
   useEffect(() => {
     getAllCate()
-  }, [])
+  }, [store])
 
   useEffect(() => {
     getAllTheme()
@@ -40,7 +39,7 @@ const CreateNewScreen = ({ show, handleClose, store, loadStoreScreen }) => {
 
   const getAllCate = async () => {
     try {
-      const res = await axios.get(GetAllCateEnd, {
+      const res = await axios.get(GetAllCateEnd + `?store_id=${store?._id}`, {
         headers: {
           menuboard: localStorage.getItem('menu_token'),
         },

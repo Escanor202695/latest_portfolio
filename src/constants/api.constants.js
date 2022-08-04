@@ -60,6 +60,9 @@ export const EditScreenEnd = BaseUrl + '/screen/edit'
 export const DeleteScreenEnd = BaseUrl + '/screen/delete'
 export const GetAllCateEnd = BaseUrl + '/screen/get_all_categories'
 
+//reports for
+export const GetReportsEnd = BaseUrl + '/report/get'
+
 
 
 
