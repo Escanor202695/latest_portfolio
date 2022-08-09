@@ -1,5 +1,5 @@
 // base
-export const BaseUrl = 'https://menuboard-backend.herokuapp.com'
+export const BaseUrl = 'https://api.1cminc.ca'
 export const ApiUrl = BaseUrl
 
 // admin
