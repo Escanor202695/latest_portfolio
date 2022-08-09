@@ -112,7 +112,7 @@ const Home = () => {
                 <p style={{ color: 'rgb(92, 92, 92)' }}></p>
               </div>
               <h1 className='col-3 text-end pe-4' style={{ color: '#333333' }}>
-                {reports?.adverts || 0}
+                {reports?.ad || 0}
               </h1>
             </div>
 
@@ -124,7 +124,7 @@ const Home = () => {
                 <p style={{ color: 'rgb(92, 92, 92)' }}></p>
               </div>
               <h1 className='col-3 text-end pe-4' style={{ color: '#333333' }}>
-                {reports?.admins || 0}
+                {reports?.admin || 0}
               </h1>
             </div>
             <div className='d-flex justify-content-between align-start px-4 row'>
@@ -135,7 +135,7 @@ const Home = () => {
                 <p style={{ color: 'rgb(92, 92, 92)' }}></p>
               </div>
               <h1 className='col-3 text-end pe-4' style={{ color: '#333333' }}>
-                {reports?.managers || 0}
+                {reports?.manager || 0}
               </h1>
             </div>
             <div className='d-flex justify-content-between align-start px-4 row'>
