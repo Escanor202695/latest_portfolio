@@ -508,6 +508,7 @@ const EditStoreModal = ({ show, handleClose, data, loadStoreData }) => {
             <input
               type='text'
               placeholder='Please input your api key'
+              value={storeData?.api_key}
               onChange={handleInput}
               name='api_key'
             />
