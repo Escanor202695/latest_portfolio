@@ -31,7 +31,7 @@ const EditStoreModal = ({ show, handleClose, data, loadStoreData }) => {
     tag: [],
     removable_words: [],
     type: '',
-    api_key: '2d108b5e-ec42-45cb-a0cf-c5f432ea637a',
+    api_key: '',
     product_slider_interval: 30,
     font: '',
   })
@@ -54,7 +54,7 @@ const EditStoreModal = ({ show, handleClose, data, loadStoreData }) => {
       removable_words: data?.removable_words,
       font: data?.font,
       type: data?.type,
-      api_key: '2d108b5e-ec42-45cb-a0cf-c5f432ea637a',
+      api_key: '',
       product_slider_interval: data?.product_slider_interval,
     })
   }, [data])
