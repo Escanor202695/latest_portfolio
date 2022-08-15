@@ -54,7 +54,7 @@ const EditStoreModal = ({ show, handleClose, data, loadStoreData }) => {
       removable_words: data?.removable_words,
       font: data?.font,
       type: data?.type,
-      api_key: '',
+      api_key: data?.api_key,
       product_slider_interval: data?.product_slider_interval,
     })
   }, [data])
@@ -508,8 +508,8 @@ const EditStoreModal = ({ show, handleClose, data, loadStoreData }) => {
             <input
               type='text'
               placeholder='Please input your api key'
-              value={storeData?.api_key}
               onChange={handleInput}
+              name='api_key'
             />
           </div>
 
