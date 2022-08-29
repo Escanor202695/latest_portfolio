@@ -32,6 +32,7 @@ const EditStoreModal = ({ show, handleClose, data, loadStoreData }) => {
     removable_words: [],
     type: '',
     api_key: '',
+    inventory_link: '',
     product_slider_interval: 30,
     font: '',
   })
@@ -55,6 +56,7 @@ const EditStoreModal = ({ show, handleClose, data, loadStoreData }) => {
       font: data?.font,
       type: data?.type,
       api_key: data?.api_key,
+      inventory_link: data?.inventory_link || '',
       product_slider_interval: data?.product_slider_interval,
     })
   }, [data])
@@ -117,6 +119,12 @@ const EditStoreModal = ({ show, handleClose, data, loadStoreData }) => {
       return
     }
 
+    if (storeData.inventory_link === '') {
+      Toast('err', 'Please enter inventory link')
+      setEditSpinner(false)
+      return
+    }
+
     if (storeData.product_slider_interval === '') {
       Toast('err', 'Please enter Product Slider Interval')
       setEditSpinner(false)
@@ -148,6 +156,7 @@ const EditStoreModal = ({ show, handleClose, data, loadStoreData }) => {
               address: '',
               footer: '',
               link: '',
+              inventory_link :'',
               social_link: '',
               icon: '',
               tag: [],
@@ -515,18 +524,35 @@ const EditStoreModal = ({ show, handleClose, data, loadStoreData }) => {
           </div>
 
           <div className='plain-input my-3'>
-            <label for=''>API Link*</label>
+            <label for=''>Product API Link*</label>
             <br />
             <input
               type='text'
-              placeholder='Please input your address'
+              placeholder='Please input your product api link'
               value={storeData.link}
               onChange={(e) =>
                 setStoreData({ ...storeData, link: e.target.value })
               }
-              name='social_link'
+              name='link'
             />
           </div>
+
+          <div className='plain-input my-3'>
+            <label htmlFor=''>Inventory API Link*</label>
+            <br/>
+            <input
+                type='text'
+                placeholder='Please input your inventory api link'
+                value={storeData.inventory_link}
+                onChange={(e) =>
+                    setStoreData({...storeData, inventory_link: e.target.value})
+                }
+                name='inventory_link'
+            />
+          </div>
+
+
+
 
           {/* </form> */}
         </Modal.Body>
