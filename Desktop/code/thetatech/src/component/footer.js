@@ -32,7 +32,7 @@ export default function Footer() {
         <div className="flex justify-evenly">
           <div>
             <img className="h-20" src="./logo1.png" alt="Company name" />
-            <p className="text-[.75rem] mt-4">@Copyright All Rights Are Reserved 2023</p>
+            <p className="text-[.75rem] mt-4 ">@Copyright All Rights Are Reserved 2023</p>
           </div>
 
           <div className="mt-16 xl:mt-0">
