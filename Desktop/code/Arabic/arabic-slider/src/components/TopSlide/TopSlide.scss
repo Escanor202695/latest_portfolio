@@ -1,0 +1,58 @@
+.flex-container-of-parcent-test {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+.parcentaze-point-div {
+    width: 77px;
+    height: 15px;
+    background: #ababab2b;
+    display: flex;
+    border-radius: 14px;
+    position: relative;
+}
+
+.child-div-for-parcentaze {
+    position: absolute;
+    height: 100%;
+    border-radius: 10px 0px 0px 10px;
+    background: #f09713;
+}
+
+.orange-bg-tagline {
+    height: 74px;
+}
+
+.arrow-text-flex img {
+    height: 37px;
+}
+
+.orange-bg-tagline h6 {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.content-slide-for-slider h1 span{
+    padding: 20px 60px;
+}
+
+.arrow-text-flex h6 {
+    font-size: 16px;
+    font-weight: bold;
+    color: #767676;
+}
+.arrow-text-flex p {
+    margin: 0;
+    font-size: 15px !important;
+    font-weight: bold;
+    color: #767676;
+}
+
+
+.orange-bg-tagline p {
+    margin: 0;
+    font-size: 13px !important;
+    font-weight: bold;
+    color: #767676;
+}

@@ -1,0 +1,131 @@
+.container-map {
+  min-height: 100vh;
+  background-image: url("/public/map4.png");
+  background-repeat: no-repeat;
+  background-size: cover; /* or 'contain' depending on your preference */
+  background-position: right right; /* Center the image */
+  background-color: red;
+  position: relative;
+  z-index: 999999999;
+}
+.area {
+  height: 50px;
+  width: 50px;
+  display: flex;
+  position: fixed;
+  justify-content: center;
+  align-items: center;
+  border-radius: 999px;
+  position: relative;
+}
+
+.map-icon {
+  animation: bounce 1.5s cubic-bezier(0.55, 0.055, 0.675, 0.19) infinite;
+}
+
+.area::before {
+  content: "";
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  border-radius: inherit;
+  /* Add a spinning animation to the border */
+}
+
+@keyframes bounce {
+  0%,
+  100% {
+    transform: translateY(0) scale(1);
+  }
+  50% {
+    transform: translateY(-4px) scale(1.05); /* Adjust the distance for the bounce effect */
+  }
+}
+
+.container-map {
+  position: relative;
+  min-height: 100vh;
+  background-color: #f0f0f0;
+}
+.title {
+  text-align: right;
+  font-size: large;
+  padding-top: 20px;
+}
+.location-icon {
+  position: absolute;
+  cursor: pointer;
+}
+
+.location-icon img {
+  width: 20px;
+  height: 20px;
+}
+
+.location-info-box {
+  position: absolute;
+  display: none;
+}
+
+.location-info-box img {
+  width: 100%;
+  height: auto;
+}
+
+.location-info-box.open {
+  display: block;
+}
+
+.location-info-box {
+  position: relative;
+  transition: visibility 0.3s ease-in-out, transform 0.3s ease-in-out;
+  visibility: hidden;
+  transform: scale(0.8);
+}
+
+.location-text {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background-color: rgba(255, 255, 255, 0.8);
+  padding: 8px;
+  direction: rtl;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.hovered .location-info-box {
+  visibility: visible;
+  transform: scale(1); /* Zoom in to normal size */
+}
+
+
+.location-info-box::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  margin-top: -10px;
+  border-width: 10px;
+  border-style: solid;
+  border-color: transparent transparent transparent white;
+}
+/* Add this CSS to your stylesheet */
+
+.IconMapLocationDot {
+  color: red;
+  animation: pulse 2s infinite; /* Add a pulsating animation */
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.2);
+  }
+}

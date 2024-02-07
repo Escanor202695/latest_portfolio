@@ -1,0 +1,47 @@
+// .slide{
+//     background: url(../../assets/images/banner/banner2.png);
+//     background-repeat: no-repeat;
+//     background-size: cover;
+//     height: 100vh;
+//     background-position: bottom center;
+// }
+
+.position_____________relative{
+    position: relative;
+}
+
+.text_position_change {
+    position: absolute;
+    top: -9px;
+    right: 0;
+    z-index: 9;
+}
+
+.slider {
+    position: relative;
+    justify-content: center;
+    display: flex;
+    align-items: end;
+}
+
+
+.text_position_change {
+    position: absolute;
+    top: -20px;
+    right: 0;
+    z-index: 9;
+}
+
+.right-slide-background.bottom-side-spacing-adding h3 {
+    text-align: center;
+}
+
+
+.slider {
+    position: relative;
+    height: 480px !important;
+    justify-content: center;
+    display: flex;
+    align-items: end;
+}
+

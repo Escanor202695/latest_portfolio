@@ -1,0 +1,224 @@
+.navbar-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 30px;
+}
+
+.nav-item a {
+    text-decoration: none;
+    color: black;
+    margin-left: 20px;
+    font-size: 13px;
+    border: 1px solid #0a9ba5;
+    padding: 5px 10px;
+    border-radius: 6px;
+    font-weight: bold;
+}
+.__card_height {
+    background: #fafbff;
+}
+.dashboard_cards {
+    background: #fafbff;
+}
+.last-headline_____ h6 {
+    font-weight: bold;
+    font-size: 20px;
+}
+.cards___flex___div p {
+    font-size: 13px;
+    font-weight: bold;
+}
+.cards___flex___div span {
+    font-weight: bold;
+}
+.navbar-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 85px;
+    border-bottom: 1px solid #0a9ba5;
+    padding-bottom: 22px;
+}
+
+.sidebar-and-dashboard {
+    display: grid;
+    grid-template-columns: 1fr 3fr;
+    grid-template-rows: 1fr;
+    grid-column-gap: 10px;
+    grid-row-gap: 0px;
+    padding: 0 40px;
+    height: 1080px;
+    position: relative;
+    bottom: 50px;
+}
+
+    .______sidebar {
+        border-right: 1px solid #0a9ba5;
+    }
+
+    .position-changing-those-item {
+        text-align: end;
+        position: relative;
+        top: 63px;
+        padding: 0 20px;
+    }
+
+    .side-bar-text-containers-flex {
+        display: flex;
+        justify-content: end;
+        margin-top: 17px;
+        align-items: center;
+        gap: 10px;
+        border: 1px solid #0a9ba5;
+        padding: 8px;
+        border-radius: 7px;
+    }
+
+    .side-bar-text-containers-flex p {
+        margin: 0;
+        font-size: 14px;
+        color: #767676;
+    }
+
+
+    .flex-those-line {
+        display: flex;
+        justify-content: space-between;
+    }
+    .flex-those-lines {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 12px;
+    }
+
+    .flex-those-lines span {
+        border: 1px solid #0a9ba5;
+        width: 128px;
+        padding: 7px;
+        border-radius: 10px;
+        font-weight: 500;
+    }
+
+    .full-widthimages img {
+        width: 100%;
+    }
+
+    .dashboard-headline h5 {
+        color: red;
+    }
+    .dashboard-headline p {
+        color: #ed9718;
+    }
+
+    .dashboard__headline {
+        background: #0a9ba5;
+        padding: 13px;
+        text-align: end;
+        color: white;
+        border-radius: 6px;
+    }
+
+    .dashboard__headline h6 {
+        font-weight: bold;
+        font-size: 20px;
+    }
+
+    .dashboard_card p {
+        font-size: 16px;
+        font-weight: bold;
+    }
+
+    .dashboard_card p span{
+        color: #19e3bc;
+    }
+
+    .dashboard_card img {
+        width: 80%;
+        height: 80%;
+        object-fit: cover;
+        margin-top: 6px;
+    }
+
+    .table-image_____ img {
+        width: 90%;
+        margin-top: 13px;
+    }
+
+    
+    .table-image_____  {
+        text-align: center;
+    }
+
+    .dashboard_card {
+        border: 1px solid #0a9ba5;
+        padding: 19px;
+        border-radius: 12px;
+    }
+
+ 
+    .need-custom-height-for-vh {
+        height: 525px !important;
+    }
+
+    .dashboard_cards {
+        border: 1px solid #0a9ba5;
+        padding: 19px;
+        border-radius: 12px;
+    }
+
+    .dashboard_cards img {
+        width: 100%;
+    }
+    .table-image_____ img {
+        width: 124px;
+    }
+
+
+    .cards___flex___div {
+        display: flex;
+        text-align: end;
+        gap: 5px;
+        margin-top: 12px;
+    }
+
+    .cards___flex___div p {
+        font-size: 12px;
+    }
+
+    .cards___flex___div span {
+        font-size: 14px;
+    }
+
+    .grid-and-flex-box {
+        display: flex;
+        justify-content: end;
+        gap: 13px;
+    }
+
+    .dashboard_card {
+        height: 390px;
+    }
+
+    .__card_height {
+        height: 185px;
+    }
+
+    ._card-height {
+        height: 325px;
+    }
+
+    .last-fourth-image-item img {
+        width: 100%;
+        object-fit: fill;
+    }
+
+    .table-image img {
+        height: 166px;
+    }
+
+    .table-image_____ {
+        text-align: center;
+        position: relative;
+        top: 10px;
+    }
